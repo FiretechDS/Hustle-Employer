@@ -1,0 +1,29 @@
+{
+  "name": "hustle-employer",
+  "version": "1.0.0",
+  "description": "Hustle app for employers, built with the cleanest architecture we can achieve",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run serve --workspace ui"
+
+  },
+  "workspaces": [
+    "./packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FiretechDS/Hustle-Employer.git"
+  },
+  "keywords": [
+    "clean",
+    "typescript",
+    "vue"
+  ],
+  "author": "Firetech group B",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FiretechDS/Hustle-Employer/issues"
+  },
+  "homepage": "https://github.com/FiretechDS/Hustle-Employer#readme"
+}
