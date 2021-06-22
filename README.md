@@ -2,11 +2,11 @@
 
 # SETUP:
 
-# Importante tener npm versión > 7 (npm install -g npm@7)
+Importante tener npm versión > 7 (npm install -g npm@7)
 
-# 1. npm i
+1. npm i
 
-# 2. npm start
+2. npm start
 
 # Referencias: (ARREGLAR)
 
