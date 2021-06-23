@@ -1,5 +1,5 @@
-import JobOfferPage from "@/views/JobOfferPage.vue";
-import { createRouter, createWebHistory } from "vue-router";
+import JobOfferPage from "@/views/JobOfferPage.vue"
+import {createRouter,createWebHistory}  from "vue-router";
 //we can implement lazyloading hereee lets gooo
 const routes = [
   {
@@ -9,12 +9,12 @@ const routes = [
   },
 
 ];
-
 const router = createRouter({
-  history: createWebHistory(),
+  history:createWebHistory(),
   routes
 });
 
 
 
 export default router;
+
