@@ -10,7 +10,9 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "sass-loader": "^10.1.1",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-inline-svg": "^2.0.0",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
@@ -27,6 +29,7 @@
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1",
     "sass": "^1.35.1",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "vue-cli-plugin-svg": "~0.1.3"
   }
 }
