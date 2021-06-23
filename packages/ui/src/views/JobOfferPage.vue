@@ -8,11 +8,13 @@
       <li class="small-column">duración</li>
     </ul>
   </div>
+  <CreateOfferModal />
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import CreateOfferModal from "@/components/jobOffers/CreateOfferModal.vue";
 export default defineComponent({
+  components: { CreateOfferModal },
   name: "JobOfferPage",
 });
 </script>
