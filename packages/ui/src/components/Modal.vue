@@ -1,10 +1,10 @@
 <template>
   <transition name="modal-fade">
-  <div class="modal-backdrop">
+  <div class="modal-backdrop" @click="close">
     <div class="modal">
       <header class="modal-header">
         <slot name="header"> This is the default title! </slot>
-        <button type="button" class="btn-close" @click="close">x</button>
+        <img class="btn-close" src="@/assets/svg/letra-x.png" />
       </header>
 
       <section class="modal-body">
@@ -13,9 +13,6 @@
 
       <footer class="modal-footer">
         <slot name="footer"> This is the default footer! </slot>
-        <button type="button" class="btn-green" @click="close">
-          Close Modal
-        </button>
       </footer>
     </div>
   </div>
@@ -69,13 +66,13 @@ export default defineComponent({
 
 .modal-header {
   position: relative;
-  border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
+//  border-bottom: 1px solid #eeeeee;
+  color: $font-dark;
   justify-content: space-between;
 }
 
 .modal-footer {
-  border-top: 1px solid #eeeeee;
+//  border-top: 1px solid #eeeeee;
   flex-direction: column;
   justify-content: flex-end;
 }
@@ -87,23 +84,14 @@ export default defineComponent({
 
 .btn-close {
   position: absolute;
-  top: 0;
-  right: 0;
-  border: none;
-  font-size: 20px;
+  top: 0.6rem;
+  right: 0.6rem;
   padding: 10px;
   cursor: pointer;
-  font-weight: bold;
-  color: #4aae9b;
-  background: transparent;
+  height: 1.5rem;
+  filter: $filter-gray;
 }
 
-.btn-green {
-  color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
-}
 .modal-fade-enter,
   .modal-fade-leave-to {
     opacity: 0;
