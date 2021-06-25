@@ -74,3 +74,19 @@ a {
 html {
   font-size: 62.5%;
 }
+
+//JOB OFFER COLUMNS
+.columns-job-offer {
+  display: flex;
+  width: 60vw;
+  justify-content: space-around;
+  list-style-type: none;
+
+  :first-child {
+    justify-self: flex-start;
+    flex: 1;
+  }
+  .small-columns-job-offer {
+    flex: 0.5;
+  }
+}
