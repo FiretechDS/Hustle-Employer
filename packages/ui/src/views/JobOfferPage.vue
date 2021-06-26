@@ -7,18 +7,19 @@
       <li class="small-columns-job-offer">Ubicacion</li>
       <li class="small-columns-job-offer">Duración</li>
       <li class="small-columns-job-offer">Fecha tope</li>
-    </ul>
-    <HorizontalCard title='Desarrollador' salary=2000 location='Caracas' duration='36' last='24/08/2021'/>
+    </ul> 
+    <OfferDetail title='Desarrollador UI' salary=3000 location='Caracas' duration='36' last='24/08/2021'/>
   </div>
-  <CreateOfferModal />
+  <CreateOfferModal/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import CreateOfferModal from "@/components/jobOffers/CreateOfferModal.vue";
-import HorizontalCard from "@/components/HorizontalCard.vue";
+import OfferDetail from "@/components/jobOffers/OfferDetail.vue"
+
 export default defineComponent({
-  components: { CreateOfferModal, HorizontalCard },
+  components: { CreateOfferModal, OfferDetail },
   name: "JobOfferPage",
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="job-card">
+    <div class="job-card" @click="onClick()">
         <ul class="columns-job-offer">
           <li>
             <p class="in-card-text-job-offer">{{title}}</p>
@@ -26,7 +26,10 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "HorizontalCard",
-  props:{    
+  props:{  
+      onClick: {
+        type: Function as PropType<() => void>,
+      },  
        title: {
          type: String
        },
@@ -42,7 +45,7 @@ export default defineComponent({
        last:{
          type: String
        }
-    }
+    },
 });
 </script>
 
@@ -52,7 +55,7 @@ export default defineComponent({
     padding: 0.1rem;
     margin: 1rem 0;
     border-radius: 8px;
-
+    cursor: pointer;
 
   }
 
