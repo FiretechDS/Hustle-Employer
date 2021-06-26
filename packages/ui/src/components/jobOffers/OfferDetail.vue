@@ -4,7 +4,35 @@
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> {{this.title}} </template>
       <template v-slot:body>
-        <h5>Aloha</h5>
+        <div class="value-modal-offer">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Dolorum numquam, vitae consectetur animi nobis pariatur, 
+            sequi assumenda cupiditate doloremque atque earum expedita, dolor rerum ipsam modi enim sed voluptas nesciunt?</p>
+        </div>
+        <div>
+        <ul class="columns-modal-offer-detail">
+          <li>
+            <p class="title-modal-offer">Pago</p>
+          </li>
+          <li class="small-columns-modal-offer-detail"> 
+            <p class="title-modal-offer">Horas</p>
+          </li> 
+          <li class="small-columns-modal-offer-detail"> 
+            <p class="title-modal-offer">Vencimiento</p>
+          </li>
+        </ul>
+        <ul class="columns-modal-offer-detail">
+          <li>
+            <p class="value-modal-offer">{{salary}}</p>
+          </li>
+          <li class="small-columns-modal-offer-detail"> 
+            <p class="value-modal-offer">{{duration}}</p>
+          </li> 
+          <li class="small-columns-modal-offer-detail"> 
+            <p class="value-modal-offer">{{last}}</p>
+          </li>
+        </ul>
+        </div>
       </template>
     </Modal>
   </div>
@@ -58,5 +86,3 @@ export default defineComponent({
   },
 });
 </script>
-
-

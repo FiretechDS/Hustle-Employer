@@ -94,3 +94,29 @@ html {
     flex: 0.5;
   }
 }
+
+//DETAIL OFFER MODAL
+.title-modal-offer{
+  color: $font-dark
+}
+
+.value-modal-offer{
+  color: $font-gray
+}
+
+.columns-modal-offer-detail {
+  display: flex;
+  width: 30vw;
+  justify-content: space-around;
+  list-style-type: none;
+  max-height: 2rem;
+  max-width: 50rem;
+
+  :first-child {
+    justify-self: flex-start;
+    flex: 0.2;
+  }
+  .small-columns-modal-offer-detail {
+    flex: 0.2;
+  }
+}
