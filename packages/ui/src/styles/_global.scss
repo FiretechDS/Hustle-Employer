@@ -108,6 +108,7 @@ html {
   display: flex;
   width: 30vw;
   justify-content: space-around;
+  align-items: stretch;
   list-style-type: none;
   max-height: 2rem;
   max-width: 50rem;
@@ -119,4 +120,15 @@ html {
   .small-columns-modal-offer-detail {
     flex: 0.2;
   }
+  
+}
+
+.fields-modal-offer{
+  margin-top: 0rem;
+  padding: 10px;
+}
+
+.list-modal-offer{ 
+  list-style: none;
+  padding-inline-start: 1rem;
 }
