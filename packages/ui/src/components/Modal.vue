@@ -55,7 +55,7 @@ export default defineComponent({
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 8px;
   max-width: 70rem;
 }
 

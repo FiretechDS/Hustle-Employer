@@ -4,12 +4,12 @@
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> {{this.title}} </template>
       <template v-slot:body>
-        <div class="fields-modal-offer value-modal-offer">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        
+          <p class="fields-modal-offer value-modal-offer">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
             Dolorum numquam, vitae consectetur animi nobis pariatur, 
             sequi assumenda cupiditate doloremque atque earum expedita, dolor rerum ipsam modi enim sed voluptas nesciunt?</p>
-        </div>
-        <div>
+
+        <div class="fields-modal-offer">
         <ul class="columns-modal-offer-detail">
           <li>
             <p class="title-modal-offer">Pago/hora</p>
@@ -33,6 +33,7 @@
           </li>
         </ul>
         </div>
+
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Horario</p>
           <ul class="list-modal-offer">
