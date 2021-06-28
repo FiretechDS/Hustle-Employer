@@ -23,24 +23,12 @@ export class Either<L, R> {
         }
     }
 
-    map<T>(fn: (r: R) => T): Either<L, T> {
-        return this.flatMap(r => Either.right(fn(r)));
-    }
-
-    flatMap<T>(fn: (right: R) => Either<L, T>): Either<L, T> {
-        return this.fold(leftValue => Either.left(leftValue), rightValue => fn(rightValue));
-    }
-
     getOrThrow(errorMessage?: string): R {
         const throwFn = () => {
             throw Error(errorMessage ? errorMessage : "An error has ocurred: " + this.value);
         };
 
         return this.fold(() => throwFn(), rightValue => rightValue);
-    }
-
-    getOrElse(defaultValue: R): R {
-        return this.fold(() => defaultValue, someValue => someValue);
     }
 
     static left<L, R>(value: L) {

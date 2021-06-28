@@ -2,30 +2,27 @@ import { Either } from "../../../common/domain/Either";
 import { ValueObject } from "../../../common/domain/ValueObject";
 
 interface durationProps{
-  value:number
+  value:number,
+  type?:string,
+
 }
 
-interface DurationError{
-  message:string
-}
 
 export class Duration extends ValueObject<durationProps>{
   public readonly value:number;
-
+  public readonly type: string;
   private constructor (props: durationProps){
     super(props);
     this.value= props.value;
+    props.type? this.type = props.type
+    :this.type="hours" 
   }
   
-  public static create(duration:number): Either<DurationError, Duration>{
+  public static create(duration:number, type?:string): Duration{
     if (duration<=0){
-      return Either.left({
-        message:'Job duration must be greater than zero'
-      })
-
-
-    }
-      return Either.right( new Duration({value:duration}) )
+      throw  new Error('Job duration must be greater than zero')
+    } 
+      return new Duration({value:duration,type:type});
   }
 
 }
