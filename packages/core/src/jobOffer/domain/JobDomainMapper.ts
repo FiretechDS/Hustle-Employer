@@ -14,7 +14,7 @@ export interface jobPresentationProps{
   specialRequirements?:string,
   skills:stringSkillProps[] ,
   status:number,
-  payment: number,
+  hourlyRate: number,
   schedules: String[]|String[][]
 }
 
@@ -26,7 +26,7 @@ export class ToDomainMapper{
         header:JobHeader.create(props.title,props.specialRequirements),
         status: Status.create(props.status),
         skills: Skill.createList(props.skills),
-        hourlyRate:HourlyRate.create(props.payment),
+        hourlyRate:HourlyRate.create(props.hourlyRate),
         schedules: Array.isArray(props.schedules[0]) ? Schedule.createList(props.schedules as String[][] ): [Schedule.create(props.schedules as String[])]
       })
 

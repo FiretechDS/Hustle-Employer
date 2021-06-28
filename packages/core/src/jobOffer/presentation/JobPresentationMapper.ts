@@ -16,7 +16,7 @@ export class JobPresentationMapper {
         return {name:skill.name, category:skill.category }
       }),
       status:jobOffer.status.value,
-      payment:jobOffer.hourlyRate.value,
+      hourlyRate:jobOffer.hourlyRate.value,
       schedules: jobOffer.schedules.map((schedule:Schedule)=>{
         return schedule.ToString()
       }) 
