@@ -1,6 +1,7 @@
 import { JobOffer } from "../domain/JobOffer";
 
 import { jobPresentationProps } from "../domain/JobDomainMapper";
+import { Skill } from "../domain/valueObjects/SkillValueObject";
 
 
 export class JobPresentationMapper {
@@ -10,7 +11,7 @@ export class JobPresentationMapper {
       specialRequirements: jobOffer.header.specialRequirements,
       duration:jobOffer.duration.value,
       deadline:jobOffer.deadline.value,
-      skills:jobOffer.skills.map(skill=>{
+      skills:jobOffer.skills.map((skill:Skill)=>{
         return {name:skill.name, category:skill.category }
       }),
       status:jobOffer.status.value,
