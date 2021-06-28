@@ -3,6 +3,7 @@ import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
 import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { HourlyRate } from "./valueObjects/HourlyRateValueObject";
+import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { Skill, stringSkillProps } from "./valueObjects/SkillValueObject";
 import { Status } from "./valueObjects/StatusValueObject";
 
@@ -14,6 +15,7 @@ export interface jobPresentationProps{
   skills:stringSkillProps[] ,
   status:number,
   payment: number,
+  schedules: String[]|String[][]
 }
 
 export class ToDomainMapper{
@@ -24,7 +26,8 @@ export class ToDomainMapper{
         header:JobHeader.create(props.title,props.specialRequirements),
         status: Status.create(props.status),
         skills: Skill.createList(props.skills),
-        hourlyRate:HourlyRate.create(props.payment)
+        hourlyRate:HourlyRate.create(props.payment),
+        schedules: Array.isArray(props.schedules[0]) ? Schedule.createList(props.schedules as String[][] ): [Schedule.create(props.schedules as String[])]
       })
 
     }
