@@ -8,6 +8,7 @@
       <template v-slot:body>
         <div class="create-job-offer-body-div">
           <form class="create-job-offer-form">
+            Título:
             <input v-model="jobOffer.title" placeholder="Título">
             <input class="description-input" v-model="jobOffer.description" placeholder="Descripción">
             <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
@@ -65,6 +66,16 @@ export default defineComponent({
       console.log("closed");
     }
 
+    function getTodayDate(): string{
+      //función util para validaciones
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      
+      return String(yyyy + '-' + mm + '-' + dd);
+    }
+
     function createOffer(): void {
       console.log("created");
       console.log(jobOffer)
@@ -76,8 +87,8 @@ export default defineComponent({
       jobOffer,
       showModal,
       closeModal,
-      createOffer    
-      };
+      createOffer,
+    };
   },
 });
 </script>
@@ -86,6 +97,9 @@ export default defineComponent({
 
 div{
   color: grey;
+  padding: 10px;
+  text-align: top left;
+  display: inline;
 }
 .create-job-offer-form{
   margin: 1rem 1rem;
@@ -107,9 +121,40 @@ Button{
   
 }
 
+textarea{
+  resize: none;
+  font-family: 'Poppins';
+  margin: 10px;
+  display: inline-block;
+  border-radius: 10px;
+  border-color: rgb(196, 196, 196);
+  padding: 5px;
+  width: 90%;
+  background: rgba(197, 197, 197, 0.349);
+  border-width: 2px;
+  border-style: inset;
+}
+
 .description-input{
   width: 80%;
+}
 
+.schedule-input{
+  padding: 0;
+  margin: 30px;
+  margin-left: 0px;
+}
+
+label{
+  border-radius: 10px;
+  border-color: rgb(196, 196, 196);
+  border-style: inset;
+  border-width: 2px;
+  background: rgba(197, 197, 197, 0.349);
+  padding: 3px;
+  padding-right: 9px;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 </style>
