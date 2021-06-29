@@ -1,30 +1,5 @@
-// Colors
-$background-color: #303547;
-$white: #ffffff;
-$highlit-yellow: #ffeda3;
-$highlit-blue: #39a9cb;
-$highlit-darkblue: #2940d3;
-$font-dark: #2b2b2b;
-$font-gray: #747474;
-$font-light: #c4c4c4;
-
-//Filters (colors for svg) https://codepen.io/sosuke/pen/Pjoqqp
-$filter-blue: invert(81%) sepia(23%) saturate(7224%) hue-rotate(158deg)
-  brightness(88%) contrast(78%);
-$filter-light-gray: invert(98%) sepia(0%) saturate(1196%) hue-rotate(128deg)
-  brightness(85%) contrast(84%);
-$filter-gray: invert(49%) sepia(12%) saturate(0%) hue-rotate(140deg)
-  brightness(92%) contrast(88%);
-$filter-white: invert(89%) sepia(100%) saturate(0%) hue-rotate(66deg)
-  brightness(110%) contrast(99%);
-// Font sizes
-$small-font: 1.2rem;
-$normal-font: 1.4rem;
-$medium-font: 2.4rem;
-$large-font: 3.4rem;
-$xlarge-font: 5.4rem;
-$xxlarge-font: 7.8rem;
-
+@import 'multiselect';
+@import 'variables';
 /* Font styles */
 @font-face {
   font-family: 'Poppins';
