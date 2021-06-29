@@ -3,12 +3,13 @@
     <h2 class="title">Ofertas creadas</h2>
     <ul class="columns-job-offer">
       <li>Titulo</li>
-      <li class="small-columns-job-offer">Pago</li>
-      <li class="small-columns-job-offer">Ubicacion</li>
-      <li class="small-columns-job-offer">Duración</li>
+      <li class="small-columns-job-offer">Pago/hora</li>
+      <li class="small-columns-job-offer">Duración/horas</li>
       <li class="small-columns-job-offer">Fecha tope</li>
+      <li class="small-columns-job-offer">Status</li>
     </ul> 
-    <OfferDetail title='Desarrollador UI' salary=3000 location='Caracas' duration='36' last='24/08/2021' :schedule="schedule" :skills="skills"/>
+    <OfferDetail title='Desarrollador UI' salary=3000 status='Posted' duration='36' deadline='24/08/2021' :schedule="schedule" :skills="skills"/>
+    <OfferDetail :title="job.title" :salary="job.payment" :duration="job.duration" deadline="24/08/2020" :status="job.status" :schedule="schedule" :skills="skills"/>
   </div>
   <CreateOfferModal/>
 </template>
@@ -24,24 +25,30 @@ export default defineComponent({
   data(){
     return{
       schedule: [
-        {
-          id: 1, day:'lun', hourIn: '8:00 am', hourOut: '3:30 pm'
-        },
-        {
-          id: 2, day:'mar', hourIn: '8:00 am', hourOut: '3:30 pm'
-        },
+        ['tuesday','monday'],
+        ['friday','monday']
       ],
       skills: [
         {
-          id: 1, description: 'Conocimientos medios en Vue.js'
+         name: 'Cook', category: 'tecnhical'
         },
         {
-          id: 2, description: 'Conocimientos medios en CSS'
+          name: 'Clean', category: 'soft'
         },
-        {
-          id: 3, description: 'Conocimientos medios en HTML'
-        }
-      ]
+      ],
+      job: {
+        title: 'New job',
+        specialRequirements: 'None',
+        duration: 400,
+        deadline: '2020-07-27T00:00:00.000Z',
+        skills:[
+          {name: 'Cook', category: 'tecnhical'},
+          {name: 'Clean', category: 'soft'}
+        ],
+        status: 'Canceled',
+        payment: 200,
+        schedules: [['tuesday','monday'],['friday','monday']]
+      }
     }
   }
 });

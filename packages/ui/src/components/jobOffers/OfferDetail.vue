@@ -1,8 +1,8 @@
 <template>
   <div>
-    <HorizontalCard :title="title" :salary="salary" :location="location" :duration="duration" :last="last" :onClick="showModal" />
+    <HorizontalCard :title="title" :salary="salary" :status="status" :duration="duration" :deadline="deadline" :onClick="showModal" />
     <Modal v-show="state.isModalVisible" @close="closeModal()">
-      <template v-slot:header> {{this.title}} </template>
+      <template v-slot:header> {{this.title}}</template>
       <template v-slot:body>
         
           <p class="fields-modal-offer value-modal-offer">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
@@ -29,7 +29,7 @@
             <p class="value-modal-offer">{{duration}}</p>
           </li> 
           <li class="small-columns-modal-offer-detail"> 
-            <p class="value-modal-offer">{{last}}</p>
+            <p class="value-modal-offer">{{deadline}}</p>
           </li>
         </ul>
         </div>
@@ -38,9 +38,9 @@
           <p class="title-modal-offer">Horario</p>
           <ul class="list-modal-offer">
             <li v-for="days in schedule" :key="days.id">
-              <div class="value-modal-offer">
+              <div class="value-modal-offer"> 
                 <p>
-                {{days.day}}    {{days.hourIn}} a {{days.hourOut}}
+                {{days[0]}} - {{days[1]}}
                 </p>
               </div>
             </li>
@@ -49,10 +49,10 @@
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Habilidades</p>
           <ul class="list-modal-offer">
-            <li v-for="skill in skills" :key="skill.id">
+            <li v-for="skill in skills" :key="skill.name">
               <div class="value-modal-offer">
                 <p>
-                {{skill.description}}
+                {{skill.name}} {{skill.category}}
                 </p>
               </div>
             </li>
@@ -84,15 +84,21 @@ export default defineComponent({
        duration: {
          type: String
        },
-       last:{
+       deadline:{
          type: String
        },
        schedule:{
          type: Array as PropType<{id: number, day: string, hourIn: string, hourOut: string}[]>
        },
        skills:{
-         type: Array as PropType<{id: number, description: string}[]>
+         type: Array as PropType<{name: string, category: string}[]>
        },
+       status:{
+         type: String
+       },
+       job:{
+         type: Object
+       }
     },
   components: { Modal, HorizontalCard },
   created(){

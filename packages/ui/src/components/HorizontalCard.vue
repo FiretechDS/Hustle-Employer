@@ -8,15 +8,14 @@
             <p class="in-card-text-job-offer">{{salary}}</p>
           </li> 
           <li class="small-columns-job-offer"> 
-            <p class="in-card-text-job-offer">{{location}}</p>
-          </li> 
-          <li class="small-columns-job-offer"> 
             <p class="in-card-text-job-offer">{{duration}}</p>
           </li> 
           <li class="small-columns-job-offer"> 
-            <p class="in-card-text-job-offer">{{last}}</p>
+            <p class="in-card-text-job-offer">{{deadline}}</p>
           </li> 
-          
+          <li class="small-columns-job-offer"> 
+            <p class="in-card-text-job-offer">{{status}}</p>
+          </li> 
         </ul>
     </div>
 </template>
@@ -36,13 +35,13 @@ export default defineComponent({
        salary: {
          type: Number
        },
-       location:{
+       status:{
          type: String
        },
        duration: {
          type: String
        },
-       last:{
+       deadline:{
          type: String
        }
     },
