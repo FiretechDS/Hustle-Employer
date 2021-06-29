@@ -5,9 +5,7 @@
       <template v-slot:header> {{this.title}}</template>
       <template v-slot:body>
         
-          <p class="fields-modal-offer value-modal-offer">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Dolorum numquam, vitae consectetur animi nobis pariatur, 
-            sequi assumenda cupiditate doloremque atque earum expedita, dolor rerum ipsam modi enim sed voluptas nesciunt?</p>
+          <p class="fields-modal-offer value-modal-offer">{{description}}</p>
 
         <div class="fields-modal-offer">
         <ul class="columns-modal-offer-detail">
@@ -78,7 +76,7 @@ export default defineComponent({
        salary: {
          type: Number
        },
-       location:{
+       description:{
          type: String
        },
        duration: {

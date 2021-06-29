@@ -8,8 +8,9 @@
       <li class="small-columns-job-offer">Fecha tope</li>
       <li class="small-columns-job-offer">Status</li>
     </ul> 
-    <OfferDetail title='Desarrollador UI' salary=3000 status='Posted' duration='36' deadline='24/08/2021' :schedule="schedule" :skills="skills"/>
-    <OfferDetail :title="job.title" :salary="job.payment" :duration="job.duration" deadline="24/08/2020" :status="job.status" :schedule="schedule" :skills="skills"/>
+    <div v-for="job in jobs" :key="job.title">
+      <OfferDetail :title="job.title" :description="job.specialRequirements" :salary="job.payment" :duration="job.duration" :deadline="job.deadline" :status="job.status" :schedule="job.schedules" :skills="job.skills"/>
+    </div>
   </div>
   <CreateOfferModal/>
 </template>
@@ -24,23 +25,13 @@ export default defineComponent({
   name: "JobOfferPage",
   data(){
     return{
-      schedule: [
-        ['tuesday','monday'],
-        ['friday','monday']
-      ],
-      skills: [
+      
+      jobs: [
         {
-         name: 'Cook', category: 'tecnhical'
-        },
-        {
-          name: 'Clean', category: 'soft'
-        },
-      ],
-      job: {
-        title: 'New job',
+        title: 'Back-End Developer',
         specialRequirements: 'None',
         duration: 400,
-        deadline: '2020-07-27T00:00:00.000Z',
+        deadline: '08/08/2021 02:21 pm',
         skills:[
           {name: 'Cook', category: 'tecnhical'},
           {name: 'Clean', category: 'soft'}
@@ -48,7 +39,34 @@ export default defineComponent({
         status: 'Canceled',
         payment: 200,
         schedules: [['tuesday','monday'],['friday','monday']]
-      }
+        },
+        {
+        title: 'Desarrollador UI',
+        specialRequirements: 'None',
+        duration: 500,
+        deadline: '17/07/2021 02:21 pm',
+        skills:[
+          {name: 'Climb', category: 'tecnhical'},
+          {name: 'Clean', category: 'Blue'}
+        ],
+        status: 'Posted',
+        payment: 250,
+        schedules: [['tuesday','monday'],['friday','monday']]
+        },
+        {
+        title: 'Full Stack',
+        specialRequirements: 'None',
+        duration: 400,
+        deadline: '10/08/2021 02:21 pm',
+        skills:[
+          {name: 'Cook', category: 'tecnhical'},
+          {name: 'Clean', category: 'soft'}
+        ],
+        status: 'Canceled',
+        payment: 500,
+        schedules: [['tuesday','monday'],['friday','monday']]
+        }
+      ]
     }
   }
 });
