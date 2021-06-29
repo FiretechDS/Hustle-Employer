@@ -1,16 +1,19 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": "./src",
     "composite": true,
     "declaration": true,
     "allowJs": false,
-    "target": "es5",
+    "target": "ES6",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "isolatedModules": true,
   },
   "include": [
     "./src/**/*"

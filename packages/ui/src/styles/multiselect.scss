@@ -1,0 +1,116 @@
+@import 'variables';
+// MULTISELECT
+.multiselect {
+  position: relative;
+  margin: inherit;
+  width: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  border: $font-light 1px solid;
+  border-radius: 5px;
+  min-height: 3.5rem;
+  background-color: $lighter-gray;
+  border-color: transparent;
+  .multiselect-caret {
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+    background-image: url('/packages/ui/src/assets/svg/more.svg');
+    margin: 0 0.875rem 0 0;
+    position: relative;
+    z-index: 10;
+    opacity: 0.4;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    width: 0.625rem;
+    height: 1.125rem;
+  }
+
+  .multiselect-multiple-label,
+  .multiselect-placeholder,
+  .multiselect-single-label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    background: transparent;
+    line-height: 1.375;
+    padding-left: 0.875rem;
+  }
+  .multiselect-clear {
+    padding: 0 0.875rem 0 0;
+    position: relative;
+    z-index: 10;
+    opacity: 0.4;
+    transition: 0.3s;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    .multiselect-clear-icon {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      width: 0.625rem;
+      height: 1.125rem;
+      background-image: url('/packages/ui/src/assets/svg/letra-x.png');
+      filter: $filter-gray;
+      display: inline-block;
+    }
+  }
+
+  .multiselect-dropdown {
+    position: absolute;
+    left: calc(1px * -1);
+    right: calc(1px * -1);
+    bottom: 0;
+    transform: translateY(100%);
+    border: 1px solid $font-light;
+    margin-top: calc(1px * -1);
+    max-height: 10rem;
+    overflow-y: scroll;
+    z-index: 100;
+    background: var(--ms-dropdown-bg, #fff);
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 var(4px, 4px) var(4px, 4p);
+    .multiselect-options {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      .multiselect-option {
+        display: flex;
+        box-sizing: border-box;
+        text-decoration: none;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        cursor: pointer;
+        font-size: $normal-font;
+        line-height: 1.375;
+        padding: 0.5rem 0.75rem;
+      }
+      .multiselect-option.is-pointed {
+        background: #e7e7e7;
+        color: $font-dark;
+      }
+      .multiselect-option.is-selected {
+        background: $highlit-blue;
+        color: $white;
+        font-weight: bolder;
+      }
+    }
+  }
+}
