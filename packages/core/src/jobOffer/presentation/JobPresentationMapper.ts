@@ -19,7 +19,8 @@ export class JobPresentationMapper {
       hourlyRate:jobOffer.hourlyRate.value,
       schedules: jobOffer.schedules.map((schedule:Schedule)=>{
         return schedule.ToString()
-      }) 
+      }),
+      location:jobOffer.location.value 
     } 
    return mapped
   }
