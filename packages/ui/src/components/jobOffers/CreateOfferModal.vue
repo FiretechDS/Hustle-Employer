@@ -3,7 +3,7 @@
     <PlusButton :onClick="showModal" />
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> 
-        <h2>Crear nueva oferta</h2> 
+      Crear nueva oferta
       </template>
       <template v-slot:body>
         <div class="create-job-offer-body-div">
