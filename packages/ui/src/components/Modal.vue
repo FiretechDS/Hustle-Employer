@@ -1,10 +1,10 @@
 <template>
   <transition name="modal-fade">
-  <div class="modal-backdrop" @click="close">
+  <div class="modal-backdrop" >
     <div class="modal">
       <header class="modal-header">
         <slot name="header"> This is the default title! </slot>
-        <img class="btn-close" src="@/assets/svg/letra-x.png" />
+        <img class="btn-close" src="@/assets/svg/letra-x.png" @click="close" />
       </header>
 
       <section class="modal-body">

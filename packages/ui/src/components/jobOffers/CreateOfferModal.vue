@@ -1,7 +1,7 @@
 <template>
   <div>
     <PlusButton :onClick="showModal" />
-    <Modal v-show="state.isModalVisible" @close="closeModal">
+    <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> 
         <h2>Crear nueva oferta</h2> 
       </template>
