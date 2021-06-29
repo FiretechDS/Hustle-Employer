@@ -55,7 +55,8 @@ export default defineComponent({
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 8px;
+  max-width: 70rem;
 }
 
 .modal-header,
@@ -69,6 +70,7 @@ export default defineComponent({
 //  border-bottom: 1px solid #eeeeee;
   color: $font-dark;
   justify-content: space-between;
+  font-size: $medium-font
 }
 
 .modal-footer {
@@ -79,7 +81,7 @@ export default defineComponent({
 
 .modal-body {
   position: relative;
-  padding: 20px 10px;
+  padding: 0px 10px;
 }
 
 .btn-close {

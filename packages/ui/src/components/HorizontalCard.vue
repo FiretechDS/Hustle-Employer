@@ -1,5 +1,5 @@
 <template>
-    <div class="job-card">
+    <div class="job-card" @click="onClick()">
         <ul class="columns-job-offer">
           <li>
             <p class="in-card-text-job-offer">{{title}}</p>
@@ -8,15 +8,14 @@
             <p class="in-card-text-job-offer">{{salary}}</p>
           </li> 
           <li class="small-columns-job-offer"> 
-            <p class="in-card-text-job-offer">{{location}}</p>
-          </li> 
-          <li class="small-columns-job-offer"> 
             <p class="in-card-text-job-offer">{{duration}}</p>
           </li> 
           <li class="small-columns-job-offer"> 
-            <p class="in-card-text-job-offer">{{last}}</p>
+            <p class="in-card-text-job-offer">{{deadline}}</p>
           </li> 
-          
+          <li class="small-columns-job-offer"> 
+            <p class="in-card-text-job-offer">{{status}}</p>
+          </li> 
         </ul>
     </div>
 </template>
@@ -26,23 +25,26 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "HorizontalCard",
-  props:{    
+  props:{  
+      onClick: {
+        type: Function as PropType<() => void>,
+      },  
        title: {
          type: String
        },
        salary: {
          type: Number
        },
-       location:{
+       status:{
          type: String
        },
        duration: {
          type: String
        },
-       last:{
+       deadline:{
          type: String
        }
-    }
+    },
 });
 </script>
 
@@ -52,7 +54,7 @@ export default defineComponent({
     padding: 0.1rem;
     margin: 1rem 0;
     border-radius: 8px;
-
+    cursor: pointer;
 
   }
 
