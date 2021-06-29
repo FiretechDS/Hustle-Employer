@@ -3,6 +3,7 @@ import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
 import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { HourlyRate } from "./valueObjects/HourlyRateValueObject";
+import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { Skill } from "./valueObjects/SkillValueObject";
 import { Status } from "./valueObjects/StatusValueObject";
 
@@ -13,10 +14,10 @@ export interface JobOfferProps{
   header:JobHeader;
   status:Status;
   skills:Skill[];
+  schedules:Schedule[];
 }
 
 export class JobOffer extends Entity<JobOfferProps>{
-  //Agregar getter restantes
   get deadline(){
     return this.props.deadline; 
   }
@@ -35,7 +36,9 @@ export class JobOffer extends Entity<JobOfferProps>{
   get skills(){
     return this.props.skills;
   }
-
+  get schedules(){
+    return this.props.schedules;
+  }
   private constructor(props:JobOfferProps){
     super(props);
   }
