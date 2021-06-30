@@ -1,4 +1,4 @@
-import { JobOffersWeb } from "../../adapter/WebModel";
+import { JobOffersWeb } from "../../adapter/OfferWebModel";
 import { jobPresentationProps } from "../../domain/JobDomainMapper";
 
 export type JobApplicationProps = jobPresentationProps & {id:number}

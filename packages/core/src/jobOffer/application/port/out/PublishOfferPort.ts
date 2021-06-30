@@ -1,3 +1,5 @@
+import { JobOffersWeb } from "../../../adapter/OfferWebModel";
+
 export interface PublishOfferPort{
-  publish():Promise<Boolean>
+  publish(offer:JobOffersWeb):Promise<Boolean>
 }

@@ -5,7 +5,7 @@ import { Skill } from "../domain/valueObjects/SkillValueObject";
 import { Schedule } from "../domain/valueObjects/ScheduleValueObject";
 
 
-export class JobPresentationMapper {
+export class ToPresentationMapper {
   static map(jobOffer:JobOffer):jobPresentationProps{
     const mapped:jobPresentationProps = {
       title: jobOffer.header.title,

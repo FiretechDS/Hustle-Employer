@@ -1,5 +1,5 @@
-import { LoadOffersPort } from "../application/port/out/LoadOffersPort";
-import {JobOffersWeb } from "./WebModel";
+import { LoadOffersPort } from "../../application/port/out/LoadOffersPort";
+import {JobOffersWeb } from "../OfferWebModel";
 
 export class OffersInMemoryRepository implements LoadOffersPort{
  async loadOffers(employerID: number):Promise<JobOffersWeb[]> {
@@ -53,7 +53,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','tueday']
+      scheduleModel:['monday','fuck']
   },
     {
     id:2,
@@ -93,7 +93,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','tueday']
+      scheduleModel:['monday','tuesday','wednesday']
   },
     {
     id:3,
@@ -133,7 +133,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','tueday']
+      scheduleModel:['monday','tuesday']
   }
 
 

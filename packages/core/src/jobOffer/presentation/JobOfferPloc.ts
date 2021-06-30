@@ -1,8 +1,7 @@
 import { Ploc } from "../../common/presentation";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
-import { jobPresentationProps } from "../domain/JobDomainMapper";
-import { JobOfferProps } from "../domain/JobOffer";
+import { jobPresentationProps, ToDomainMapper } from "../domain/JobDomainMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
 
 const employerID = 1;
@@ -18,20 +17,22 @@ export class JobOfferPloc extends Ploc<OffersState>{
       const offersResult = await this.loadOffersQuery.load(employerID);
       this.changeState(this.mapToUpdatedState(offersResult))
     } catch (error) {
-      console.log(error.message)
+      this.handleError(error)
     }
 
   }
 
-  createOffer(offer:JobOfferProps):string{
+  createOffer(offer:jobPresentationProps):string{
     try {
-      const isCreated =  this.publishOfferUseCase.publish(offer);
+      const isCreated =  this.publishOfferUseCase.publish(ToDomainMapper.map(offer));
       if (isCreated){
+        this.state.kind==="LoadedOffersState"&& this.state.offers.unshift(offer);
         return 'Offer created succesfully'
       }else{
         return "An error has occurred"
       }
     } catch (error) {
+      this.handleError(error.message);
       return error.message;
     }
 
@@ -45,7 +46,12 @@ export class JobOfferPloc extends Ploc<OffersState>{
       })
     }
   }
-  private handleError(error:string){
-    
+
+
+  private handleError(error:string):OffersState{
+    return{
+      kind:"ErrorOfferState",
+      error:error
+    }
   }
 }

@@ -1,5 +1,5 @@
 type Subscription<S> = (state: S) => void;
-//Abstracción para gestionar el estado de nuestros componentes UI, sin acoplarnos 
+//Presentation Logic Component: Abstracción para gestionar el estado de nuestros componentes UI, sin acoplarnos al framework de UI(sea React, Vue, etc)
 export abstract class Ploc<S> {
     private internalState: S;
     private listeners: Subscription<S>[] = [];

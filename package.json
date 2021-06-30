@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run serve --workspace ui",
     "core": "npm start --workspace core"
-
   },
   "workspaces": [
     "./packages/*"
@@ -26,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/FiretechDS/Hustle-Employer/issues"
   },
-  "homepage": "https://github.com/FiretechDS/Hustle-Employer#readme"
+  "homepage": "https://github.com/FiretechDS/Hustle-Employer#readme",
+  "devDependencies": {
+    "typescript": "^4.1.6"
+  }
 }

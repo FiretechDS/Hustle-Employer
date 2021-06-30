@@ -9,6 +9,7 @@ import { Skill, stringSkillProps } from "./valueObjects/SkillValueObject";
 import { Status } from "./valueObjects/StatusValueObject";
 
 export interface jobPresentationProps{
+  id?:number,
   deadline:Date,
   duration:number,
   title:string,
@@ -31,7 +32,7 @@ export class ToDomainMapper{
         hourlyRate:HourlyRate.create(props.hourlyRate),
         schedules: Array.isArray(props.schedules[0]) ? Schedule.createList(props.schedules as String[][] ): [Schedule.create(props.schedules as String[])],
         location:Location.create(props.location)
-      })
+      },props.id)
 
     }
 }
