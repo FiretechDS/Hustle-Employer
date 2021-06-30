@@ -29,7 +29,7 @@ try {
   const title='New job'
   const skillProps = [{name:'Cook',category:'Technical'}, {name:'Clean',category:'soft'} ]
   const days =[['tuesday','monday'],['friday','monday']]
-  const jobOffer = ToDomainMapper.map({deadline:line,status:status,hourlyRate:hourlyRate,duration:duration, title:title, skills: skillProps, schedules:days})
+  const jobOffer = ToDomainMapper.map({deadline:line,status:status,hourlyRate:hourlyRate,duration:duration, title:title, skills: skillProps, schedules:days, location:'Albuquerque'})
   const mapped = JobPresentationMapper.map(jobOffer)
   console.log(mapped);
 } catch (error) {
