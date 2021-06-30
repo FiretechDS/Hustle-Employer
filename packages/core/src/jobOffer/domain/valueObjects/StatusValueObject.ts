@@ -8,7 +8,7 @@ export enum statuses{
   Assigned=3,
   InProgress=4,
   Finished=5,
-  Canceled=6,
+  Cancelled=6,
 }
 
 interface statusProps{
@@ -29,8 +29,34 @@ export class Status extends ValueObject<statusProps>{
     }
     return  new Status({value: Math.round(status)})
   }
-  
   get statusName():string{
     return statuses[this.value].toString();
+  }
+    static getStatusNumber(status:string):number{
+    let number:number;
+    switch(status.toLowerCase()){
+      case 'posted':
+        number=statuses.Posted;
+        break;
+      case 'open':
+        number = statuses.Open
+        break;
+      case 'closed':
+        number = statuses.Closed
+        break;
+      case 'assigned':
+        number=statuses.Assigned
+        break
+      case 'inprogress':
+        number = statuses.Assigned
+        break
+      case 'finished':
+        number = statuses.Finished
+      case 'cancelled':
+        number = statuses.Cancelled
+      default:
+        number = -1
+    }
+    return number;
   }
 }

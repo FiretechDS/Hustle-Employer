@@ -1,3 +1,3 @@
 export interface PublishOfferPort{
-  publish():boolean
+  publish():Promise<Boolean>
 }

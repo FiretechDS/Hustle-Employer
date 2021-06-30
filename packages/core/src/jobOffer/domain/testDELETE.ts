@@ -16,6 +16,7 @@ import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { Skill } from "./valueObjects/SkillValueObject";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
+import { OffersInMemoryRepository } from "../adapter/InMemoryRepository";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -31,11 +32,15 @@ try {
   const days =[['tuesday','monday'],['friday','monday']]
   const jobOffer = ToDomainMapper.map({deadline:line,status:status,hourlyRate:hourlyRate,duration:duration, title:title, skills: skillProps, schedules:days, location:'Albuquerque'})
   const mapped = JobPresentationMapper.map(jobOffer)
-  console.log(mapped);
+
 } catch (error) {
   console.log('Caught error: '+error.message)
 }
 
+async function loadOffer(){
+  const repo = new OffersInMemoryRepository();
+  console.log( await repo.loadOffers(2));
+}
 
 
-
+loadOffer()
