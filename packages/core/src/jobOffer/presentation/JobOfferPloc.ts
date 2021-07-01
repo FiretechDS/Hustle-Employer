@@ -1,3 +1,4 @@
+import { DataError } from "../../common/domain/DataError";
 import { Ploc } from "../../common/presentation";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
@@ -17,13 +18,13 @@ export class JobOfferPloc extends Ploc<OffersState>{
   }
 
   private async loadOffers(){
-    try {
-      const offersResult = await this.loadOffersQuery.load(employerID);
-      this.changeState(this.mapToUpdatedState(offersResult))
-    } catch (error) {
-      this.handleError(error)
-    }
-
+ 
+      const offersResult = await  this.loadOffersQuery.load(employerID);
+      offersResult.fold((error)=>{
+           this.changeState( this.handleError(error))
+      },(offers)=>{
+          this.changeState(this.mapToUpdatedState(offers))
+      } )
   }
 
   createOffer(offer:jobPresentationProps):string{
@@ -52,10 +53,12 @@ export class JobOfferPloc extends Ploc<OffersState>{
   }
 
 
-  private handleError(error:string):OffersState{
+  private handleError(error:DataError):OffersState{
     return{
       kind:"ErrorOfferState",
-      error:'Ha ocurrido un error inesperado: '+error
+      error:'Ha ocurrido un error inesperado al cargar las ofertas.',
+      type:error.kind,
+      reason: error.kind==='ApiError'?error.message:error.kind==='UnexpectedError'?error.message.message: 'Error desconocido'
     }
   }
 }

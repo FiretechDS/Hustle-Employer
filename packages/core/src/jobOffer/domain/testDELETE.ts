@@ -17,10 +17,10 @@ import { Skill } from "./valueObjects/SkillValueObject";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { OffersInMemoryRepository } from "../adapter/out/OffersInMemoryRepository";
-import { loadOffersService } from "../application/services/LoadOffersService";
 import { JobOfferPloc } from "../presentation";
 import { PublishOfferService } from "../application/services/PublishOfferService";
 import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
+import { LoadOffersService } from "../application/services/LoadOffersService";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -45,15 +45,19 @@ try {
 }
 
 
-async function load(){
+ async function load(){
   try {
     const repo = new OffersInMemoryRepository();
-    const loadService = new loadOffersService(repo);
+    const loadService = new LoadOffersService(repo);
     const createService = new PublishOfferService(new OfferinMemoryPublisher())
     const ploc = new JobOfferPloc(loadService,createService );
-    console.log(await loadService.load(1));
+    ploc.state.kind==='ErrorOfferState'&& console.log(ploc.state.reason  );
+    const result =await repo.loadOffers(2)
+    result.fold( 
+      (error)=>{ console.log(error)}
+    ,(jobs)=>{console.log(jobs) })
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
 
 }

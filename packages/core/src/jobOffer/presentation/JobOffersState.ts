@@ -12,7 +12,9 @@ export interface LoadedOffersState{
 
 export interface ErrorOffersState{
   kind:"ErrorOfferState",
-  error:string
+  type:string,
+  error:string,
+  reason:string,
 }
 
 export type OffersState = LoadingOffersState|LoadedOffersState|ErrorOffersState
