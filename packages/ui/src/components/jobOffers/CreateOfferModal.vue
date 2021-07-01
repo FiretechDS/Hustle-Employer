@@ -20,6 +20,7 @@
               mode="multiple"
             />
             <input v-model="jobOffer.skills[0]" placeholder="Habilidades"/>
+            <input v-model="jobOffer.location" placeholder="Localización"/>
           </form>
         </div>
       </template>
@@ -55,6 +56,7 @@ export default defineComponent({
         value:[],
         options:['monday','tuesday','wednesday','thursday','friday','saturday'] },
       skills: [] as Array<string>,
+      location: "" as string
     });
   
     function showModal(): void {
