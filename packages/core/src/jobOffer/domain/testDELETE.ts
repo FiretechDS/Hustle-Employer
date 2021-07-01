@@ -51,7 +51,7 @@ async function load(){
     const loadService = new loadOffersService(repo);
     const createService = new PublishOfferService(new OfferinMemoryPublisher())
     const ploc = new JobOfferPloc(loadService,createService );
-    console.log(ploc);
+    console.log(await loadService.load(1));
   } catch (error) {
     console.log(error)
   }

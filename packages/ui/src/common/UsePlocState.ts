@@ -1,12 +1,9 @@
-import { readonly } from "@vue/reactivity"
-import { ref } from "@vue/reactivity"
-import { onMounted } from "@vue/runtime-core"
-import { DeepReadonly, onUnmounted, Ref } from "@vue/runtime-dom"
+import { DeepReadonly, onMounted, onUnmounted, readonly, Ref, ref } from "vue";
 import {Ploc} from "../../../core/src/common/presentation/Ploc" 
 
 
 //Engancha cualquier componente de Vue a la lógica manejado desde core
-export function usePlocState<S>(ploc:Ploc<S>):DeepReadonly<Ref<S>>{
+export function usePlocState<S>(ploc:Ploc<S>):/*DeepReadonly<Ref<S>>*/Ref<S>{
   const state = ref(ploc.state) as Ref<S>
 
   const stateSubscription = (newState:S)=>{
@@ -21,5 +18,5 @@ export function usePlocState<S>(ploc:Ploc<S>):DeepReadonly<Ref<S>>{
     ploc.unsubscribe(stateSubscription)
   })
 
-  return readonly(state);
+  return state;
 }

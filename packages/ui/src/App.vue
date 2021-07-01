@@ -8,11 +8,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { dependenciesLocator } from "../../core/src/common/dependencies";
 import NavBar from './components/nav-bar/NavBar.vue'
 
 export default defineComponent({
   name: "App",
   components: {NavBar},
+  provide:{
+    jobOfferPloc:dependenciesLocator.provideJobOfferPloc()
+  }
 });
 </script>
 

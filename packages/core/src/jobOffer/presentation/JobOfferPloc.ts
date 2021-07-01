@@ -7,8 +7,12 @@ import { offersInitialState, OffersState } from "./JobOffersState";
 const employerID = 1;
 
 export class JobOfferPloc extends Ploc<OffersState>{
-  constructor (private loadOffersQuery:LoadOffersQuery, private publishOfferUseCase:PublishOfferUseCase ){
+  private loadOffersQuery:LoadOffersQuery
+  private publishOfferUseCase:PublishOfferUseCase;
+  constructor ( loadOffersQueryProp:LoadOffersQuery,  publishOfferUseCaseProp:PublishOfferUseCase ){
     super(offersInitialState);
+    this.loadOffersQuery=loadOffersQueryProp;
+    this.publishOfferUseCase = publishOfferUseCaseProp
     this.loadOffers();
   }
 
@@ -51,7 +55,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
   private handleError(error:string):OffersState{
     return{
       kind:"ErrorOfferState",
-      error:error
+      error:'Ha ocurrido un error inesperado: '+error
     }
   }
 }

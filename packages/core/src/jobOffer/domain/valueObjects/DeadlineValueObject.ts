@@ -2,21 +2,22 @@
 import { ValueObject } from "../../../common/domain/ValueObject";
 
 interface DeadlineProps{
-  value:Date
+  value:Date,
+  createdAt?:Date,
 }
 
 export class Deadline extends ValueObject<DeadlineProps>{
   public readonly value:Date; 
-  
+  public readonly createdAt:Date;
   private constructor (props: DeadlineProps){
     super(props);
-
     this.value=props.value;
+    props.createdAt? this.createdAt=props.createdAt:this.createdAt=new Date() ;
   }
 
-  public static create(deadline:Date):Deadline{
-    const currentDate = new Date()
-    if (deadline<currentDate){
+  public static create(deadline:Date,createdAt?:Date):Deadline{
+    const currentDate:Date = new Date()
+    if (createdAt && createdAt>deadline||deadline<currentDate){
       throw new Error(`Deadline date must be newer than current date: ${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`)
       
     }else{ 

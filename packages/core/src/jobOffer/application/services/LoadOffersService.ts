@@ -22,7 +22,7 @@ export class loadOffersService implements LoadOffersQuery{
         })
         resolve(mappedJobOffers);
       }).catch((error)=>{
-        reject('Oh no...'+error.message)
+        reject(error)
       })
       
     })

@@ -53,7 +53,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','fuck']
+      scheduleModel:['monday','NOOOO']
   },
     {
     id:2,
