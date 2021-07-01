@@ -21,7 +21,9 @@ export class InfraToApplicationMapper{
       } ),
       schedules:props.scheduleModel,
       hourlyRate:props.hourlyRate,
-      id:props.id
+      id:props.id,
+      startHour:props.startHour,
+      endHour:props.endHour
 
     }
   }

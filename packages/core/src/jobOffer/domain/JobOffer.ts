@@ -18,6 +18,8 @@ export interface JobOfferProps{
   skills:Skill[];
   schedules:Schedule[];
   location:Location;
+  startHour:number;
+  endHour:number;
 }
 
 export class JobOffer extends Entity<JobOfferProps>{
@@ -44,6 +46,12 @@ export class JobOffer extends Entity<JobOfferProps>{
   }
   get location(){
     return this.props.location;
+  }
+  get startHour(){
+    return this.props.startHour;
+  }
+  get endHour(){
+    return this.props.endHour;
   }
   private constructor(props:JobOfferProps, id?:number){
     super(props,id);

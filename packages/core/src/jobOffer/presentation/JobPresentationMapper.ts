@@ -19,7 +19,9 @@ export class ToPresentationMapper {
       schedules: jobOffer.schedules.map((schedule:Schedule)=>{
         return schedule.ToString()
       }),
-      location:jobOffer.location.value 
+      location:jobOffer.location.value,
+      startHour:jobOffer.startHour.value,
+      endHour:jobOffer.endHour.value
     } 
    return mapped
   }

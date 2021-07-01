@@ -21,5 +21,7 @@ export interface JobOffersWeb{
     description:string
   },
   skillModel: skillModel[],
-  scheduleModel: string[]
+  scheduleModel: string[],
+  startHour: number,
+  endHour: number
 }

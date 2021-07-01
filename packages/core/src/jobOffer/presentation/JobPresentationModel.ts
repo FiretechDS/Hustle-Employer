@@ -10,5 +10,7 @@ export interface jobPresentationProps{
   status:string,
   hourlyRate: number,
   schedules: string[]|string[][],
-  location:string 
+  location:string ,
+  startHour: number,
+  endHour: number
 }
