@@ -23,7 +23,8 @@ export class Status extends ValueObject<statusProps>{
     this.value=props.value;
   }
 
-  public static create(status:statuses):Status{
+  public static create(status?:statuses):Status{
+    if(!status) status =0;
     if (status <0 || status >6){
      throw new Error('status must be between 0 and 6')
     }

@@ -1,9 +1,13 @@
 import { JobOffersWeb } from "../../adapter/OfferWebModel";
-import { jobPresentationProps } from "../../domain/JobDomainMapper";
+import { jobPresentationProps } from "../../presentation/JobPresentationModel";
 
-export type JobApplicationProps = jobPresentationProps & {id:number}
+type mappedPresentation={
+  [P in keyof jobPresentationProps]: P extends "status"?number: P extends "deadline" ? Date: jobPresentationProps[P]
+}
 
-export class ToApplicationMapper{
+export type JobApplicationProps = mappedPresentation & {id?:number}
+
+export class InfraToApplicationMapper{
   static map(props:JobOffersWeb):JobApplicationProps{
     return {
       deadline:props.deadline,

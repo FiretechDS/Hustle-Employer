@@ -8,7 +8,7 @@ import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { Skill, stringSkillProps } from "./valueObjects/SkillValueObject";
 import { Status } from "./valueObjects/StatusValueObject";
 
-export interface jobPresentationProps{
+export interface jobCreationProps{
   id?:number,
   deadline:Date,
   duration:number,
@@ -22,7 +22,7 @@ export interface jobPresentationProps{
 }
 
 export class ToDomainMapper{
-  static map(props:jobPresentationProps):JobOffer{
+  static map(props:jobCreationProps):JobOffer{
       return JobOffer.createJobOffer({
         deadline: Deadline.create(props.deadline),
         duration: Duration.create(props.duration),

@@ -1,6 +1,6 @@
 import { DataError } from "../../../../common/domain/DataError";
 import { Either } from "../../../../common/domain/Either";
-import { jobPresentationProps } from "../../../domain/JobDomainMapper";
+import { jobPresentationProps } from "../../../presentation/JobPresentationModel";
 import {LoadOffersPort } from "../out/LoadOffersPort";
 
 export interface LoadOffersQuery{

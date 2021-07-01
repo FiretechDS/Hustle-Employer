@@ -2,8 +2,11 @@ import { DataError } from "../../common/domain/DataError";
 import { Ploc } from "../../common/presentation";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
-import { jobPresentationProps, ToDomainMapper } from "../domain/JobDomainMapper";
+import { PresentationToApplicationMapper } from "../application/services/JobPresentApplicationMapper";
+import { ToDomainMapper } from "../domain/JobDomainMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
+import { ToPresentationMapper } from "./JobPresentationMapper";
+import { jobPresentationProps } from "./JobPresentationModel";
 
 const employerID = 1;
 
@@ -29,7 +32,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
 
   createOffer(offer:jobPresentationProps):string{
     try {
-      const isCreated =  this.publishOfferUseCase.publish(ToDomainMapper.map(offer));
+      const isCreated =  this.publishOfferUseCase.publish(ToDomainMapper.map(PresentationToApplicationMapper.map( offer)));
       if (isCreated){
         this.state.kind==="LoadedOffersState"&& this.state.offers.unshift(offer);
         return 'Offer created succesfully'

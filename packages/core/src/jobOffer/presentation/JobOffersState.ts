@@ -1,4 +1,4 @@
-import { jobPresentationProps } from "../domain/JobDomainMapper";
+import { jobPresentationProps } from "./JobPresentationModel";
 
 
 export interface LoadingOffersState{
