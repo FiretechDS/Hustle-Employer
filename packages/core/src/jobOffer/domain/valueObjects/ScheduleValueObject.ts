@@ -5,7 +5,7 @@ type days ='monday'|'tuesday'|'wednesday'|'thursday'|'friday'|'saturday'
 interface scheduleProps{
   days:Set<days>
 }
-const regExp:RegExp = /^(monday|tuesday|wednesday|thursday|friday|saturday)$/
+const regExp = /^(monday|tuesday|wednesday|thursday|friday|saturday)$/
 
 export class Schedule extends ValueObject<scheduleProps>{
   public readonly days: Set<days>
@@ -15,9 +15,9 @@ export class Schedule extends ValueObject<scheduleProps>{
     this.days=props.days
   }
 
-  public static create(daysProps:String[]){
+  public static create(daysProps:string[]){
     const daySet= new Set();
-    daysProps.forEach((day:String)=>{
+    daysProps.forEach((day:string)=>{
       if (day.toLowerCase().match(regExp)){
         daySet.add(day.toLowerCase());
       }else{
@@ -30,16 +30,16 @@ export class Schedule extends ValueObject<scheduleProps>{
   }
 
   public ToString(){
-    const stringSet : String[] = []
+    const stringSet : string[] = []
     this.days.forEach((day:days)=>{
       stringSet.push(day)
     })
     return stringSet;
   }
 
-  public static createList(dayPropsLists:String[][] ):Schedule[]{
+  public static createList(dayPropsLists:string[][] ):Schedule[]{
     const scheduleList:Schedule[] = [];
-    dayPropsLists.forEach((dayList:String[])=>{
+    dayPropsLists.forEach((dayList:string[])=>{
       const schedule = this.create(dayList)
       scheduleList.push(schedule)
     })

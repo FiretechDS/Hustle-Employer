@@ -1,4 +1,3 @@
-import { Either } from "../../../common/domain/Either";
 import { ValueObject } from "../../../common/domain/ValueObject";
 
 interface durationProps{
@@ -25,4 +24,7 @@ export class Duration extends ValueObject<durationProps>{
       return new Duration({value:duration,type:type});
   }
 
+  public toDays():Duration{
+    return new Duration({value:this.value/24, type:'days' })
+  }
 }

@@ -26,7 +26,7 @@ export class Skill extends ValueObject<skillProps>{
         throw new Error("Skill name can't be blank")
       }
       let cat:skillCategory;
-      switch (categoryProp.toLowerCase()){
+      switch (categoryProp.toLowerCase().trim()){
         case 'soft':
           cat='soft'
           break;
@@ -34,10 +34,10 @@ export class Skill extends ValueObject<skillProps>{
           cat ='technical'
           break;
         default:
-          throw new Error('Skill category must be either "soft" or "technical"')
+          throw new Error(`Skill category [${categoryProp}] must be either "soft" or "technical"`)
           
       }
-      return new Skill({category:cat, name:nameProp });
+      return new Skill({category:cat, name:nameProp.toLowerCase().trim() });
   }
  public static createList(skills:stringSkillProps[]):Skill[]{
     const skillList: Skill[] = [];
