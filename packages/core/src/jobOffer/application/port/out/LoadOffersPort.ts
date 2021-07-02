@@ -1,7 +1,7 @@
 import { DataError } from "../../../../common/domain/DataError";
 import { Either } from "../../../../common/domain/Either";
-import { JobOffersWeb } from "../../../adapter/OfferWebModel";
+import { JobApplicationProps } from "../../JobApplicationModel";
 
 export interface LoadOffersPort{
-  loadOffers(employerID:number):Promise<Either<DataError, JobOffersWeb[]>>
+  loadOffers(employerID:number):Promise<Either<DataError, JobApplicationProps[]>>
 }

@@ -1,14 +1,13 @@
 import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
-import { JobOffersWeb } from "../../adapter/OfferWebModel";
 import { JobOffer } from "../../domain/JobOffer";
 import { ToDomainMapper } from "../../domain/JobDomainMapper";
 import { ToPresentationMapper } from "../../presentation/JobPresentationMapper";
 import { LoadOffersQuery } from "../port/in/LoadOffersQuery";
 import {  LoadOffersPort } from "../port/out/LoadOffersPort";
-import {  InfraToApplicationMapper } from "../../adapter/JobInfraApplicationMapper";
-import { JobApplicationProps } from "../../adapter/JobInfraApplicationMapper";
+import { JobApplicationProps } from "../JobApplicationModel";
 import { jobPresentationProps } from "../../presentation/JobPresentationModel";
+
 export class LoadOffersService implements LoadOffersQuery{
   getOffersPort:LoadOffersPort;
   constructor(port: LoadOffersPort){
@@ -20,11 +19,10 @@ export class LoadOffersService implements LoadOffersQuery{
       (error:DataError)=>{
         return Either.left(error)
       }
-    , (jobOffers:JobOffersWeb[])=>{
+    , (jobOffers:JobApplicationProps[])=>{
         try {
-          const mappedResult =jobOffers.map((jobOffer:JobOffersWeb)=>{
-            const applicationMapped: JobApplicationProps=InfraToApplicationMapper.map(jobOffer);
-            const domainMapped:JobOffer = ToDomainMapper.map(applicationMapped);
+          const mappedResult =jobOffers.map((jobOffer:JobApplicationProps)=>{
+            const domainMapped:JobOffer = ToDomainMapper.map(jobOffer);
             return ToPresentationMapper.map(domainMapped)
           })
           return Either.right(mappedResult);

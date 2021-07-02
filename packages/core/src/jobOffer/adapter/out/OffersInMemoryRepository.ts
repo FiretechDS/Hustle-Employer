@@ -1,15 +1,17 @@
 import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
+import { JobApplicationProps } from "../../application/JobApplicationModel";
 import { LoadOffersPort } from "../../application/port/out/LoadOffersPort";
+import { InfraToApplicationMapper } from "../JobInfraApplicationMapper";
 import {JobOffersWeb } from "../OfferWebModel";
 
 export class OffersInMemoryRepository implements LoadOffersPort{
- async loadOffers(employerID: number):Promise<Either<DataError, JobOffersWeb[]>> {
+ async loadOffers(employerID: number):Promise<Either<DataError, JobApplicationProps[]>> {
   return new Promise((resolve,reject)=>{      
     const result=  jobOffers.filter((jobOffer)=>{
       return jobOffer.employerId === employerID
     })
-    if(result.length>0) resolve(Either.right(result))
+    if(result.length>0) resolve(Either.right(result.map((offer)=>{return InfraToApplicationMapper.map(offer)})))
     else resolve(Either.left({kind:'UnexpectedError',message:new Error('Error inesperado')}))
   }
   )}

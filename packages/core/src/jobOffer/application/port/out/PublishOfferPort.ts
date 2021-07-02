@@ -1,5 +1,5 @@
-import { JobOffersWeb } from "../../../adapter/OfferWebModel";
+import { JobApplicationProps } from "../../JobApplicationModel";
 
 export interface PublishOfferPort{
-  publish(offer:JobOffersWeb):Promise<Boolean>
+  publish(offer:JobApplicationProps):Promise<Boolean>
 }

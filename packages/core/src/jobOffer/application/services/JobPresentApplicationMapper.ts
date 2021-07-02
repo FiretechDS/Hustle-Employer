@@ -1,6 +1,6 @@
 import { Status } from "../../domain/valueObjects/StatusValueObject";
 import { jobPresentationProps } from "../../presentation/JobPresentationModel";
-import { JobApplicationProps } from "../../adapter/JobInfraApplicationMapper";
+import { JobApplicationProps } from "../JobApplicationModel";
 
 
 export class PresentationToApplicationMapper{

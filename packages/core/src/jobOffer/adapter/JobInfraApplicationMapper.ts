@@ -1,11 +1,6 @@
 import { JobOffersWeb } from "./OfferWebModel";
-import { jobCreationProps } from "../domain/JobDomainMapper";
+import { JobApplicationProps } from "../application/JobApplicationModel";
 
-type mappedDomainProps={
-  [P in keyof jobCreationProps]: P extends "status"?number: P extends "deadline" ? Date: jobCreationProps[P]
-}
-
-export type JobApplicationProps = mappedDomainProps & {id?:number}
 
 export class InfraToApplicationMapper{
   static map(props:JobOffersWeb):JobApplicationProps{

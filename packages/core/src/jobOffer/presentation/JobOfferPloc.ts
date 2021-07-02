@@ -1,5 +1,6 @@
 import { DataError } from "../../common/domain/DataError";
 import { Ploc } from "../../common/presentation";
+import { JobApplicationProps } from "../application/JobApplicationModel";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
 import { PresentationToApplicationMapper } from "../application/services/JobPresentApplicationMapper";
@@ -50,7 +51,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
     return{
       kind:"LoadedOffersState",
       offers:props.map((offer:jobPresentationProps)=>{
-        return offer 
+        return offer
       })
     }
   }
