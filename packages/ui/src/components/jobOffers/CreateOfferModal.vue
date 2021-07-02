@@ -8,19 +8,25 @@
       <template v-slot:body>
         <div class="create-job-offer-body-div">
           <form class="create-job-offer-form">
-            Título:
-            <input v-model="jobOffer.title" placeholder="Título">
+            Trabajo:
+            <input v-model="jobOffer.title" placeholder="Título">-
+            <input v-model="jobOffer.location" placeholder="Localización"/>
             <input class="description-input" v-model="jobOffer.description" placeholder="Descripción">
-            <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
-            <input type="number" v-model="jobOffer.duration" placeholder="Duración (horas)">
-            <input type="number" v-model="jobOffer.hourlyRate" placeholder="Salario/Hora">
+            <br>Horario de Trabajo:
             <Multiselect 
               :options="jobOffer.schedules.options" v-bind="jobOffer.schedules"
               v-model="jobOffer.schedules.value" placeholder="Horario" 
-              mode="multiple"
+              mode="multiple" class="schedule-multiselect"
             />
+            Inicio:<input class="time-input" type="time" step="3600" v-model="jobOffer.startWorkTime" placeholder="Hora inicial de horario" min="07:00" max="24:00">
+            Fin:<input class="time-input" type="time" step="3600" v-model="jobOffer.endWorkTime" placeholder="Hora final de horario" min="07:00" max="24:00">
+            -<input type="number" v-model="jobOffer.hourlyRate" placeholder="Salario/Hora ($)">
+            <br>Fecha tope:
+            <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
+            Tiempo estimado:
+            <input type="number" v-model="jobOffer.duration" placeholder="Duración (horas)">
+            <br>
             <input v-model="jobOffer.skills[0]" placeholder="Habilidades"/>
-            <input v-model="jobOffer.location" placeholder="Localización"/>
           </form>
         </div>
       </template>
@@ -49,14 +55,16 @@ export default defineComponent({
     const jobOffer = reactive({
       title: "" as string,
       description: "" as string,
+      location: "" as string,
       deadline: "" as string,
       duration: "" as string,
       hourlyRate: "" as string,
       schedules: { 
         value:[],
         options:['monday','tuesday','wednesday','thursday','friday','saturday'] },
+      startWorkTime: "" as string,
+      endWorkTime: "" as string,
       skills: [] as Array<string>,
-      location: "" as string
     });
   
     function showModal(): void {
@@ -157,6 +165,10 @@ label{
   padding-right: 9px;
   padding-left: 0px;
   margin: 3px;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
 }
 
 </style>
