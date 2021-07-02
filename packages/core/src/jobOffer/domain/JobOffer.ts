@@ -1,4 +1,3 @@
-import { idText } from "typescript";
 import { Entity } from "../../common/domain/Entity";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
@@ -16,10 +15,8 @@ export interface JobOfferProps{
   header:JobHeader;
   status:Status;
   skills:Skill[];
-  schedules:Schedule[];
+  schedules:Schedule;
   location:Location;
-  startHour:number;
-  endHour:number;
 }
 
 export class JobOffer extends Entity<JobOfferProps>{
@@ -46,12 +43,6 @@ export class JobOffer extends Entity<JobOfferProps>{
   }
   get location(){
     return this.props.location;
-  }
-  get startHour(){
-    return this.props.startHour;
-  }
-  get endHour(){
-    return this.props.endHour;
   }
   private constructor(props:JobOfferProps, id?:number){
     super(props,id);

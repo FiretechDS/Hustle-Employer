@@ -2,7 +2,7 @@ import { Set } from "typescript";
 import { ValueObject } from "../../../common/domain/ValueObject";
 
 type days ='monday'|'tuesday'|'wednesday'|'thursday'|'friday'|'saturday'
-
+const daysArray=['monday','tuesday','wednesday','thursday','friday','saturday']
 interface scheduleProps{
   days:Set<days>,
   startHour: number,
@@ -33,7 +33,7 @@ export class Schedule extends ValueObject<scheduleProps>{
       
     } )
 
-    if ((startHourProps>0)&&(startHourProps>24)&&(endHourProps>0)&&(endHourProps>24)){
+    if ((startHourProps<0)||(startHourProps>24)||(endHourProps<0)||(endHourProps>24)){
       throw new Error(`Schedules hours must be a valid hour between 0-23`)
     }
     
@@ -58,4 +58,7 @@ export class Schedule extends ValueObject<scheduleProps>{
     return scheduleList;
   }
 
+  public static getDayNumber(day:string):number{
+    return daysArray.findIndex((value:string)=>{return day===value } )+1;
+  }
 }

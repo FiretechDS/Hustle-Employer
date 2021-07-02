@@ -1,16 +1,5 @@
-import { stringSkillProps } from "../domain/valueObjects/SkillValueObject";
+import { jobCreationProps } from "../domain/JobDomainMapper";
 
-export interface jobPresentationProps{
-  id?:number,
-  deadline:string,
-  duration:number,
-  title:string,
-  specialRequirements?:string,
-  skills:stringSkillProps[] ,
-  status:string,
-  hourlyRate: number,
-  schedules: string[]|string[][],
-  location:string ,
-  startHour: number,
-  endHour: number
+export type jobPresentationProps={
+  [P in keyof jobCreationProps]: jobCreationProps[P] extends Date? string : P extends "status"?string : jobCreationProps[P]
 }

@@ -1,3 +1,5 @@
-export abstract class Mapper<From,To>{
-  abstract map(props:From):To;
+export  class Mapper<From extends Object,To extends Object>{
+ /*  map(props:From):To{
+    props.
+   }*/
 }

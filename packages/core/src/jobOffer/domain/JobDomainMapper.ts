@@ -1,4 +1,4 @@
-import { JobOffer } from "./JobOffer";
+import { JobOffer, JobOfferProps } from "./JobOffer";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
 import { JobHeader } from "./valueObjects/HeaderValueObject";
@@ -9,6 +9,7 @@ import { Skill, stringSkillProps } from "./valueObjects/SkillValueObject";
 import { Status } from "./valueObjects/StatusValueObject";
 
 export interface jobCreationProps{
+  
   id?:number,
   deadline:Date,
   duration:number,
@@ -17,7 +18,7 @@ export interface jobCreationProps{
   skills:stringSkillProps[] ,
   status:number,
   hourlyRate: number,
-  schedules: string[]|string[][],
+  schedules: string[],
   location:string,
   startHour: number,
   endHour: number
@@ -32,7 +33,7 @@ export class ToDomainMapper{
         status: Status.create(props.status),
         skills: Skill.createList(props.skills),
         hourlyRate:HourlyRate.create(props.hourlyRate),
-        schedules: Array.isArray(props.schedules[0]) ? Schedule.createList(props.schedules as string[][],props.startHour,props.endHour ): [Schedule.create(props.schedules as string[],props.startHour,props.endHour)],
+        schedules: Schedule.create(props.schedules as string[],props.startHour,props.endHour),
         location:Location.create(props.location)
       },props.id)
 
