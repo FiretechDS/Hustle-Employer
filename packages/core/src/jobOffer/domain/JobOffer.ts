@@ -1,4 +1,3 @@
-import { idText } from "typescript";
 import { Entity } from "../../common/domain/Entity";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
@@ -16,7 +15,7 @@ export interface JobOfferProps{
   header:JobHeader;
   status:Status;
   skills:Skill[];
-  schedules:Schedule[];
+  schedules:Schedule;
   location:Location;
 }
 

@@ -35,10 +35,10 @@
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Horario</p>
           <ul class="list-modal-offer">
-            <li v-for="days in schedule" :key="days.id">
+            <li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
               <div class="value-modal-offer"> 
                 <p>
-                {{days[0]}} - {{days[1]}}
+                {{day}} {{schedule.hourIn}}:00 -{{schedule.hourOut}}:00 
                 </p>
               </div>
             </li>
@@ -86,7 +86,7 @@ export default defineComponent({
          type: String
        },
        schedule:{
-         type: Array as PropType<{id: number, day: string, hourIn: string, hourOut: string}[]>
+         type: Object as PropType<{id: number, days: string[], hourIn: string, hourOut: string}>
        },
        skills:{
          type: Array as PropType<{name: string, category: string}[]>

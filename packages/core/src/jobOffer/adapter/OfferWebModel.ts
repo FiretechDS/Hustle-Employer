@@ -6,6 +6,12 @@ interface skillModel{
     nameCategory:string
   }
 }
+interface scheduleModel{
+  id:number,
+  day:string,
+  startHour:number,
+  endHour:number
+}
 
 export interface JobOffersWeb{
   id:number,
@@ -21,5 +27,5 @@ export interface JobOffersWeb{
     description:string
   },
   skillModel: skillModel[],
-  scheduleModel: string[]
+  scheduleModel: scheduleModel[],
 }

@@ -34,9 +34,8 @@ try {
   const title='New job'
   const skillProps = [{name:'Cook',category:'Technical'}, {name:'Clean',category:'soft'} ]
   const days =[['tuesday','monday'],['friday','monday']]
-  const jobOffer = ToDomainMapper.map({deadline:line,status:status,hourlyRate:hourlyRate,duration:duration, title:title, skills: skillProps, schedules:days, location:'Albuquerque'})
-  const mapped = ToPresentationMapper.map(jobOffer);
 
+  console.log(Schedule.getDayNumber('sunday'))
 
 
 
@@ -52,7 +51,7 @@ try {
     const createService = new PublishOfferService(new OfferinMemoryPublisher())
     const ploc = new JobOfferPloc(loadService,createService );
     ploc.state.kind==='ErrorOfferState'&& console.log(ploc.state.reason  );
-    const result =await repo.loadOffers(2)
+    const result =await repo.loadOffers(2);
     result.fold( 
       (error)=>{ console.log(error)}
     ,(jobs)=>{console.log(jobs) })

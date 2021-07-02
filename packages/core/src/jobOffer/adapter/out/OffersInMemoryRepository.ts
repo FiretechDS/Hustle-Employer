@@ -56,7 +56,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['tuesday','saturday']
+      scheduleModel:[{id:2, day:'tuesday', startHour: 10, endHour: 18}]
   },
     {
     id:2,
@@ -96,7 +96,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','tuesday','wednesday']
+      scheduleModel:[{id:2, day:'tuesday', startHour: 10, endHour: 18},{id:2, day:'wednesday', startHour: 10, endHour: 18}]
   },
     {
     id:3,
@@ -136,7 +136,7 @@ const jobOffers:JobOffersWeb[]=[
           }
         },
       ],
-      scheduleModel:['monday','tuesday']
+       scheduleModel:[{id:2, day:'monday', startHour: 10, endHour: 18},{id:2, day:'thursday', startHour: 10, endHour: 18}]
   }
 
 

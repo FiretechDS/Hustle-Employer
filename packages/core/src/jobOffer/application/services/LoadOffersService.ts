@@ -6,8 +6,8 @@ import { ToDomainMapper } from "../../domain/JobDomainMapper";
 import { ToPresentationMapper } from "../../presentation/JobPresentationMapper";
 import { LoadOffersQuery } from "../port/in/LoadOffersQuery";
 import {  LoadOffersPort } from "../port/out/LoadOffersPort";
-import {  InfraToApplicationMapper } from "./JobInfraApplicationMapper";
-import { JobApplicationProps } from "./JobInfraApplicationMapper";
+import {  InfraToApplicationMapper } from "../../adapter/JobInfraApplicationMapper";
+import { JobApplicationProps } from "../../adapter/JobInfraApplicationMapper";
 import { jobPresentationProps } from "../../presentation/JobPresentationModel";
 export class LoadOffersService implements LoadOffersQuery{
   getOffersPort:LoadOffersPort;

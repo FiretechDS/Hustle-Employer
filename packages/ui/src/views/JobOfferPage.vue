@@ -22,7 +22,7 @@
           :duration="job.duration"
           :deadline="job.deadline"
           :status="job.status"
-          :schedule="job.schedules"
+          :schedule="{days: job.schedules,hourIn:job.startHour, hourOut:job.endHour}"
           :skills="job.skills"
         />
       </div>
