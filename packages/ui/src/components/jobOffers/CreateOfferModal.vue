@@ -8,31 +8,45 @@
       <template v-slot:body>
         <div class="create-job-offer-body-div">
           <form class="create-job-offer-form">
-            Trabajo:
-            <input v-model="jobOffer.title" placeholder="Título">-
+            <p class="subtitle">Trabajo:</p> 
+            <input v-model="jobOffer.title" placeholder="Título">
             <input v-model="jobOffer.location" placeholder="Localización"/>
-            <input class="description-input" v-model="jobOffer.description" placeholder="Descripción">
-            <br>Horario de Trabajo:
-            <Multiselect 
-              :options="jobOffer.schedules.options" v-bind="jobOffer.schedules"
-              v-model="jobOffer.schedules.value" placeholder="Horario" 
-              mode="multiple" class="schedule-multiselect"
-            />
-            Inicio:<input class="time-input" type="time" step="3600" v-model="jobOffer.startWorkTime" placeholder="Hora inicial de horario" min="07:00" max="24:00">
-            Fin:<input class="time-input" type="time" step="3600" v-model="jobOffer.endWorkTime" placeholder="Hora final de horario" min="07:00" max="24:00">
-            -<input type="number" v-model="jobOffer.hourlyRate" placeholder="Salario/Hora ($)">
-            <br>Fecha tope:
+            <input type="number" v-model="jobOffer.hourlyRate" placeholder="Salario/Hora ($)">
+            <p class="subtitle">Horario de Trabajo:</p> 
+           <div class="schedule-options">
+              <Multiselect 
+                :options="jobOffer.schedules.options" v-bind="jobOffer.schedules"
+                v-model="jobOffer.schedules.value" placeholder="Horario" 
+                mode="multiple" class="schedule-multiselect"
+              />
+              <Multiselect 
+                :options="getHourOptions()" 
+                v-model="jobOffer.startHour" placeholder="Hora inicio" 
+                class="hour-multiselect"
+              />
+              <Multiselect 
+                :options="getHourOptions()" 
+                v-model="jobOffer.endHour" placeholder="Hora fin" 
+                class="hour-multiselect"
+              />
+            </div> 
+            <p class="subtitle">Fecha tope:</p> 
             <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
-            Tiempo estimado:
             <input type="number" v-model="jobOffer.duration" placeholder="Duración (horas)">
-            <br>
-            <input v-model="jobOffer.skills[0]" placeholder="Habilidades"/>
+              <Multiselect 
+                :options="jobOffer.skills.options" v-bind="jobOffer.skills"
+                v-model="jobOffer.skills.value" placeholder="Habilidades" 
+                mode="multiple" class="skills-multiselect"
+              />
+             <p class="subtitle">Requerimientos adicionales:</p> 
+            <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Descripción"/>
+            <p class="form-result">{{message}}</p>
           </form>
         </div>
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
-          <Button buttonText="Crear" iconName="paper-plane.svg" :isPrimary="true" :onClick="createOffer"/> 
+          <Button buttonText="Crear" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer"/> 
         </div>
       </template>
     </Modal>
@@ -40,31 +54,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, reactive } from "vue";
 import PlusButton from "../PlusButton.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
-import Multiselect from '@vueform/multiselect'
+import Multiselect from '@vueform/multiselect';
+import {skills} from "./skills";
 export default defineComponent({
   name: "CreateOfferModal",
   components: { Modal, PlusButton, Button,Multiselect },
-  setup() {
+  props:{
+    message:{
+      type:String,
+      default:''
+    }
+  },
+  setup(props,ctx) {
     const state = reactive({
       isModalVisible: false as boolean,
     });
     const jobOffer = reactive({
       title: "" as string,
-      description: "" as string,
+      specialRequirements: "" as string,
       location: "" as string,
       deadline: "" as string,
-      duration: "" as string,
-      hourlyRate: "" as string,
+      duration:0 as number,
+      hourlyRate:0 as number, 
       schedules: { 
-        value:[],
+        value:[] as Array<string> ,
         options:['monday','tuesday','wednesday','thursday','friday','saturday'] },
-      startWorkTime: "" as string,
-      endWorkTime: "" as string,
-      skills: [] as Array<string>,
+      startHour: 0 as number,
+      endHour: 0 as number,
+      skills:{
+         value:[] as Array<number>,
+         options:skills.map(skill=>{
+           return {value:skill.id, label:skill.habilityName}
+         }) 
+      },
+      status:1,
     });
   
     function showModal(): void {
@@ -76,19 +103,32 @@ export default defineComponent({
       console.log("closed");
     }
 
-    function getTodayDate(): string{
-      //función util para validaciones
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-      
-      return String(yyyy + '-' + mm + '-' + dd);
+    function getHourOptions():Object[]{
+      let i=5;
+      const options = [];
+      while(i<=23){ 
+        options.push({value:i,label:`${i}:00`});
+        i++;
+      }
+      return options;
     }
-
-    function createOffer(): void {
-      console.log("created");
+    async function sendOffer() {
       console.log(jobOffer)
+      const newOffer = {...jobOffer, employerId:1, status:'Posted',
+        schedules:jobOffer.schedules.value,
+        skills:jobOffer.skills.value.map((skill:number)=>{
+          return {name:jobOffer.skills.options[skill].label,number:skill, category:1,}
+          }
+      )}
+      ctx.emit("createOffer",newOffer)
+      /*const result = await props.ploc.createOffer(
+        {...jobOffer, employerId:1, status:'Posted',
+        schedules:jobOffer.schedules.value,
+        skills:jobOffer.skills.value.map((skill:number)=>{
+          return {name:'any',number:skill, category:1,}
+          }
+        )
+      })*/
     }
  
 
@@ -97,7 +137,8 @@ export default defineComponent({
       jobOffer,
       showModal,
       closeModal,
-      createOffer,
+      sendOffer,
+      getHourOptions,
     };
   },
 });
@@ -112,8 +153,19 @@ div{
   display: inline;
 }
 .create-job-offer-form{
-  margin: 1rem 1rem;
+  margin: 0rem 2rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display:flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  .subtitle{
+    width: 100%;
+  }
 }
+
 input{
   font-family: 'Poppins';
   margin: 10px;
@@ -121,7 +173,7 @@ input{
   border-radius: 10px;
   border-color: transparent;
   padding: 5px;
-  width: 20%;
+  width: 25%;
   color:$font-gray;
   background: $lighter-gray;
 }
@@ -146,7 +198,24 @@ textarea{
 }
 
 .description-input{
-  width: 80%;
+  width: 100%;
+  height:6rem;
+  border:none;
+  border-radius: 10px;
+}
+.schedule-options{
+  display:flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  .hour-multiselect{
+    width:10rem;
+  }
+  .schedule-multiselect{
+    margin-right: 0;
+    width: 12rem;
+}
+
 }
 
 .schedule-input{
@@ -155,6 +224,10 @@ textarea{
   margin-left: 0px;
 }
 
+.form-result{
+  text-align: center;
+  color:$highlit-darkblue;
+}
 label{
   border-radius: 10px;
   border-color: rgb(196, 196, 196);

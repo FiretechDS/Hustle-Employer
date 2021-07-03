@@ -2,7 +2,8 @@ import { jobPresentationProps } from "./JobPresentationModel";
 
 
 export interface LoadingOffersState{
-  kind:"LoadingOffersState"
+  kind:"LoadingOffersState",
+  offers:Array <jobPresentationProps>
 }
 
 export interface LoadedOffersState{
@@ -20,5 +21,6 @@ export interface ErrorOffersState{
 export type OffersState = LoadingOffersState|LoadedOffersState|ErrorOffersState
 
 export const offersInitialState: OffersState = {
-  kind:"LoadingOffersState"
+  kind:"LoadingOffersState",
+  offers:[]
 }

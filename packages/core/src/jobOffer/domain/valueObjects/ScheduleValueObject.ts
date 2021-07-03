@@ -24,6 +24,9 @@ export class Schedule extends ValueObject<scheduleProps>{
 
   public static create(daysProps:string[], startHourProps: number, endHourProps: number){
     const daySet= new Set();
+    if (daysProps.length===0){
+      throw new Error('You must enter at least one day')
+    }
     daysProps.forEach((day:string)=>{
       if (day.toLowerCase().match(regExp)){
         daySet.add(day.toLowerCase());
@@ -33,8 +36,8 @@ export class Schedule extends ValueObject<scheduleProps>{
       
     } )
 
-    if ((startHourProps<0)||(startHourProps>24)||(endHourProps<0)||(endHourProps>24)){
-      throw new Error(`Schedules hours must be a valid hour between 0-23`)
+    if (startHourProps<=0||startHourProps>24||endHourProps<=0||endHourProps>24){
+      throw new Error(`Schedules hours must be a valid hour between 06:00-23:00`)
     }
     
 

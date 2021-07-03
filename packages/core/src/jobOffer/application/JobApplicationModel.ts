@@ -1,7 +1,7 @@
-import { jobCreationProps } from "../domain/JobDomainMapper";
+import { jobCreatedProps } from "../domain/JobDomainMapper";
 
 
 export type mappedDomainProps={
-  [P in keyof jobCreationProps]: P extends "status"?number: P extends "deadline" ? Date: jobCreationProps[P]
+  [P in keyof jobCreatedProps]: P extends "status"?number: P extends "deadline" ? Date: P extends "id" ? number|undefined: jobCreatedProps[P]
 }
-export type JobApplicationProps = mappedDomainProps & { id?: number; };
+export type JobApplicationProps = mappedDomainProps;

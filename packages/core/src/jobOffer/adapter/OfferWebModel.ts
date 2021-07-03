@@ -29,3 +29,7 @@ export interface JobOffersWeb{
   skillModel: skillModel[],
   scheduleModel: scheduleModel[],
 }
+
+export type jobOfferCreateDto={
+  [P in keyof JobOffersWeb]:P extends "scheduleModel"?JobOffersWeb[P]:  JobOffersWeb[P] extends Array<Object>?Array<number>:P extends "statusJobOfferModel"?number: P extends "id"?undefined: JobOffersWeb[P]
+}

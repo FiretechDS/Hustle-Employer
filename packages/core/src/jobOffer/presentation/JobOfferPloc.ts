@@ -3,11 +3,11 @@ import { Ploc } from "../../common/presentation";
 import { JobApplicationProps } from "../application/JobApplicationModel";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
-import { PresentationToApplicationMapper } from "../application/services/JobPresentApplicationMapper";
-import { ToDomainMapper } from "../domain/JobDomainMapper";
+import { PresentationToApplicationMapper } from "./JobPresentApplicationMapper";
+import { jobCreationProps, ToDomainMapper } from "../domain/JobDomainMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
 import { ToPresentationMapper } from "./JobPresentationMapper";
-import { jobPresentationProps } from "./JobPresentationModel";
+import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
 
 const employerID = 1;
 
@@ -31,20 +31,19 @@ export class JobOfferPloc extends Ploc<OffersState>{
       } )
   }
 
-  createOffer(offer:jobPresentationProps):string{
-    try {
-      const isCreated =  this.publishOfferUseCase.publish(ToDomainMapper.map(PresentationToApplicationMapper.map( offer)));
-      if (isCreated){
-        this.state.kind==="LoadedOffersState"&& this.state.offers.unshift(offer);
-        return 'Offer created succesfully'
-      }else{
-        return "An error has occurred"
-      }
-    } catch (error) {
-      this.handleError(error.message);
-      return error.message;
-    }
-
+   async createOffer(offer:jobCreatePresentationProps){
+    const publishResult =  await this.publishOfferUseCase.publish((PresentationToApplicationMapper.mapToCreate( {...offer,employerId:employerID})));
+     const message = publishResult.fold(error=>{
+        if( error.kind==='ApiError')
+        return error.message
+        return error.message.message
+      }, (offer:jobPresentationProps)=>{
+          if(this.state.kind!=='ErrorOfferState'){ 
+            this.changeState(this.mapToUpdatedState([offer,...this.state.offers]))
+          }
+          return 'Offer published successfully'
+      } )
+      return message 
   }
 
   mapToUpdatedState(props: jobPresentationProps[]):OffersState{

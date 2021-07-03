@@ -50,7 +50,7 @@
             <li v-for="skill in skills" :key="skill.name">
               <div class="value-modal-offer">
                 <p>
-                {{skill.name}} {{skill.category}}
+                {{skill.name}} 
                 </p>
               </div>
             </li>
@@ -80,7 +80,7 @@ export default defineComponent({
          type: String
        },
        duration: {
-         type: String
+         type: Number
        },
        deadline:{
          type: String

@@ -39,7 +39,7 @@ export default defineComponent({
          type: String
        },
        duration: {
-         type: String
+         type: Number
        },
        deadline:{
          type: String
