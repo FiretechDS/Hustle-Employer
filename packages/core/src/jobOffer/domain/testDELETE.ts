@@ -21,6 +21,7 @@ import { JobOfferPloc } from "../presentation";
 import { PublishOfferService } from "../application/services/PublishOfferService";
 import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
 import { LoadOffersService } from "../application/services/LoadOffersService";
+import { OffersAPIRepository } from "../adapter/out/OffersAPIRepository";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -37,6 +38,7 @@ try {
 
   console.log(Schedule.getDayNumber('sunday'))
 
+  
 
 
 } catch (error) {
@@ -46,7 +48,7 @@ try {
 
  async function load(){
   try {
-    const repo = new OffersInMemoryRepository();
+    const repo = new OffersAPIRepository();
     const loadService = new LoadOffersService(repo);
     const createService = new PublishOfferService(new OfferinMemoryPublisher())
     const ploc = new JobOfferPloc(loadService,createService );
@@ -58,6 +60,7 @@ try {
   } catch (error) {
     console.log(error.message)
   }
+  
 
 }
-load();
+load()

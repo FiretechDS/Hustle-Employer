@@ -6,7 +6,7 @@ import { PresentationToApplicationMapper } from "./JobPresentApplicationMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
 import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
 
-const employerID = 1;
+const employerID = 2;
 
 export class JobOfferPloc extends Ploc<OffersState>{
   private loadOffersQuery:LoadOffersQuery
