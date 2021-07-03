@@ -1,3 +1,5 @@
 export * from "./JobOfferPloc"
 export * from "./JobOffersState"
 export * from "./JobPresentationModel"
+export * from "./JobPresentationMapper"
+export * from "./JobPresentApplicationMapper"

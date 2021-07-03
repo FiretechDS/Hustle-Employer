@@ -1,9 +1,7 @@
 import { Status } from "../domain/valueObjects/StatusValueObject";
 import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
 import { JobApplicationProps } from "../application/JobApplicationModel";
-import { idText } from "typescript";
 import { jobCreationProps } from "../domain/JobDomainMapper";
-import { OffersInMemoryRepository } from "../adapter/out/OffersInMemoryRepository";
 
 
 export class PresentationToApplicationMapper{

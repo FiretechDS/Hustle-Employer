@@ -1,12 +1,9 @@
 import { DataError } from "../../common/domain/DataError";
 import { Ploc } from "../../common/presentation";
-import { JobApplicationProps } from "../application/JobApplicationModel";
 import { LoadOffersQuery } from "../application/port/in/LoadOffersQuery";
 import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase";
 import { PresentationToApplicationMapper } from "./JobPresentApplicationMapper";
-import { jobCreationProps, ToDomainMapper } from "../domain/JobDomainMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
-import { ToPresentationMapper } from "./JobPresentationMapper";
 import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
 
 const employerID = 1;
