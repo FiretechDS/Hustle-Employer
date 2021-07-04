@@ -15,6 +15,9 @@
     <div class="empty" v-if="state.kind==='EmptyOffersState'">
       <h2>{{state.message}}</h2>
     </div>
+    <div v-if="state.kind === 'LoadingOffersState'" class="loading">
+      <FadeLoader color="#ffeda3"/>
+    </div>
     <div v-if="state.kind === 'LoadedOffersState'">
       <div v-bind:key="job.id"
       v-for="job in state.offers">
@@ -40,9 +43,10 @@ import CreateOfferModal from '@/components/jobOffers/CreateOfferModal.vue';
 import OfferDetail from '@/components/jobOffers/OfferDetail.vue';
 import { JobOfferPloc,jobPresentationProps } from '../../../../core/src/jobOffer/presentation';
 import { usePlocState } from '../../common/UsePlocState';
+import  FadeLoader from 'vue-spinner/src/FadeLoader.vue';
 
 export default defineComponent({
-  components: { CreateOfferModal, OfferDetail },
+  components: { CreateOfferModal, OfferDetail, FadeLoader },
   name: 'JobOfferMain',
   setup() {
     const ploc = inject<JobOfferPloc>('jobOfferPloc') as JobOfferPloc;
@@ -79,6 +83,12 @@ export default defineComponent({
     text-align:center;
     margin-top:20vh;
     color:$white;
+  }
+  .loading{
+    text-align:center;
+    margin-top:25vh;
+    color:$white;
+    margin-left: 80vh;
   }
 }
 </style>
