@@ -28,7 +28,7 @@ module.exports = {
             .setValue('input[type=number]',validOffer.hourlyRate)
             .click('.multiselect.schedule-multiselect')
             .click('.multiselect-option')
-            .click('.multiselect.hour-multiselect[name=Hora fin]')
+            //.click('.multiselect.hour-multiselect[name=Hora fin]')
             //.click('')
             .saveScreenshot('tests_output/form.png')
             //.assert.containsText('input[placeholder=Título]','Hola')
