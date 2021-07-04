@@ -16,13 +16,17 @@ An npm version greater than 7 is required.
 
 ## Setup:
 
-#### To run the project locally:
+#### Run the Vue project locally:
 
 1. Clone the project, and open a terminal inside it.
 
 1. Run: `npm i`
 
 1. Run: `npm start`
+
+#### Run tests
+
+1. Run: `npm test`
 
 ## Key concepts:
 
