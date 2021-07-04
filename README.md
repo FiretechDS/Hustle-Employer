@@ -22,6 +22,8 @@ An npm version greater than 7 is required.
 
 1. Run: `npm i`
 
+1. Run: `npm run setup`
+
 1. Run: `npm start`
 
 #### Run tests

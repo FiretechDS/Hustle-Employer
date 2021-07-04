@@ -7,7 +7,7 @@
     "test": "npm test --workspace core",
     "start": "npm run build --workspace core && npm run serve --workspace ui",
     "core": "npm start --workspace core",
-    "setup":"npm i --workspace ui"
+    "setup":"(cd packages/ui & npm i) && cd ../../"
   },
   "workspaces": [
     "./packages/*"
