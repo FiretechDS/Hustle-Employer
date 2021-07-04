@@ -17,7 +17,7 @@ export class JobOfferMother{
       employerId: 1,
     }
   }
-  createInvalid(){
+  static createInvalid():jobCreationProps{
       return{
       deadline: new Date('01-01-2019'),
       duration: 200,
