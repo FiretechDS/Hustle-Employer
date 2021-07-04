@@ -18,7 +18,7 @@ export interface JobOffersWeb{
   employerId:number,
   title:string,
   location:string,
-  deadline:Date,
+  deadline:string,
   specialRequirements:string,
   duration:number,
   hourlyRate:number,
@@ -31,5 +31,5 @@ export interface JobOffersWeb{
 }
 
 export type jobOfferCreateDto={
-  [P in keyof JobOffersWeb]:P extends "scheduleModel"?JobOffersWeb[P]:  JobOffersWeb[P] extends Array<Object>?Array<number>:P extends "statusJobOfferModel"?number: P extends "id"?undefined: JobOffersWeb[P]
+  [P in keyof JobOffersWeb]:P extends "scheduleModel"?JobOffersWeb[P]:  JobOffersWeb[P] extends Array<Object>?Array<number>:P extends "statusJobOfferModel"?number: P extends "id"?number: JobOffersWeb[P]
 }

@@ -9,8 +9,11 @@
       <li class="small-columns-job-offer">Status</li>
     </ul>
     <div class="error" v-if="state.kind === 'ErrorOfferState'">
-      <h2 class>{{ state.error }}</h2>
-      <p>{{state.reason}} </p>
+      <h2 class>{{ state.reason }}</h2>
+      <p>{{state.error}} </p>
+    </div>
+    <div class="empty" v-if="state.kind==='EmptyOffersState'">
+      <h2>{{state.message}}</h2>
     </div>
     <div v-if="state.kind === 'LoadedOffersState'">
       <div v-bind:key="job.id"
@@ -71,6 +74,11 @@ export default defineComponent({
     text-align:center;
     margin-top:20vh;
     color:$highlit-yellow;
+  }
+  .empty{
+    text-align:center;
+    margin-top:20vh;
+    color:$white;
   }
 }
 </style>
