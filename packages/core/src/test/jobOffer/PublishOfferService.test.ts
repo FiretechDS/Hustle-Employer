@@ -6,8 +6,8 @@ import { PublishOfferUseCase } from '../../jobOffer/application/port/in/PublishO
 import { jobCreationProps } from '../../jobOffer/domain/JobDomainMapper';
 import { JobOfferMother } from './JobOfferMother';
 
- describe('Create Offer', async () => {
-  test('Prueba de valores validos', () => {
+ describe('Create Offer',  () => {
+  test('Prueba de valores validos',async () => {
     var memory: PublishOfferPort = new OfferinMemoryPublisher();
     var service:PublishOfferUseCase = new PublishOfferService(memory);
 
