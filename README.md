@@ -28,7 +28,9 @@ An npm version greater than 7 is required.
 
 #### Run tests
 
-1. Run: `npm test`
+1. Unit and integration tests: `npm test`
+
+1. Acceptance test: `npm acceptance`
 
 ## Key concepts:
 

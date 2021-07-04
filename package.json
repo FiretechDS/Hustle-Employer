@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test --workspace core",
+    "acceptance":"npm test --workspace ui",
     "start": "npm run build --workspace core && npm run serve --workspace ui",
     "core": "npm start --workspace core",
     "setup":"(cd packages/ui & npm i) && cd ../../"
