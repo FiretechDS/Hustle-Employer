@@ -5,6 +5,8 @@ import { PublishOfferPort } from '../../jobOffer/application/port/out/PublishOff
 import { PublishOfferUseCase } from '../../jobOffer/application/port/in/PublishOfferUseCase';
 import { jobCreationProps } from '../../jobOffer/domain/JobDomainMapper';
 import { JobOfferMother } from './JobOfferMother';
+import { DataError } from '../../common/domain/DataError';
+import { jobPresentationProps } from '../../jobOffer/presentation';
 
 describe('Create Offer',  () => {
   test('Prueba de valores validos',async () => {
@@ -12,9 +14,10 @@ describe('Create Offer',  () => {
     var service:PublishOfferUseCase = new PublishOfferService(memory);
 
     var validTestOffer:jobCreationProps = JobOfferMother.createValid()
-    const publishResult = await service.publish(validTestOffer);
+    const publishResult:Either<DataError,jobPresentationProps> = await service.publish(validTestOffer);
  
     expect(publishResult.isRight()).toBe(true);
+    expect(publishResult.isLeft()).toBe(false)
   });
 });
 
