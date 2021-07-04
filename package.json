@@ -4,7 +4,7 @@
   "description": "Hustle app for employers, built with the cleanest architecture we can achieve",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm test --workspace core",
     "start": "npm run build --workspace core && npm run serve --workspace ui",
     "core": "npm start --workspace core"
   },
