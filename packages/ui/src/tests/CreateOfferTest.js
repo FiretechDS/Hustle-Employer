@@ -2,18 +2,17 @@ module.exports = {
     'Create Job Offer - Acceptance Test' : function (browser){
         
         const validOffer = {
-            deadline: new Date('01-01-2022'),
+            deadline: '01-01-2022',
             duration: '200',
             title: 'Full Stack',
             specialRequirements: 'None',
             skills: [{ name: 'Java', category: 1, number:2 }],
             status: 2,
-            hourlyRate: '300',
+            hourlyRate: '400',
             schedules: ['monday', 'tuesday', 'friday'],
             location: 'Caracas, Venezuela',
-            startHour: 9,
-            endHour: 18,
             employerId: 1,
+            description: 'We need a good developer'
         };
 
         browser
@@ -23,14 +22,28 @@ module.exports = {
             .click('.button')
             .waitForElementVisible('.modal')
             .assert.visible('.create-job-offer-form')
-            .setValue('input[placeholder=Título]',validOffer.title)
-            .setValue('input[placeholder=Localización]',validOffer.location)
-            .setValue('input[type=number]',validOffer.hourlyRate)
+            .setValue('#title-input',validOffer.title)
+            .setValue('#location-input',validOffer.location)
+            .setValue('#hourlyRate-input',validOffer.hourlyRate)
             .click('.multiselect.schedule-multiselect')
-            .click('.multiselect-option')
-            //.click('.multiselect.hour-multiselect[name=Hora fin]')
-            //.click('')
+            .keys("\uE015")
+            .keys("\uE007")
+            .click('#start-hour-input')
+            .keys("\uE015")
+            .keys("\uE007")
+            .click('#end-hour-input')
+            .keys("\uE015")
+            .keys("\uE015")
+            .keys("\uE007")
+            .setValue('#deadline-input',validOffer.deadline)
+            .setValue('#duration-input',validOffer.duration)
+            .keys("\uE004")
+            .keys("\uE015")
+            .keys("\uE007")
+            .setValue('#description-input',validOffer.description)
+            .click('#create-button')
+            //.click('.btn-close')
+            
             .saveScreenshot('tests_output/form.png')
-            //.assert.containsText('input[placeholder=Título]','Hola')
     }
 }

@@ -9,9 +9,9 @@
         <div class="create-job-offer-body-div">
           <form class="create-job-offer-form">
             <p class="subtitle">Trabajo:</p> 
-            <input v-model="jobOffer.title" placeholder="Título">
-            <input v-model="jobOffer.location" placeholder="Localización"/>
-            <input type="number" v-model="stringHelper.hourlyRate" placeholder="Salario/Hora ($)">
+            <input v-model="jobOffer.title" placeholder="Título" id="title-input">
+            <input v-model="jobOffer.location" placeholder="Localización" id="location-input">
+            <input type="number" v-model="stringHelper.hourlyRate" placeholder="Salario/Hora ($)" id="hourlyRate-input">
             <p class="subtitle">Horario de Trabajo:</p> 
            <div class="schedule-options">
               <Multiselect 
@@ -22,31 +22,31 @@
               <Multiselect 
                 :options="getHourOptions()" 
                 v-model="jobOffer.startHour" placeholder="Hora inicio" 
-                class="hour-multiselect"
+                class="hour-multiselect" id="start-hour-input"
               />
               <Multiselect 
                 :options="getHourOptions()" 
                 v-model="jobOffer.endHour" placeholder="Hora fin" 
-                class="hour-multiselect"
+                class="hour-multiselect" id="end-hour-input"
               />
             </div> 
             <p class="subtitle">Fecha tope:</p> 
-            <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
-            <input type="number" v-model="stringHelper.duration" placeholder="Duración (horas)">
+            <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)" id="deadline-input">
+            <input type="number" v-model="stringHelper.duration" placeholder="Duración (horas)" id="duration-input">
               <Multiselect 
                 :options="jobOffer.skills.options" v-bind="jobOffer.skills"
                 v-model="jobOffer.skills.value" placeholder="Habilidades" 
-                mode="multiple" class="skills-multiselect"
+                mode="multiple" class="skills-multiselect" id="skills-input"
               />
              <p class="subtitle">Requerimientos adicionales:</p> 
-            <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Descripción"/>
+            <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Descripción" id="description-input"/>
             <p class="form-result">{{message}}</p>
           </form>
         </div>
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
-          <Button buttonText="Crear" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer"/> 
+          <Button buttonText="Crear" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer" id="create-button"/> 
         </div>
       </template>
     </Modal>
