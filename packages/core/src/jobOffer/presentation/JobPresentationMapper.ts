@@ -11,6 +11,7 @@ export class ToPresentationMapper {
       title: jobOffer.header.title,
       specialRequirements: jobOffer.header.specialRequirements,
       duration:jobOffer.duration.value,
+      creationDate:jobOffer.deadline.createdAt.toLocaleDateString(),
       deadline:jobOffer.deadline.value.toLocaleDateString(),
       skills:jobOffer.skills.map((skill:Skill)=>{
         return {name:skill.name, category:skill.category, number:skill.number }

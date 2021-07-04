@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiFetcher = axios.create({
   baseURL:'https://hustle-api-spring.herokuapp.com/api',
-  timeout:5000,
+  timeout:10000,
   headers:{mode:'cors'}
 })
 

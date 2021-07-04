@@ -8,7 +8,7 @@ const newOffer:JobOfferProps={
 
 };*/
 
-import { ToDomainMapper } from "./JobDomainMapper";
+import { jobCreationProps, ToDomainMapper } from "./JobDomainMapper";
 import { ToPresentationMapper } from "../presentation/JobPresentationMapper";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
@@ -22,6 +22,7 @@ import { PublishOfferService } from "../application/services/PublishOfferService
 import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
 import { LoadOffersService } from "../application/services/LoadOffersService";
 import { OffersAPIRepository } from "../adapter/out/OffersAPIRepository";
+import { ApplicationToInfraMapper } from "../adapter/JobApplicationToInfraMapper";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -37,9 +38,25 @@ try {
   const days =[['tuesday','monday'],['friday','monday']]
 
   console.log(Schedule.getDayNumber('sunday'))
+  const offer:jobCreationProps={
+    deadline:new Date('2022-01-02'),
+    creationDate: new Date(),
+    employerId:100,
+    duration:500,
+    schedules:['monday','tuesday'],
+    startHour:6,
+    endHour:14,
+    status:1,
+    skills:[{name:'Java',number:1,category:1}],
+    title:'UI/UX Developer',
+    hourlyRate:400,
+    location:'Los Angeles'
 
+  }
+  const mappedOffer = ApplicationToInfraMapper.map(offer)
+  const offerDto ={...mappedOffer, EmployerId:mappedOffer.employerId, statusJobOfferModelId:mappedOffer.statusJobOfferModel}
   
-
+  console.log(offerDto)
 
 } catch (error) {
   console.log('Caught error: '+error.message)
@@ -63,4 +80,3 @@ try {
   
 
 }
-load()

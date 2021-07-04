@@ -7,6 +7,8 @@ export class InfraToApplicationMapper{
   static map(props:JobOffersWeb):JobApplicationProps{
     return {
       ...props,
+      deadline:new Date(props.deadline),
+      creationDate:new Date("1990-01-01"), //Temp solution until persistance implements a creation date
       status: props.statusJobOfferModel.id,
       skills:props.skillModel.map((skill)=>{
         return {name:skill.habilityName, category: Skill.getNumber( skill.skillCategoryModel.nameCategory),number:skill.id }
