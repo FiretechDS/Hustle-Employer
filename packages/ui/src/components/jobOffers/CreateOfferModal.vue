@@ -11,7 +11,7 @@
             <p class="subtitle">Trabajo:</p> 
             <input v-model="jobOffer.title" placeholder="Título">
             <input v-model="jobOffer.location" placeholder="Localización"/>
-            <input type="number" v-model="jobOffer.hourlyRate" placeholder="Salario/Hora ($)">
+            <input type="number" v-model="stringHelper.hourlyRate" placeholder="Salario/Hora ($)">
             <p class="subtitle">Horario de Trabajo:</p> 
            <div class="schedule-options">
               <Multiselect 
@@ -32,7 +32,7 @@
             </div> 
             <p class="subtitle">Fecha tope:</p> 
             <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)">
-            <input type="number" v-model="jobOffer.duration" placeholder="Duración (horas)">
+            <input type="number" v-model="stringHelper.duration" placeholder="Duración (horas)">
               <Multiselect 
                 :options="jobOffer.skills.options" v-bind="jobOffer.skills"
                 v-model="jobOffer.skills.value" placeholder="Habilidades" 
@@ -93,6 +93,10 @@ export default defineComponent({
       },
       status:1,
     });
+    const stringHelper = reactive({
+      duration: "" as string,
+      hourlyRate: "" as string,
+    })
   
     function showModal(): void {
       state.isModalVisible = true;
@@ -101,6 +105,7 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
       console.log("closed");
+      setValuesToDefault()
     }
 
     function getHourOptions():Object[]{
@@ -112,7 +117,27 @@ export default defineComponent({
       }
       return options;
     }
+
+    function setValuesToDefault(): void{
+      jobOffer.title = "";
+      jobOffer.specialRequirements = "";
+      jobOffer.status = 1;
+      jobOffer.location = "";
+      jobOffer.deadline = "";
+      jobOffer.duration = 0;
+      jobOffer.hourlyRate = 0;
+      jobOffer.schedules.value = [];
+      jobOffer.startHour = 0;
+      jobOffer.endHour = 0;
+      jobOffer.skills.value = [];
+
+      stringHelper.duration = "";
+      stringHelper.hourlyRate = "";
+    }
+
     async function sendOffer() {
+      jobOffer.hourlyRate = Number(stringHelper.hourlyRate)
+      jobOffer.duration = Number(stringHelper.duration)
       console.log(jobOffer)
       const newOffer = {...jobOffer, employerId:1, status:'Posted',
         schedules:jobOffer.schedules.value,
@@ -135,6 +160,7 @@ export default defineComponent({
     return {
       state,
       jobOffer,
+      stringHelper,
       showModal,
       closeModal,
       sendOffer,
