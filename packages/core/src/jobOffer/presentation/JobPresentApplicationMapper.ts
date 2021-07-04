@@ -9,6 +9,7 @@ export class PresentationToApplicationMapper{
     return {
       ...offer,
       deadline:new Date(offer.deadline),
+      creationDate:new Date(offer.creationDate),
       status:Status.getStatusNumber(offer.status),
     }
   }
@@ -16,8 +17,8 @@ export class PresentationToApplicationMapper{
     return {
       ...offer,
       id:offer.id,
-
       deadline:new Date(offer.deadline),
+      creationDate:offer.creationDate?new Date(offer.creationDate):undefined,
       status:offer.status? Status.getStatusNumber(offer.status):1,
     }
   }

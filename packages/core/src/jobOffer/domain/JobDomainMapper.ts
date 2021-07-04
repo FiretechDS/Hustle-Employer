@@ -12,6 +12,7 @@ export interface jobCreationProps{
   
   id?:number,
   deadline:Date,
+  creationDate?:Date,
   duration:number,
   title:string,
   specialRequirements?:string,
@@ -20,8 +21,8 @@ export interface jobCreationProps{
   hourlyRate: number,
   schedules: string[],
   location:string,
-  startHour: number,
-  endHour: number,
+  startHour?: number,
+  endHour?: number,
   employerId:number,
 }
 
@@ -32,7 +33,7 @@ export type jobCreatedProps={
 export class ToDomainMapper{
   static map(props:jobCreationProps):JobOffer{
       return JobOffer.createJobOffer({
-        deadline: Deadline.create(props.deadline),
+        deadline: Deadline.create(props.deadline,props.creationDate),
         duration: Duration.create(props.duration),
         header:JobHeader.create(props.title,props.specialRequirements),
         status: Status.create(props.status),
