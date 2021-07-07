@@ -26,11 +26,13 @@ An npm version greater than 7 is required.
 
 1. Run: `npm start`
 
+_(If you cannot run the project succesfully, do contact us and we'll try to solve your problem ASAP)_
+
 #### Run tests
 
 1. Unit and integration tests: `npm test`
 
-1. Acceptance test: `npm acceptance`
+1. Acceptance test: `npm run acceptance`
 
 ## Key concepts:
 
