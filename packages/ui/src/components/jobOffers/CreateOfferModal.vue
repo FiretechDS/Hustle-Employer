@@ -3,50 +3,51 @@
     <PlusButton :onClick="showModal" />
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> 
-      Crear nueva oferta
+      Post new offer
       </template>
       <template v-slot:body>
         <div class="create-job-offer-body-div">
           <form class="create-job-offer-form">
-            <p class="subtitle">Trabajo:</p> 
-            <input v-model="jobOffer.title" placeholder="Título" id="title-input">
-            <input v-model="jobOffer.location" placeholder="Localización" id="location-input">
-            <input type="number" v-model="stringHelper.hourlyRate" placeholder="Salario/Hora ($)" id="hourlyRate-input">
-            <p class="subtitle">Horario de Trabajo:</p> 
+            <p class="subtitle">Job:</p> 
+            <input v-model="jobOffer.title" placeholder="Title" id="title-input">
+            <input v-model="jobOffer.location" placeholder="Location" id="location-input">
+            <input type="number" v-model="stringHelper.hourlyRate" placeholder="HourlyRate ($)" id="hourlyRate-input">
+            <p class="subtitle">Job schedules:</p> 
            <div class="schedule-options">
               <Multiselect 
                 :options="jobOffer.schedules.options" v-bind="jobOffer.schedules"
-                v-model="jobOffer.schedules.value" placeholder="Horario" 
+                v-model="jobOffer.schedules.value" placeholder="Days" 
                 mode="multiple" class="schedule-multiselect"
               />
               <Multiselect 
                 :options="getHourOptions()" 
-                v-model="jobOffer.startHour" placeholder="Hora inicio" 
+                v-model="jobOffer.startHour" placeholder="Start hour" 
                 class="hour-multiselect" id="start-hour-input"
               />
               <Multiselect 
                 :options="getHourOptions()" 
-                v-model="jobOffer.endHour" placeholder="Hora fin" 
+                v-model="jobOffer.endHour" placeholder="End hour" 
                 class="hour-multiselect" id="end-hour-input"
               />
             </div> 
-            <p class="subtitle">Fecha tope:</p> 
-            <input type="date" v-model="jobOffer.deadline" placeholder="Fecha tope (DD/MM/YYYY)" id="deadline-input">
-            <input type="number" v-model="stringHelper.duration" placeholder="Duración (horas)" id="duration-input">
+            <p class="subtitle">Deadline:</p> 
+            <input type="date" v-model="jobOffer.deadline" placeholder="Deadline" id="deadline-input">
+            <input type="number" v-model="stringHelper.duration" placeholder="Duration (hours)" id="duration-input">
               <Multiselect 
                 :options="jobOffer.skills.options" v-bind="jobOffer.skills"
-                v-model="jobOffer.skills.value" placeholder="Habilidades" 
+                v-model="jobOffer.skills.value" placeholder="Skills" 
                 mode="multiple" class="skills-multiselect" id="skills-input"
               />
-             <p class="subtitle">Requerimientos adicionales:</p> 
-            <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Descripción" id="description-input"/>
+             <p class="subtitle">Special Requirements:</p> 
+            <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Description" id="description-input"/>
             <p class="form-result">{{message}}</p>
           </form>
         </div>
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
-          <Button buttonText="Crear" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer" id="create-button"/> 
+          <Button buttonText="Publish" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer(true)" id="create-button"/> 
+           <Button buttonText="Archive" iconName="archive.svg" :isPrimary="false" @click="sendOffer(false)" /> 
         </div>
       </template>
     </Modal>
@@ -135,25 +136,18 @@ export default defineComponent({
       stringHelper.hourlyRate = "";
     }
 
-    async function sendOffer() {
+    async function sendOffer(willPublish:boolean) {
       jobOffer.hourlyRate = Number(stringHelper.hourlyRate)
       jobOffer.duration = Number(stringHelper.duration)
+      const status = willPublish?'Open':'Posted'
       console.log(jobOffer)
-      const newOffer = {...jobOffer, employerId:1, status:'Posted',
+      const newOffer = {...jobOffer, employerId:1, status:status,
         schedules:jobOffer.schedules.value,
         skills:jobOffer.skills.value.map((skill:number)=>{
           return {name:jobOffer.skills.options[skill].label,number:skill, category:1,}
           }
       )}
       ctx.emit("createOffer",newOffer)
-      /*const result = await props.ploc.createOffer(
-        {...jobOffer, employerId:1, status:'Posted',
-        schedules:jobOffer.schedules.value,
-        skills:jobOffer.skills.value.map((skill:number)=>{
-          return {name:'any',number:skill, category:1,}
-          }
-        )
-      })*/
     }
  
 
@@ -204,10 +198,6 @@ input{
   background: $lighter-gray;
 }
 
-Button{
-  margin-left: auto;
-  
-}
 
 textarea{
   resize: none;
@@ -269,5 +259,10 @@ label{
 input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
 }
-
+.create-job-offer-footer{
+  display:flex;
+  width:26rem;
+  margin-left:auto;
+  justify-content:space-between;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="jobPageCointainer">
-    <h2 class="title">Ofertas creadas</h2>
+    <h2 class="title">Published Offers</h2>
     <ul class="columns-job-offer">
-      <li>Titulo</li>
-      <li class="small-columns-job-offer">Pago/hora</li>
-      <li class="small-columns-job-offer">Duración/horas</li>
-      <li class="small-columns-job-offer">Fecha tope</li>
+      <li>Title</li>
+      <li class="small-columns-job-offer">Rate/hour</li>
+      <li class="small-columns-job-offer">Duration</li>
+      <li class="small-columns-job-offer">Deadline</li>
       <li class="small-columns-job-offer">Status</li>
     </ul>
     <div class="error" v-if="state.kind === 'ErrorOfferState'">

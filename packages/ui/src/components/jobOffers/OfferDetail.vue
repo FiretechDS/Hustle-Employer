@@ -10,13 +10,13 @@
         <div class="fields-modal-offer">
         <ul class="columns-modal-offer-detail">
           <li>
-            <p class="title-modal-offer">Pago/hora</p>
+            <p class="title-modal-offer">Hourly rate</p>
           </li>
           <li class="small-columns-modal-offer-detail"> 
-            <p class="title-modal-offer">Horas</p>
+            <p class="title-modal-offer">Hours</p>
           </li> 
           <li class="small-columns-modal-offer-detail"> 
-            <p class="title-modal-offer">Vencimiento</p>
+            <p class="title-modal-offer">Deadline</p>
           </li>
         </ul>
         <ul class="columns-modal-offer-detail">
@@ -33,7 +33,7 @@
         </div>
 
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Horario</p>
+          <p class="title-modal-offer">Schedule</p>
           <ul class="list-modal-offer">
             <li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
               <div class="value-modal-offer"> 
@@ -45,7 +45,7 @@
           </ul>
         </div>
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Habilidades</p>
+          <p class="title-modal-offer">Skills</p>
           <ul class="list-modal-offer">
             <li v-for="skill in skills" :key="skill.name">
               <div class="value-modal-offer">
