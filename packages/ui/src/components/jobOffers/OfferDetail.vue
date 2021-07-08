@@ -65,7 +65,7 @@
           <ul class="footer-offer-detail">
             <li >
               <Button buttonText="Applicants" iconName="postulantes.svg" 
-              :isPrimary="false" @click="oppenApplications()" />
+              :isPrimary="false" @click="openApplications()" />
             </li>
             <li>
               <Button buttonText="Update" iconName="edit.svg" 
