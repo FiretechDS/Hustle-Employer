@@ -180,7 +180,7 @@ div{
   display: inline;
 }
 .create-job-offer-form{
-  margin: 0rem 2rem;
+  margin: 0rem 1rem;
   width: 80%;
   margin-left: auto;
   margin-right: auto;

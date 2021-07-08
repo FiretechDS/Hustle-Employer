@@ -4,7 +4,6 @@
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> {{this.title}}</template>
       <template v-slot:body>
-        
           <p class="fields-modal-offer value-modal-offer">{{description}}</p>
 
         <div class="fields-modal-offer">
@@ -56,6 +55,28 @@
             </li>
           </ul>
         </div>
+        <div class="fields-modal-offer">
+          <p class="title-modal-offer">Location</p>
+          <p class="value-modal-offer">{{location}}</p>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <div class="offer-detail-footer">
+          <ul class="footer-offer-detail">
+            <li >
+              <Button buttonText="Applicants" iconName="postulantes.svg" 
+              :isPrimary="false" @click="openApplications()" />
+            </li>
+            <li>
+              <Button buttonText="Update" iconName="edit.svg" 
+              :isPrimary="false" @click="update()" />
+            </li>
+            <li>
+              <Button buttonText="Archive" iconName="archive.svg" 
+              :isPrimary="false" @click="file()" />
+            </li>
+          </ul>
+        </div>
       </template>
     </Modal>
   </div>
@@ -65,6 +86,7 @@
 import { defineComponent, reactive, PropType } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
+import Button from "../Button.vue";
 
 
 export default defineComponent({
@@ -96,9 +118,12 @@ export default defineComponent({
        },
        job:{
          type: Object
+       },
+       location:{
+         type: String
        }
     },
-  components: { Modal, HorizontalCard },
+  components: { Modal, HorizontalCard, Button },
   created(){
     console.log(this.state)
   },
@@ -122,3 +147,4 @@ export default defineComponent({
   },
 });
 </script>
+
