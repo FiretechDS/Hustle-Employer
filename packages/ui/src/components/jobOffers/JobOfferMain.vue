@@ -1,11 +1,11 @@
 <template>
   <div class="jobPageCointainer">
-    <h2 class="title">Ofertas creadas</h2>
+    <h2 class="title">Published Offers</h2>
     <ul class="columns-job-offer">
-      <li>Titulo</li>
-      <li class="small-columns-job-offer">Pago/hora</li>
-      <li class="small-columns-job-offer">Duración/horas</li>
-      <li class="small-columns-job-offer">Fecha tope</li>
+      <li>Title</li>
+      <li class="small-columns-job-offer">Rate/hour</li>
+      <li class="small-columns-job-offer">Duration</li>
+      <li class="small-columns-job-offer">Deadline</li>
       <li class="small-columns-job-offer">Status</li>
     </ul>
     <div class="error" v-if="state.kind === 'ErrorOfferState'">
@@ -16,7 +16,7 @@
       <h2>{{state.message}}</h2>
     </div>
     <div v-if="state.kind === 'LoadingOffersState'" class="loading">
-      <FadeLoader color="#ffeda3"/>
+      <Loader color="#ffeda3"/>
     </div>
     <div v-if="state.kind === 'LoadedOffersState'">
       <div v-bind:key="job.id"
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <CreateOfferModal  @createOffer="createOffer" :message="message.value" />
+  <CreateOfferModal  @createOffer="createOffer" :message="message" />
 </template>
 
 <script lang="ts">
@@ -43,22 +43,24 @@ import CreateOfferModal from '@/components/jobOffers/CreateOfferModal.vue';
 import OfferDetail from '@/components/jobOffers/OfferDetail.vue';
 import { JobOfferPloc,jobPresentationProps } from '../../../../core/src/jobOffer/presentation';
 import { usePlocState } from '../../common/UsePlocState';
-import  FadeLoader from 'vue-spinner/src/FadeLoader.vue';
+import  Loader from '@/components/Loader.vue';
 
 export default defineComponent({
-  components: { CreateOfferModal, OfferDetail, FadeLoader },
+  components: { CreateOfferModal, OfferDetail, Loader },
   name: 'JobOfferMain',
   setup() {
     const ploc = inject<JobOfferPloc>('jobOfferPloc') as JobOfferPloc;
     const state = usePlocState(ploc);
-    const message = reactive({value:'' as string})
+    const message = reactive({value:'' as string, loading:false as boolean})
     async function createOffer(offer:jobPresentationProps){
       message.value=''
+      message.loading=true
       try {
         message.value = await ploc.createOffer(offer);
       } catch (error) {
         message.value=error.message;
       }
+      message.loading=false
     }
     return { state,createOffer,message };
   },
@@ -88,7 +90,8 @@ export default defineComponent({
     text-align:center;
     margin-top:25vh;
     color:$white;
-    margin-left: 80vh;
+    margin-left:auto;
+    margin-right: auto;
   }
 }
 </style>

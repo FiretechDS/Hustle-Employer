@@ -14,7 +14,7 @@ export class JobOfferMother{
       location: 'Caracas, Venezuela',
       startHour: 9,
       endHour: 18,
-      employerId: 1,
+      employerId: 2,
     }
   }
   static createInvalid():jobCreationProps{
@@ -30,7 +30,7 @@ export class JobOfferMother{
       location: 'Caracas, Venezuela',
       startHour: 9,
       endHour: 18,
-      employerId: 1,
+      employerId: 2,
     }
   }
 }

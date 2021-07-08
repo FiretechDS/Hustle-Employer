@@ -12,7 +12,7 @@ export class OffersInMemoryRepository implements LoadOffersPort{
       return jobOffer.employerId === employerID
     })
     if(result.length>0) resolve(Either.right(result.map((offer)=>{return InfraToApplicationMapper.map(offer)})))
-    else resolve(Either.left({kind:'UnexpectedError',message:new Error('Error inesperado')}))
+    else resolve(Either.left({kind:'UnexpectedError',message:new Error('Error at loading offers')}))
   }
   )}
 
@@ -22,7 +22,7 @@ export class OffersInMemoryRepository implements LoadOffersPort{
 const jobOffers:JobOffersWeb[]=[
   {
     id:1,
-    employerId:1,
+    employerId:100,
     title:`New work opportunity 1`,
     location:'New York',
     deadline: '2021,10,5',
@@ -62,7 +62,7 @@ const jobOffers:JobOffersWeb[]=[
   },
     {
     id:2,
-    employerId:1,
+    employerId:100,
     title:`New work opportunity 2`,
     location:'New Yorkshire',
     deadline: '2022,11,5',
