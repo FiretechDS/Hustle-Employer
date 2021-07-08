@@ -103,7 +103,7 @@ html {
 
 .fields-modal-offer{
   margin-top: 0rem;
-  padding: 0px;
+  padding: 0px 50px;
   margin-left: 1rem;
   margin-block-end: 0rem;
 }
@@ -117,4 +117,8 @@ html {
   align-items: center;
   display: flex;
   justify-content: space-around;
+}
+
+.footer-offer-detail-applications{
+  width: 15rem;
 }

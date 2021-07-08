@@ -4,7 +4,6 @@
     <Modal v-show="state.isModalVisible" @close="closeModal()">
       <template v-slot:header> {{this.title}}</template>
       <template v-slot:body>
-        
           <p class="fields-modal-offer value-modal-offer">{{description}}</p>
 
         <div class="fields-modal-offer">
@@ -65,16 +64,16 @@
         <div class="offer-detail-footer">
           <ul class="footer-offer-detail">
             <li >
-              <Button buttonText="Applications" iconName="postulantes.svg" 
+              <Button buttonText="Applicants" iconName="postulantes.svg" 
               :isPrimary="false" @click="oppenApplications()" />
             </li>
             <li>
               <Button buttonText="Update" iconName="edit.svg" 
-              :isPrimary="false" @click="update(false)" />
+              :isPrimary="false" @click="update()" />
             </li>
             <li>
               <Button buttonText="Archive" iconName="archive.svg" 
-              :isPrimary="false" @click="file(false)" />
+              :isPrimary="false" @click="file()" />
             </li>
           </ul>
         </div>
