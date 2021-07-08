@@ -30,6 +30,7 @@
           :status="job.status"
           :schedule="{days: job.schedules,hourIn:job.startHour, hourOut:job.endHour}"
           :skills="job.skills"
+          :location="job.location"
         />
       </div>
     </div>
