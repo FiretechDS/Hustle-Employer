@@ -12,7 +12,7 @@
             <input v-model="jobOffer.title" placeholder="Title" id="title-input">
             <input v-model="jobOffer.location" placeholder="Location" id="location-input">
             <input type="number" v-model="stringHelper.hourlyRate" placeholder="HourlyRate ($)" id="hourlyRate-input">
-            <p class="subtitle">Job schedules:</p> 
+            <p class="subtitle">Schedule:</p> 
            <div class="schedule-options">
               <Multiselect 
                 :options="jobOffer.schedules.options" v-bind="jobOffer.schedules"
@@ -40,14 +40,17 @@
               />
              <p class="subtitle">Special Requirements:</p> 
             <textarea class="description-input" v-model="jobOffer.specialRequirements" placeholder="Description" id="description-input"/>
-            <p class="form-result">{{message}}</p>
+            <p class="form-result">{{message.value}}</p>
+
           </form>
+          <Loader class="loader" :loading="message.loading" color="#2940d3"/>
         </div>
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
           <Button buttonText="Publish" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer(true)" id="create-button"/> 
-           <Button buttonText="Archive" iconName="archive.svg" :isPrimary="false" @click="sendOffer(false)" /> 
+           <Button buttonText="Archive" iconName="archive.svg" 
+           :isPrimary="false" @click="sendOffer(false)" /> 
         </div>
       </template>
     </Modal>
@@ -61,13 +64,17 @@ import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import Multiselect from '@vueform/multiselect';
 import {skills} from "./skills";
+import Loader from "@/components/Loader.vue"
 export default defineComponent({
   name: "CreateOfferModal",
-  components: { Modal, PlusButton, Button,Multiselect },
+  components: { Modal, PlusButton, Button,Multiselect,Loader },
   props:{
     message:{
-      type:String,
-      default:''
+      type:Object,
+      default:{
+        value:'',
+        loading:false,
+      }
     }
   },
   setup(props,ctx) {
@@ -255,9 +262,15 @@ label{
   padding-left: 0px;
   margin: 3px;
 }
-
+.skills-multiselect{
+  width:30%;
+  margin:0rem 1rem;
+}
 input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
+}
+.loader{
+  margin-left: 10rem;
 }
 .create-job-offer-footer{
   display:flex;

@@ -1,13 +1,13 @@
 <template>
   <button @click="onClick" class="button"
-  :style="[isPrimary? {
+  :style="[styles,isPrimary? {
         'color':'#ffff',
         'backgroundColor':'#39a9cb',
       }:{
         'color':'#39a9cb',
         'backgroundColor':'#ffff', } ]" >
    
-      <img class ="icon" :src="require(`@/assets/svg/${iconName}`)" 
+      <img v-if="iconName" class ="icon" :src="require(`@/assets/svg/${iconName}`)" 
        :style="[isPrimary? {
         'filter':'invert(89%) sepia(100%) saturate(0%) hue-rotate(66deg) brightness(110%) contrast(99%)',
       }:{
@@ -38,8 +38,11 @@ export default defineComponent({
       },
       iconName:{
         type: String as PropType<string>,
-        required: true
+        required: false
       },
+      styles:{
+        type: Object as PropType<Object>
+      }
     
   },
 })

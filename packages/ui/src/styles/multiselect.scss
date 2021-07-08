@@ -3,7 +3,6 @@
 .multiselect {
   position: relative;
   margin: inherit;
-  margin-right: 0 !important;
   width: 20rem;
   display: flex;
   align-items: center;
@@ -56,6 +55,7 @@
     transition-duration: 0.3s;
     transition-timing-function: ease;
     transition-delay: 0s;
+    border-radius: 50px;
     flex-shrink: 0;
     flex-grow: 0;
     display: flex;
@@ -77,6 +77,7 @@
     bottom: 0;
     transform: translateY(100%);
     border: 1px solid $font-light;
+    border-radius: 5px;
     margin-top: calc(1px * -1);
     max-height: 10rem;
     overflow-y: scroll;

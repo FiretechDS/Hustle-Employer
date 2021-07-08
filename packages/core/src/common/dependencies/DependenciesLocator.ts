@@ -6,9 +6,9 @@ import { LoadOffersService } from "../../jobOffer/application/services/LoadOffer
 import { PublishOfferService } from "../../jobOffer/application/services/PublishOfferService";
 import { JobOfferPloc } from "../../jobOffer/presentation";
 
-function provideJobOfferPloc():JobOfferPloc{
-  const createOfferRepo = new OfferinMemoryPublisher();
-  const getOfferRepo = new OffersInMemoryRepository();
+function provideJobOfferPloc(workLocal?:boolean):JobOfferPloc{
+  const createOfferRepo = workLocal? new OfferinMemoryPublisher():new OfferApiPublisher();
+  const getOfferRepo = workLocal? new OffersInMemoryRepository(): new OffersAPIRepository();
   const getOffersQuery = new LoadOffersService(getOfferRepo);
   const publishOfferUseCase = new PublishOfferService(createOfferRepo);
   const jobOfferPloc = new JobOfferPloc(getOffersQuery,publishOfferUseCase);
