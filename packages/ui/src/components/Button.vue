@@ -1,18 +1,18 @@
 <template>
   <button @click="onClick" class="button"
-  :style="[styles,isPrimary? {
+  :style="[isPrimary? {
         'color':'#ffff',
         'backgroundColor':'#39a9cb',
       }:{
         'color':'#39a9cb',
-        'backgroundColor':'#ffff', } ]" >
+        'backgroundColor':'#ffff', },styles ]" >
    
       <img v-if="iconName" class ="icon" :src="require(`@/assets/svg/${iconName}`)" 
        :style="[isPrimary? {
         'filter':'invert(89%) sepia(100%) saturate(0%) hue-rotate(66deg) brightness(110%) contrast(99%)',
       }:{
         'filter':'invert(81%) sepia(23%) saturate(7224%) hue-rotate(158deg)brightness(88%) contrast(78%)',
-       } ]"
+       }]"
       />
    
     <span class="span">{{buttonText}} </span> 

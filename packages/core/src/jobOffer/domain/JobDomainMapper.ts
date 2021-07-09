@@ -17,7 +17,7 @@ export interface jobCreationProps{
   title:string,
   specialRequirements?:string,
   skills:skillMappedProps[] ,
-  status?:number,
+  status:number,
   hourlyRate: number,
   schedules: string[],
   location:string,

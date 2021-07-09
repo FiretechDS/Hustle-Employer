@@ -65,6 +65,7 @@
           <ul class="footer-offer-detail">
             <li >
               <Button buttonText="Applicants" iconName="postulantes.svg" 
+              :styles="{'width':'15rem'}"
               :isPrimary="false" @click="openApplications()" />
             </li>
             <li>

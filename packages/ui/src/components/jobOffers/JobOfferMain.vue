@@ -1,5 +1,6 @@
 <template>
   <div class="jobPageCointainer">
+    <ArchiveActiveButtons/>
     <h2 class="title">Published Offers</h2>
     <ul class="columns-job-offer">
       <li>Title</li>
@@ -45,9 +46,10 @@ import OfferDetail from '@/components/jobOffers/OfferDetail.vue';
 import { JobOfferPloc,jobPresentationProps } from '../../../../core/src/jobOffer/presentation';
 import { usePlocState } from '../../common/UsePlocState';
 import  Loader from '@/components/Loader.vue';
+import ArchiveActiveButtons from './ArchiveActiveButtons.vue';
 
 export default defineComponent({
-  components: { CreateOfferModal, OfferDetail, Loader },
+  components: { CreateOfferModal, OfferDetail, Loader,ArchiveActiveButtons },
   name: 'JobOfferMain',
   setup() {
     const ploc = inject<JobOfferPloc>('jobOfferPloc') as JobOfferPloc;

@@ -19,7 +19,7 @@ export class PresentationToApplicationMapper{
       id:offer.id,
       deadline:new Date(offer.deadline),
       creationDate:offer.creationDate?new Date(offer.creationDate):undefined,
-      status:offer.status? Status.getStatusNumber(offer.status):1,
+      status:Status.getStatusNumber(offer.status),
     }
   }
 }
