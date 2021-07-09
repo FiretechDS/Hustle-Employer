@@ -32,11 +32,12 @@ import Button from '../Button.vue'
 
 export default defineComponent({
   components: { Button },
-  setup() {
+  setup(props,ctx) {
     function handleClick(isActive:boolean){
       isClicked.active=isActive
       isClicked.archive=!isActive
-    }
+      ctx.emit('handleClick',isActive)
+    } 
     const isClicked=reactive({
       active:true,
       archive:false

@@ -44,7 +44,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
       return message 
   }
 
-  mapToUpdatedState(props: jobPresentationProps[]):OffersState{
+  private mapToUpdatedState(props: jobPresentationProps[]):OffersState{
     return{
       kind:"LoadedOffersState",
       offers:props.map((offer:jobPresentationProps)=>{
