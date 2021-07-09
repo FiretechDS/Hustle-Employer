@@ -1,6 +1,7 @@
 <template>
   <div class="jobPageCointainer">
-    <h2 class="title">Published Offers</h2>
+    <ArchiveActiveButtons @handleClick="handleFilter"/>
+    <h2 class="title">{{offerFilter.active?'Published':'Archived'}} Offers</h2>
     <ul class="columns-job-offer">
       <li>Title</li>
       <li class="small-columns-job-offer">Rate/hour</li>
@@ -22,6 +23,7 @@
       <div v-bind:key="job.id"
       v-for="job in state.offers">
         <OfferDetail
+          v-if="(offerFilter.active&&job.status==='Open')||(!offerFilter.active&&job.status==='Posted')"
           :title="job.title"
           :description="job.specialRequirements"
           :salary="job.hourlyRate"
@@ -45,14 +47,21 @@ import OfferDetail from '@/components/jobOffers/OfferDetail.vue';
 import { JobOfferPloc,jobPresentationProps } from '../../../../core/src/jobOffer/presentation';
 import { usePlocState } from '../../common/UsePlocState';
 import  Loader from '@/components/Loader.vue';
+import ArchiveActiveButtons from './ArchiveActiveButtons.vue';
 
 export default defineComponent({
-  components: { CreateOfferModal, OfferDetail, Loader },
+  components: { CreateOfferModal, OfferDetail, Loader,ArchiveActiveButtons },
   name: 'JobOfferMain',
   setup() {
     const ploc = inject<JobOfferPloc>('jobOfferPloc') as JobOfferPloc;
     const state = usePlocState(ploc);
     const message = reactive({value:'' as string, loading:false as boolean})
+    const offerFilter = reactive({active:true})
+  
+    function handleFilter(active:boolean){
+      offerFilter.active=active
+    }
+
     async function createOffer(offer:jobPresentationProps){
       message.value=''
       message.loading=true
@@ -63,7 +72,7 @@ export default defineComponent({
       }
       message.loading=false
     }
-    return { state,createOffer,message };
+    return {ploc, state,createOffer,message, offerFilter, handleFilter };
   },
 });
 </script>

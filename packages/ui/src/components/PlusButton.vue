@@ -19,8 +19,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .button {
   filter: $filter-blue;
-  width: 7rem;
-  height: 7rem;
+  width: 6rem;
+  height: 6rem;
   position: fixed;
   bottom: 50px;
   right: 30px;
