@@ -10,6 +10,7 @@
       <li class="small-columns-job-offer">Status</li>
     </ul>
     <div class="error" v-if="state.kind === 'ErrorOfferState'">
+      <img :src="require('@/assets/svg/disconnected.svg')" />
       <h2 class>{{ state.reason }}</h2>
       <p>{{state.error}} </p>
     </div>
@@ -33,6 +34,7 @@
           :schedule="{days: job.schedules,hourIn:job.startHour, hourOut:job.endHour}"
           :skills="job.skills"
           :location="job.location"
+          :areOffersActive="offerFilter.active"
         />
       </div>
     </div>
@@ -48,9 +50,10 @@ import { JobOfferPloc,jobPresentationProps } from '../../../../core/src/jobOffer
 import { usePlocState } from '../../common/UsePlocState';
 import  Loader from '@/components/Loader.vue';
 import ArchiveActiveButtons from './ArchiveActiveButtons.vue';
+import Button from '../Button.vue';
 
 export default defineComponent({
-  components: { CreateOfferModal, OfferDetail, Loader,ArchiveActiveButtons },
+  components: { CreateOfferModal, OfferDetail, Loader,ArchiveActiveButtons, Button },
   name: 'JobOfferMain',
   setup() {
     const ploc = inject<JobOfferPloc>('jobOfferPloc') as JobOfferPloc;
@@ -61,7 +64,9 @@ export default defineComponent({
     function handleFilter(active:boolean){
       offerFilter.active=active
     }
-
+    async function reload(){
+      await ploc.loadOffers()
+    }
     async function createOffer(offer:jobPresentationProps){
       message.value=''
       message.loading=true
@@ -72,7 +77,7 @@ export default defineComponent({
       }
       message.loading=false
     }
-    return {ploc, state,createOffer,message, offerFilter, handleFilter };
+    return {ploc, state,createOffer,message, offerFilter, handleFilter,reload };
   },
 });
 </script>
@@ -88,8 +93,13 @@ export default defineComponent({
   }
   .error{
     text-align:center;
-    margin-top:20vh;
+    margin-top:12vh;
     color:$highlit-yellow;
+    img{
+      width: 25rem;
+      height: 25rem;
+      filter: $filter-blue;
+    }
   }
   .empty{
     text-align:center;

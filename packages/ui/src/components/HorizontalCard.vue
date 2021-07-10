@@ -17,7 +17,11 @@
           <li class="small-columns-job-offer"> 
             <p class="in-card-text-job-offer">{{status}}</p>
           </li> 
+          <div class="buttons">
+            <slot name="buttons"> Buttons go here! </slot>
+          </div>
         </ul>
+
     </div>
 </template>
 
@@ -50,16 +54,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
 .job-card {
     //animation:anim 1s ease-in-out;
     background: white;
     padding: 0.1rem;
+    height: 8rem;
     margin: 1rem 0;
     border-radius: 8px;
     cursor: pointer;
+    .columns-job-offer{
+      width: 75vw;
+    }
   }
-
+.buttons{
+  width:15vw;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .in-card-text-job-offer{
       color: $font-dark;  
 }
