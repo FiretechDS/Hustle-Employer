@@ -1,5 +1,6 @@
 @import 'multiselect';
 @import 'variables';
+@import 'tooltip';
 /* Font styles */
 @font-face {
   font-family: 'Poppins';
@@ -60,7 +61,6 @@ html {
   width: 60vw;
   justify-content: space-around;
   list-style-type: none;
-
   :first-child {
     justify-self: flex-start;
     flex: 1;
@@ -70,14 +70,13 @@ html {
   }
 }
 
-
 //DETAIL OFFER MODAL
-.title-modal-offer{
-  color: $font-dark
+.title-modal-offer {
+  color: $font-dark;
 }
 
-.value-modal-offer{
-  color: $font-gray
+.value-modal-offer {
+  color: $font-gray;
 }
 
 .columns-modal-offer-detail {
@@ -98,27 +97,26 @@ html {
   .small-columns-modal-offer-detail {
     flex: 0rem;
   }
-  
-} 
+}
 
-.fields-modal-offer{
+.fields-modal-offer {
   margin-top: 0rem;
   padding: 0px 50px;
   margin-left: 1rem;
   margin-block-end: 0rem;
 }
 
-.list-modal-offer{ 
+.list-modal-offer {
   list-style: none;
   padding-inline-start: 1rem;
 }
 
-.footer-offer-detail{
+.footer-offer-detail {
   align-items: center;
   display: flex;
   justify-content: space-around;
 }
 
-.footer-offer-detail-applications{
+.footer-offer-detail-applications {
   width: 15rem;
 }

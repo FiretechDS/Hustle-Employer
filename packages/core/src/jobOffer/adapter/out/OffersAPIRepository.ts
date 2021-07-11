@@ -18,7 +18,7 @@ export class OffersAPIRepository implements LoadOffersPort{
                 }
             return Either.left({kind:'ApiError',message:'No response from API',statusCode: loadResponse.status,error: loadResponse.statusText})
         } catch (error) {
-            return Either.left({kind:'UnexpectedError',message:error})    
+            return Either.left({kind:'UnexpectedError',message:new Error("Couldn't load offers, try again later.")})    
         }
     }
 }

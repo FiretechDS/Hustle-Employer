@@ -1,0 +1,41 @@
+@import 'variables';
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 6rem;
+  height: 0.8rem;
+  background-color: $font-dark;
+  color: #fff;
+  text-align: center;
+  padding-bottom: 8px;
+  padding-top: 3px;
+  border-radius: 6px;
+  top: 120%;
+  left: 50%;
+  margin-left: -3rem;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.6s ease-in;
+  font-size: 1rem;
+}
+.tooltip .tooltiptext::after {
+  content: ' ';
+  position: absolute;
+  bottom: 100%; /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent $font-dark transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
