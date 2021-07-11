@@ -9,19 +9,73 @@
       :onClick="showModal"
     >
       <template v-slot:buttons v-if="areOffersActive">
-        <img
-          class="cardIcons"
-          @click.stop
-          :src="require('@/assets/svg/postulantes.svg')"
-        />
-        <img class="cardIcons"  @click.stop :src="require('@/assets/svg/edit.svg')" />
-        <img class="cardIcons"  @click.stop :src="require('@/assets/svg/archive.svg')" />
-        <img
-          class="cardIcons"
-          @click.stop
-          @click="showModal"
-          :src="require('@/assets/svg/more.svg')"
-        />
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/postulantes.svg')"
+          />
+          <span class="tooltiptext"> Aspirant </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/edit.svg')"
+          />
+          <span class="tooltiptext"> Update </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/archive.svg')"
+          />
+          <span class="tooltiptext"> Archive </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            @click="showModal"
+            :src="require('@/assets/svg/more.svg')"
+          />
+          <span class="tooltiptext"> Details </span>
+        </div>
+      </template>
+      <template v-slot:buttons v-else>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/paper-plane.svg')"
+          />
+          <span class="tooltiptext"> Publish </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/duplicate.svg')"
+          />
+          <span class="tooltiptext"> Duplicate </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/edit.svg')"
+          />
+          <span class="tooltiptext"> Update </span>
+        </div>
+        <div class="icon tooltip">
+          <img
+            class="cardIcons"
+            @click.stop
+            :src="require('@/assets/svg/delete.svg')"
+          />
+          <span class="tooltiptext"> Delete </span>
+        </div>
       </template>
     </HorizontalCard>
     <Modal v-show="state.isModalVisible" @close="closeModal()">
@@ -92,7 +146,7 @@
                 iconName="postulantes.svg"
                 :styles="{ width: '15rem' }"
                 :isPrimary="false"
-                @click="openAplications()"
+                @click="openApplications()"
               />
             </li>
             <li>
@@ -112,14 +166,13 @@
               />
             </li>
           </ul>
-          <ul v-else class="offer-detail-footer">
+          <ul v-else class="footer-offer-detail">
             <li>
               <Button
-                buttonText="Applicants"
-                iconName="postulantes.svg"
-                :styles="{ width: '15rem' }"
+                buttonText="Publish"
+                iconName="paper-plane.svg"
                 :isPrimary="false"
-                @click="openAplications()"
+                @click="publish()"
               />
             </li>
             <li>
@@ -132,10 +185,10 @@
             </li>
             <li>
               <Button
-                buttonText="Archive"
-                iconName="archive.svg"
+                buttonText="Delete"
+                iconName="delete.svg"
                 :isPrimary="false"
-                @click="file()"
+                @click="deleteOffer()"
               />
             </li>
           </ul>
@@ -218,6 +271,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.icon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+}
 .cardIcons {
   width: 3rem;
   height: 3rem;

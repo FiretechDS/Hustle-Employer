@@ -51,10 +51,12 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .modal {
   background: #ffffff;
+  z-index: 3;
   //  box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
   display: flex;
