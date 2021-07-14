@@ -1,25 +1,20 @@
 module.exports = {
     'Create Job Offer - Acceptance Test' : function (browser){
-        
+
         const validOffer = {
             deadline: '01-01-2022',
             duration: '200',
-            title: 'Full Stack',
-            specialRequirements: 'None',
-            skills: [{ name: 'Java', category: 1, number:2 }],
-            status: 2,
-            hourlyRate: '400',
-            schedules: ['monday', 'tuesday', 'friday'],
+            title: 'Acceptance test',
+            hourlyRate: '100',
             location: 'Caracas, Venezuela',
-            employerId: 1,
-            description: 'We need a good developer'
+            description: 'This is an acceptance test.'
         };
 
         browser
             .url('http://localhost:8080')
             .waitForElementVisible('body')
-            .assert.visible('.button')
-            .click('.button')
+            .assert.visible('#create-new-offer-button')
+            .click('#create-new-offer-button')
             .waitForElementVisible('.modal')
             .assert.visible('.create-job-offer-form')
             .setValue('#title-input',validOffer.title)
@@ -39,11 +34,16 @@ module.exports = {
             .setValue('#duration-input',validOffer.duration)
             .keys("\uE004")
             .keys("\uE015")
+            .keys("\uE015")
+            .keys("\uE007")
+            .keys("\uE015")
             .keys("\uE007")
             .setValue('#description-input',validOffer.description)
-            .click('#create-button')
-            //.click('.btn-close')
-            
-            .saveScreenshot('tests_output/form.png')
+            .assert.visible('#publish-button')
+            .click('#publish-button')
+            .assert.containsText('.form-result', 'Offer published successfully')
+            //Not-happy-path Validation: when duration equals 0
+            //.assert.containsText('.form-result', 'Job duration must be greater than zero')
+            .saveScreenshot('tests_output/create_job_offer.png')
     }
 }
