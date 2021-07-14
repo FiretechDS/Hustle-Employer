@@ -53,7 +53,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .job-card {
-  //animation:anim 1s ease-in-out;
+  animation: anim 1s ease-in-out;
   align-self: center;
   background: white;
   width: 80vw;

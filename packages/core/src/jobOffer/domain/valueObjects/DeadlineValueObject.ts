@@ -17,8 +17,8 @@ export class Deadline extends ValueObject<DeadlineProps>{
 
   public static create(deadline:Date,createdAt?:Date):Deadline{
     const currentDate:Date = new Date()
-    if ((createdAt && createdAt>deadline)&&deadline<currentDate){
-      throw new Error(`Deadline date "${deadline}" must be newer than current date: ${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`)
+    if ((createdAt && createdAt>deadline)||deadline<currentDate){
+      throw new Error(`Deadline date "${deadline.toDateString()}" must be newer than current date: "${currentDate.toDateString()}"`)
       
     }else{ 
       return new Deadline({

@@ -56,7 +56,8 @@ try {
   const mappedOffer = ApplicationToInfraMapper.map(offer)
   const offerDto ={...mappedOffer, EmployerId:mappedOffer.employerId, statusJobOfferModelId:mappedOffer.statusJobOfferModel}
   
-  console.log(offerDto)
+ // console.log(offerDto)
+  console.log(Deadline.create(new Date('1997-01-01')))
 
 } catch (error) {
   console.log('Caught error: '+error.message)
