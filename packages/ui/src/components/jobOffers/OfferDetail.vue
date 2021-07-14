@@ -15,7 +15,7 @@
             @click.stop
             :src="require('@/assets/svg/postulantes.svg')"
           />
-          <span class="tooltiptext"> Aspirant </span>
+          <span class="tooltiptext"> Applicant </span>
         </div>
         <div class="icon tooltip">
           <img
@@ -29,6 +29,7 @@
           <img
             class="cardIcons"
             @click.stop
+            @click="file"
             :src="require('@/assets/svg/archive.svg')"
           />
           <span class="tooltiptext"> Archive </span>
@@ -72,6 +73,7 @@
           <img
             class="cardIcons"
             @click.stop
+            @click="deleteOffer"
             :src="require('@/assets/svg/delete.svg')"
           />
           <span class="tooltiptext"> Delete </span>
@@ -188,7 +190,7 @@
                 buttonText="Delete"
                 iconName="delete.svg"
                 :isPrimary="false"
-                @click="deleteOffer()"
+                @click="deleteOffer"
               />
             </li>
           </ul>
@@ -203,6 +205,8 @@ import { defineComponent, reactive, PropType } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -261,10 +265,28 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
     }
+    function deleteOffer(): void {
+      createToast("Job offer was successfully deleted.", {
+        type: "success",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
+    }
+    function file(): void {
+      createToast("Job offer was moved to archive.", {
+        type: "success",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
+    }
     return {
       state,
       showModal,
       closeModal,
+      deleteOffer,
+      file,
     };
   },
 });
