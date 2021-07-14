@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="white-card">
-      <div class="modal">
         <header class="white-card-header">
           <slot name="header"> This is the default title! </slot>
         </header>
@@ -10,10 +9,6 @@
           <slot name="body"> This is the default body! </slot>
         </section>
 
-        <footer class="modal-footer">
-          <slot name="footer"> This is the default footer! </slot>
-        </footer>
-      </div>
     </div>
   </div>
 </template>
@@ -33,22 +28,26 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  width: 50rem;
-  height: 60rem;
+  width: 43rem;
+  height: 46rem;
   align-content: space-around;
-  margin-top: 7rem;
-  margin-left: 63rem;
+  //margin-left: 63rem;
+  margin: auto;
+  margin-top: 18rem;
 }
 .white-card-header{
   color: $font-dark;
-  font-size: 3rem;
+  font-size: $large-font;
   text-align: center;
-  padding: 1rem;
+  padding: 3.5rem;
+  margin-bottom: -1rem;
+  font-weight: bold;
 }
 .white-card-body{
   color: $font-dark;
-  font-size: 3rem;
+  font-size: $normal-font;
   text-align: center;
   padding: 1rem;
 }
+
 </style>
