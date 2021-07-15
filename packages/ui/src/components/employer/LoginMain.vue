@@ -55,9 +55,9 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+//  justify-content: space-around;
   width: 43rem;
-  height: 46rem;
+  height: 34rem;
   margin-right: 2rem;
   margin-left: 2.2rem;
 }
