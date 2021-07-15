@@ -28,12 +28,14 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  width: 43rem;
-  height: 46rem;
+ // width: 43rem;
+  //height: 46rem;
   align-content: space-around;
   //margin-left: 63rem;
   margin: auto;
   margin-top: 18rem;
+  max-width: 50rem;
+  max-height: 80rem;
 }
 .white-card-header{
   color: $font-dark;

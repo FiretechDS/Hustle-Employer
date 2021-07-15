@@ -56,6 +56,10 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  width: 43rem;
+  height: 46rem;
+  margin-right: 2rem;
+  margin-left: 2.2rem;
 }
 .input-login{
   font-family: 'Poppins';
