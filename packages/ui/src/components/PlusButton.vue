@@ -25,5 +25,8 @@ export default defineComponent({
   bottom: 50px;
   right: 30px;
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 </style>

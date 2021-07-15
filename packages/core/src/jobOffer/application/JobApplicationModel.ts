@@ -6,4 +6,4 @@ export type mappedDomainProps<T>={
 }
 export type JobApplicationProps = mappedDomainProps<jobCreationProps>;
 
-export type JobCreatedApplicationProps = mappedDomainProps<jobCreatedProps>
+export type JobCreatedApplicationProps = jobCreatedProps

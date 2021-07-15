@@ -5,20 +5,24 @@ import { PublishOfferUseCase } from "../application/port/in/PublishOfferUseCase"
 import { PresentationToApplicationMapper } from "./JobPresentApplicationMapper";
 import { offersInitialState, OffersState } from "./JobOffersState";
 import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
+import { DeleteOfferUseCase } from "../application/port/in/DeleteOfferUseCase";
+import { plocResult } from "../../common/presentation/PlocResult";
 
 const employerID = 100;
 
 export class JobOfferPloc extends Ploc<OffersState>{
   private loadOffersQuery:LoadOffersQuery
   private publishOfferUseCase:PublishOfferUseCase;
-  constructor ( loadOffersQueryProp:LoadOffersQuery,  publishOfferUseCaseProp:PublishOfferUseCase ){
+  private deleteOfferUseCase:DeleteOfferUseCase;
+  constructor ( loadOffersQueryProp:LoadOffersQuery,  publishOfferUseCaseProp:PublishOfferUseCase, deleteOfferUseCase:DeleteOfferUseCase ){
     super(offersInitialState);
     this.loadOffersQuery=loadOffersQueryProp;
-    this.publishOfferUseCase = publishOfferUseCaseProp
+    this.publishOfferUseCase = publishOfferUseCaseProp;
+    this.deleteOfferUseCase=deleteOfferUseCase;
     this.loadOffers();
   }
 
-   async loadOffers(){
+  private async loadOffers(){
  
       const offersResult = await  this.loadOffersQuery.load(employerID);
       offersResult.fold((error)=>{
@@ -29,19 +33,42 @@ export class JobOfferPloc extends Ploc<OffersState>{
       } )
   }
 
-   async createOffer(offer:jobCreatePresentationProps){
+   async createOffer(offer:jobCreatePresentationProps):Promise<plocResult>{
+     const result:plocResult ={success:false,value:'An unexpected error has occurred. '}
     const publishResult =  await this.publishOfferUseCase.publish((PresentationToApplicationMapper.mapToCreate( {...offer,employerId:employerID})));
-     const message = publishResult.fold(error=>{
-        if( error.kind==='ApiError')
-        return "Coudn't connect to server, try again later."
-        return error.message.message
-      }, (offer:jobPresentationProps)=>{
-          if(this.state.kind==='EmptyOffersState'||this.state.kind==='LoadedOffersState'){ 
-            this.changeState(this.mapToUpdatedState([offer,...this.state.offers]))
-          }
-          return 'Offer published successfully'
+    publishResult.fold(error=>{
+        if( error.kind==='ApiError')  result.value= "Coudn't connect to server, try again later."
+        else result.value = error.message.message
+      }, ()=>{
+          this.loadOffers()
+          result.success =true
+          result.value = 'Offer published successfully'
       } )
-      return message 
+      return result 
+  }
+
+  async deleteOffer(offerNumber:number):Promise<plocResult>{
+    const result:plocResult ={success:false,value:'An unexpected error has occurred. '}
+    if (this.state.kind==='LoadedOffersState'){
+      const foundOffer =  this.state.offers.find((offer:jobPresentationProps)=>{
+       return offer.id===offerNumber
+      } )
+      if (foundOffer){
+        const deleteResult = await this.deleteOfferUseCase.delete(PresentationToApplicationMapper.mapCreated(foundOffer))
+        deleteResult.fold( 
+          (error)=>{
+           if (error.kind==='UnexpectedError')  result.value=error.message.message
+          },
+          ()=>{
+            result.success=true
+            result.value='Your job offer was removed successfully.'
+            this.loadOffers()
+          }
+        )
+      }
+    }
+
+    return result
   }
 
   private mapToUpdatedState(props: jobPresentationProps[]):OffersState{

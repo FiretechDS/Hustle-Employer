@@ -11,15 +11,15 @@
       <template v-slot:buttons v-if="areOffersActive">
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/postulantes.svg')"
           />
-          <span class="tooltiptext"> Applicant </span>
+          <span class="tooltiptext"> Candidate </span>
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
@@ -27,7 +27,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             @click="file"
             :src="require('@/assets/svg/archive.svg')"
@@ -36,7 +36,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             @click="showModal"
             :src="require('@/assets/svg/more.svg')"
@@ -47,7 +47,7 @@
       <template v-slot:buttons v-else>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/paper-plane.svg')"
           />
@@ -55,7 +55,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/duplicate.svg')"
           />
@@ -63,7 +63,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
@@ -71,7 +71,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             @click="deleteOffer"
             :src="require('@/assets/svg/delete.svg')"
@@ -207,6 +207,7 @@ import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import { JobOfferPloc } from "../../../../core/build/jobOffer/presentation";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -250,12 +251,20 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    id: {
+      type: Number,
+      required: true,
+    },
+    ploc: {
+      type: JobOfferPloc,
+      required: true,
+    },
   },
   components: { Modal, HorizontalCard, Button },
   created() {
     console.log(this.state);
   },
-  setup() {
+  setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
     });
@@ -265,9 +274,10 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
     }
-    function deleteOffer(): void {
-      createToast("Job offer was successfully deleted.", {
-        type: "success",
+    async function deleteOffer() {
+      const result = await props.ploc.deleteOffer(props.id);
+      createToast(result.value, {
+        type: result.success ? "success" : "warning",
         toastBackgroundColor: "#39a9cb",
         position: "bottom-center",
         showIcon: true,

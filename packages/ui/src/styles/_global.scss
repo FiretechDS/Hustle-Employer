@@ -39,7 +39,12 @@
   src: local('Poppins'),
     url('/fonts/Poppins/Poppins-Semibold.ttf') format('truetype');
 }
-
+.highlight-icon {
+  opacity: 1;
+  &:hover {
+    opacity: 0.8;
+  }
+}
 body {
   margin: 0;
   background-color: $background-color;

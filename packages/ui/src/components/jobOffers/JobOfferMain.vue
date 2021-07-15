@@ -46,6 +46,8 @@
           :skills="job.skills"
           :location="job.location"
           :areOffersActive="offerFilter.active"
+          :id="job.id"
+          :ploc="ploc"
         />
       </div>
     </div>
@@ -65,7 +67,8 @@ import { usePlocState } from "../../common/UsePlocState";
 import Loader from "@/components/Loader.vue";
 import ArchiveActiveButtons from "./ArchiveActiveButtons.vue";
 import Button from "../Button.vue";
-
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 export default defineComponent({
   components: {
     CreateOfferModal,
@@ -87,17 +90,23 @@ export default defineComponent({
     function handleFilter(active: boolean) {
       offerFilter.active = active;
     }
-    async function reload() {
-      await ploc.loadOffers();
-    }
     async function createOffer(offer: jobPresentationProps) {
       message.value = "";
       message.loading = true;
-      try {
-        message.value = await ploc.createOffer(offer);
+      const result = await ploc.createOffer(offer);
+      message.value = result.value;
+      if (result.success)
+        createToast("Offer created", {
+          type: "success",
+          toastBackgroundColor: "#39a9cb",
+          position: "bottom-center",
+          showIcon: true,
+        });
+      /* try {
+        message.value = await (await ploc.createOffer(offer)).value;
       } catch (error) {
         message.value = error.message;
-      }
+      }*/
       message.loading = false;
     }
     return {
@@ -107,7 +116,6 @@ export default defineComponent({
       message,
       offerFilter,
       handleFilter,
-      reload,
     };
   },
 });
