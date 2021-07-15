@@ -1,25 +1,30 @@
 <template>
     <WhiteVerticalCard>
-        <template v-slot:header>Employer Access</template>
+        <template v-slot:header>Employer Register</template>
         <template v-slot:body>
             <div class="content-register">
-                <div class="more-items-register">
+                <div class="multiple-items-register">
                     <input v-model="registerInfo.email" class="two-inputs-register" placeholder="Email" id="email-register" type="text"/>
                     <input v-model="registerInfo.password" class="two-inputs-register" placeholder="Password" id="password-register" type="password"/>
                 </div>
                 <input v-model="registerInfo.companyName" class="full-line-input-register" placeholder="Company Name" id="name-register" type="text"/>
-                <div class="more-items-register">
-                    <input v-model="registerInfo.email" class="two-inputs-register" placeholder="Skills" id="mail-login" type="text"/>
+                <div class="multiple-items-register">
+                <Multiselect 
+                :options="registerInfo.skills.options" v-bind="registerInfo.skills"
+                v-model="registerInfo.skills.value" placeholder="Skills" 
+                mode="multiple" class="two-inputs-register" id="skills-input"
+              />
                 <input v-model="registerInfo.logo" class="two-inputs-register" placeholder="Logo" id="mail-login" type="text"/>
                 </div>
                 <p class="subtitle-register">Address</p>
                 <input v-model="registerInfo.firstLineAddress" class="full-line-input-register" placeholder="First Line" id="firs-line-address-register" type="text"/>
                 <input v-model="registerInfo.secondLineAddress" class="full-line-input-register" placeholder="Second Line" id="second-line-address-register" type="text"/>
-                <div class="more-items-register">
-                    <input v-model="registerInfo.logo" class="two-inputs-register" placeholder="Logo" id="mail-login" type="text"/>
-                    <input v-model="registerInfo.logo" class="two-inputs-register" placeholder="Logo" id="mail-login" type="text"/>
-                    <input v-model="registerInfo.logo" class="two-inputs-register" placeholder="Logo" id="mail-login" type="text"/>
+                <div class="multiple-items-register">
+                    <input v-model="registerInfo.state" class="location-input-register" placeholder="State" id="mail-login" type="text"/>
+                    <input v-model="registerInfo.city" class="location-input-register" placeholder="City" id="mail-login" type="text"/>
+                    <input v-model="registerInfo.zip" class="zip-input-register" placeholder="ZIP" id="mail-login" type="text"/>
                 </div>
+                 <Button buttonText="Next" :isPrimary="false" @click="next()" id="register-button" :style="{width: '23.6rem', height: '3.6rem'}"/>
             </div>
         </template>
     </WhiteVerticalCard>
@@ -29,7 +34,8 @@
 import { defineComponent, reactive } from 'vue';
 import WhiteVerticalCard from '../WhiteVerticalCard.vue'
 import Button from "../Button.vue"
-
+import Multiselect from '@vueform/multiselect';
+import {skills} from "../jobOffers/skills";
 
 export default defineComponent({
     setup() {
@@ -38,7 +44,12 @@ export default defineComponent({
         companyName: "" as string,
         email: "" as string,
         password: "" as string,
-        skills: [],
+        skills:{
+         value:[] as Array<number>,
+         options:skills.map(skill=>{
+           return {value:skill.id, label:skill.habilityName}
+         }) 
+      },
         logo: "" as string,
         firstLineAddress: "" as string,
         secondLineAddress: "" as string,
@@ -49,7 +60,7 @@ export default defineComponent({
 
         return {registerInfo}
     },
-    components: { WhiteVerticalCard, Button },
+    components: { WhiteVerticalCard, Button, Multiselect },
     name: 'RegisterMain'
 })
 </script>
@@ -65,7 +76,7 @@ export default defineComponent({
   margin-right: 2rem;
  margin-left: 2.2rem;
 }
-.more-items-register{
+.multiple-items-register{
     display: flex;
     justify-content: space-around;
     list-style-type: none;
@@ -87,13 +98,11 @@ export default defineComponent({
   border-radius: 8px;
   border-color: transparent;
   padding: 6px;
-  //margin-bottom: 0.5rem;
-  width: 25%;
   color:$font-gray;
   background: $lighter-gray;
   width: 20rem;
-//  text-align: center;
   text-indent: 0.7rem;
+  max-width: 20rem;
 }
 .input-register{
   font-family: 'Poppins';
@@ -102,13 +111,11 @@ export default defineComponent({
   border-radius: 8px;
   border-color: transparent;
   padding: 6px;
-  //margin-bottom: 0.5rem;
-  width: 25%;
   color:$font-gray;
   background: $lighter-gray;
   width: 22rem;
-//  text-align: center;
   text-indent: 0.7rem;
+  max-width: 22rem;
 }
 .full-line-input-register{
   font-family: 'Poppins';
@@ -117,12 +124,34 @@ export default defineComponent({
   border-radius: 8px;
   border-color: transparent;
   padding: 6px;
-  //margin-bottom: 0.5rem;
-  width: 25%;
   color:$font-gray;
   background: $lighter-gray;
   width: 44rem;
-//  text-align: center;
+  text-indent: 0.7rem;
+}
+.zip-input-register{
+  font-family: 'Poppins';
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  border-radius: 8px;
+  border-color: transparent;
+  padding: 6px;
+  color:$font-gray;
+  background: $lighter-gray;
+  width: 5rem;
+  text-indent: 0.7rem;
+  margin-left: 2.1rem;
+}
+.location-input-register{
+  font-family: 'Poppins';
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  border-radius: 8px;
+  border-color: transparent;
+  padding: 6px;
+  color:$font-gray;
+  background: $lighter-gray;
+  width: 15.7rem;
   text-indent: 0.7rem;
 }
 .subtitle-register{
