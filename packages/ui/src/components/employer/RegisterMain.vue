@@ -24,7 +24,7 @@
                     <input v-model="registerInfo.city" class="location-input-register" placeholder="City" id="mail-login" type="text"/>
                     <input v-model="registerInfo.zip" class="zip-input-register" placeholder="ZIP" id="mail-login" type="text"/>
                 </div>
-                 <Button buttonText="Next" :isPrimary="false" @click="next()" id="register-button" :style="{width: '23.6rem', height: '3.6rem'}"/>
+                 <Button buttonText="Next" :isPrimary="false" @click="nextRegister()" id="register-button" :style="{width: '23.6rem', height: '3.6rem'}"/>
             </div>
         </template>
     </WhiteVerticalCard>
@@ -57,6 +57,10 @@ export default defineComponent({
         state: "" as string,
         zip: 0 as number
       })
+
+      function nextRegister() {
+          console.log(registerInfo)
+      }
 
         return {registerInfo}
     },
@@ -103,6 +107,7 @@ export default defineComponent({
   width: 20rem;
   text-indent: 0.7rem;
   max-width: 20rem;
+  max-height: 2.7rem;
 }
 .input-register{
   font-family: 'Poppins';
