@@ -24,7 +24,7 @@
                     <input v-model="registerInfo.city" class="location-input-register" placeholder="City" id="mail-login" type="text"/>
                     <input v-model="registerInfo.zip" class="zip-input-register" placeholder="ZIP" id="mail-login" type="text"/>
                 </div>
-                 <Button buttonText="Next" :isPrimary="false" @click="nextRegister()" id="register-button" :style="{width: '23.6rem', height: '3.6rem'}"/>
+                 <Button buttonText="Next" :isPrimary="false" @click="nextRegister()" id="next-button" :style="{width: '23.6rem', height: '3.6rem'}"/>
             </div>
         </template>
     </WhiteVerticalCard>
@@ -70,13 +70,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+
 .content-register{
   display: flex;
   flex-direction: column;
   align-items: center;
 //  justify-content: space-around;
-  width: 43rem;
-  height: 48rem;
+//  width: 43rem;
+//  height: 48rem;
   margin-right: 2rem;
  margin-left: 2.2rem;
 }
@@ -158,11 +159,5 @@ export default defineComponent({
   background: $lighter-gray;
   width: 15.7rem;
   text-indent: 0.7rem;
-}
-.subtitle-register{
-    font-size: $normal-font;
-    display:flex;
-    justify-self: flex-start;
-    margin-right: 38rem;
 }
 </style>
