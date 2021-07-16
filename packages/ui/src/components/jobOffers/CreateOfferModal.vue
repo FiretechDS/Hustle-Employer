@@ -166,7 +166,7 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
       setValuesToDefault();
-      ctx.emit('resetMsg')
+      ctx.emit("resetMsg");
     }
 
     function getHourOptions(): Object[] {
@@ -208,7 +208,7 @@ export default defineComponent({
         schedules: jobOffer.schedules.value,
         skills: jobOffer.skills.value.map((skill: number) => {
           return {
-            name: jobOffer.skills.options[skill].label,
+            name: jobOffer.skills.options[skill - 1].label,
             number: skill,
             category: 1,
           };

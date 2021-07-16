@@ -97,43 +97,58 @@
             <li class="small-columns-modal-offer-detail">
               <p class="title-modal-offer">Deadline</p>
             </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Status</p>
+            </li>
           </ul>
           <ul class="columns-modal-offer-detail">
             <li>
-              <p class="value-modal-offer">{{ salary }}</p>
+              <p class="value-modal-offer">${{ salary }}</p>
             </li>
             <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ duration }}</p>
+              <p class="value-modal-offer">{{ duration }} hours</p>
             </li>
             <li class="small-columns-modal-offer-detail">
               <p class="value-modal-offer">{{ deadline }}</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="value-modal-offer">{{ status }}</p>
             </li>
           </ul>
         </div>
 
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Schedule</p>
-          <ul class="list-modal-offer">
-            <li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
-              <div class="value-modal-offer">
-                <p>
-                  {{ day }} {{ schedule.hourIn }}:00 -{{ schedule.hourOut }}:00
-                </p>
-              </div>
-            </li>
-          </ul>
+          <perfect-scrollbar>
+            <ul class="list-modal-offer">
+              <li
+                v-for="day in schedule.days"
+                :key="schedule.days.indexOf(day)"
+              >
+                <div class="value-modal-offer">
+                  <p>
+                    {{ day }} {{ schedule.hourIn }}:00 -{{
+                      schedule.hourOut
+                    }}:00
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
         </div>
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Skills</p>
-          <ul class="list-modal-offer">
-            <li v-for="skill in skills" :key="skill.name">
-              <div class="value-modal-offer">
-                <p>
-                  {{ skill.name }}
-                </p>
-              </div>
-            </li>
-          </ul>
+          <p class="title-modal-offer">Required Skills</p>
+          <perfect-scrollbar>
+            <ul class="list-modal-offer">
+              <li v-for="skill in skills" :key="skill.name">
+                <div class="value-modal-offer">
+                  <p>
+                    {{ skill.name }}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
         </div>
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Location</p>
@@ -335,5 +350,10 @@ export default defineComponent({
   height: 3rem;
   filter: $filter-blue;
   flex: 1;
+}
+.ps {
+  min-height: 6rem;
+  max-height: 12rem;
+  width: 20rem;
 }
 </style>

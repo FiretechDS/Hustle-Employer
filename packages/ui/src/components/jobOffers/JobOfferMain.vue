@@ -23,33 +23,35 @@
       <Loader color="#ffeda3" />
     </div>
     <div v-if="state.kind === 'LoadedOffersState'">
-      <div v-bind:key="job.id" v-for="job in state.offers">
-        <OfferDetail
-          class="card"
-          v-if="
-            (offerFilter.active && job.status === 'Open') ||
-            job.status === 'Closed' ||
-            (!offerFilter.active && job.status === 'Posted') ||
-            job.status === 'Cancelled'
-          "
-          :title="job.title"
-          :description="job.specialRequirements"
-          :salary="job.hourlyRate"
-          :duration="job.duration"
-          :deadline="job.deadline"
-          :status="job.status"
-          :schedule="{
-            days: job.schedules,
-            hourIn: job.startHour,
-            hourOut: job.endHour,
-          }"
-          :skills="job.skills"
-          :location="job.location"
-          :areOffersActive="offerFilter.active"
-          :id="job.id"
-          :ploc="ploc"
-        />
-      </div>
+      <perfect-scrollbar>
+        <div v-bind:key="job.id" v-for="job in state.offers">
+          <OfferDetail
+            class="card"
+            v-if="
+              (offerFilter.active && job.status === 'Open') ||
+              job.status === 'Closed' ||
+              (!offerFilter.active && job.status === 'Posted') ||
+              job.status === 'Cancelled'
+            "
+            :title="job.title"
+            :description="job.specialRequirements"
+            :salary="job.hourlyRate"
+            :duration="job.duration"
+            :deadline="job.deadline"
+            :status="job.status"
+            :schedule="{
+              days: job.schedules,
+              hourIn: job.startHour,
+              hourOut: job.endHour,
+            }"
+            :skills="job.skills"
+            :location="job.location"
+            :areOffersActive="offerFilter.active"
+            :id="job.id"
+            :ploc="ploc"
+          />
+        </div>
+      </perfect-scrollbar>
     </div>
   </div>
   <CreateOfferModal
@@ -159,6 +161,9 @@ export default defineComponent({
     color: $white;
     margin-left: auto;
     margin-right: auto;
+  }
+  .ps {
+    height: 58vh;
   }
   @media only screen and (max-width: 690px) {
     .jobPageCointainer {

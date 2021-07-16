@@ -80,6 +80,7 @@ html {
 //DETAIL OFFER MODAL
 .title-modal-offer {
   color: $font-dark;
+  font-weight: bolder;
 }
 
 .value-modal-offer {
@@ -114,7 +115,7 @@ html {
 }
 
 .list-modal-offer {
-  list-style: none;
+  list-style: disc;
   padding-inline-start: 1rem;
 }
 
