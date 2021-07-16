@@ -52,7 +52,11 @@
       </div>
     </div>
   </div>
-  <CreateOfferModal @createOffer="createOffer" :message="message" />
+  <CreateOfferModal
+    @createOffer="createOffer"
+    @resetMsg="resetMsg"
+    :message="message"
+  />
 </template>
 
 <script lang="ts">
@@ -87,11 +91,14 @@ export default defineComponent({
     });
     const offerFilter = reactive({ active: true });
 
-    function handleFilter(active: boolean) {
+    function handleFilter(active: boolean): void {
       offerFilter.active = active;
     }
-    async function createOffer(offer: jobPresentationProps) {
+    function resetMsg(): void {
       message.value = "";
+    }
+    async function createOffer(offer: jobPresentationProps): Promise<void> {
+      resetMsg();
       message.loading = true;
       const result = await ploc.createOffer(offer);
       message.value = result.value;
@@ -116,6 +123,7 @@ export default defineComponent({
       message,
       offerFilter,
       handleFilter,
+      resetMsg,
     };
   },
 });

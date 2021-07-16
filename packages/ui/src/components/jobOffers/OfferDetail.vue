@@ -69,15 +69,16 @@
           />
           <span class="tooltiptext"> Update </span>
         </div>
-        <div class="icon tooltip">
+        <div v-if="!state.loadingDelete" class="icon tooltip">
           <img
             class="cardIcons highlight-icon"
             @click.stop
-            @click="deleteOffer"
+            @click="deleteModal"
             :src="require('@/assets/svg/delete.svg')"
           />
           <span class="tooltiptext"> Delete </span>
         </div>
+        <Loader v-else color="#39a9cb" size="8px" />
       </template>
     </HorizontalCard>
     <Modal v-show="state.isModalVisible" @close="closeModal()">
@@ -190,7 +191,7 @@
                 buttonText="Delete"
                 iconName="delete.svg"
                 :isPrimary="false"
-                @click="deleteOffer"
+                @click="deleteModal"
               />
             </li>
           </ul>
@@ -208,6 +209,8 @@ import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
 import { JobOfferPloc } from "../../../../core/build/jobOffer/presentation";
+import { useConfirm } from "primevue/useconfirm";
+import Loader from "../Loader.vue";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -260,21 +263,36 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { Modal, HorizontalCard, Button },
+  components: { Modal, HorizontalCard, Button, Loader },
   created() {
     console.log(this.state);
   },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
+      loadingDelete: false as boolean,
     });
+    const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
     }
     function closeModal(): void {
       state.isModalVisible = false;
     }
+    function deleteModal() {
+      confirm.require({
+        message: `Are you sure you want to delete ${props.title}?`,
+        header: "Delete Offer",
+        accept: () => {
+          deleteOffer();
+        },
+        reject: () => {
+          //callback to execute when user rejects the action
+        },
+      });
+    }
     async function deleteOffer() {
+      state.loadingDelete = true;
       const result = await props.ploc.deleteOffer(props.id);
       createToast(result.value, {
         type: result.success ? "success" : "warning",
@@ -295,7 +313,7 @@ export default defineComponent({
       state,
       showModal,
       closeModal,
-      deleteOffer,
+      deleteModal,
       file,
     };
   },

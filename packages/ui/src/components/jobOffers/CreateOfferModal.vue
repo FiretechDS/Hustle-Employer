@@ -166,6 +166,7 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
       setValuesToDefault();
+      ctx.emit('resetMsg')
     }
 
     function getHourOptions(): Object[] {

@@ -1,6 +1,7 @@
 @import 'multiselect';
 @import 'variables';
 @import 'tooltip';
+@import 'conf-modal.scss';
 /* Font styles */
 @font-face {
   font-family: 'Poppins';
@@ -65,6 +66,7 @@ html {
   display: flex;
   width: 60vw;
   justify-content: space-around;
+  align-items: center;
   list-style-type: none;
   :first-child {
     justify-self: flex-start;
