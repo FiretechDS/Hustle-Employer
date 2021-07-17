@@ -38,7 +38,7 @@ export default defineComponent({
   color: $font-dark;
   font-size: $large-font;
   text-align: center;
-  padding: 3.5rem;
+  margin-top: 3.5rem;
   margin-bottom: -1rem;
   font-weight: bold;
 }
