@@ -5,7 +5,8 @@
             <div class="content-register-contact">
                 <p class="subtitle-register">Contacts</p>
                 <GrayCard> 
-                    <ul class="multiple-items-register">
+                    <template v-slot:body>
+                        <ul class="details-contact-register">
                         <li>
                             <p>David</p>
                         </li>
@@ -16,9 +17,34 @@
                             <p>Developer</p>
                         </li>
                         <li>
-                            <p>Botones</p>
+                            <div class="icon tooltip">
+                            <img
+                                class="cardIconsContact"
+                                @click.stop
+                                :src="require('@/assets/svg/edit.svg')"
+                            />
+                            </div>
+                            <div class="icon tooltip">
+                            <img
+                                class="cardIconsContact"
+                                @click.stop
+                                :src="require('@/assets/svg/delete.svg')"
+                            />
+                            </div>
                         </li>
                     </ul>
+                    </template>
+                </GrayCard>
+                <GrayCard>
+                    <template v-slot:body>
+                        <div class="icon tooltip">
+                            <img
+                                class="cardIconsContactPlus "
+                                @click.stop
+                                :src="require('@/assets/svg/plus-flat.svg')"
+                            />
+                            </div>
+                    </template> 
                 </GrayCard>
                 <div class="multiple-items-register">
                     <Button buttonText="Previous" :isPrimary="false" @click="nextRegister()" id="previous-button" :style="{width: '15rem', height: '3.6rem'}"/>
@@ -56,6 +82,13 @@ export default defineComponent({
   margin-right: 2rem;
   margin-left: 2.2rem;
 }
+.card-multiple-items-register{
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    color: $font-dark;
+    margin-top: -8px;
+}
 .multiple-items-register{
     display: flex;
     justify-content: space-around;
@@ -66,9 +99,31 @@ export default defineComponent({
         flex: 1;
         margin-right: 2.1rem;
     }
-    .small-columns{
-        flex: 0.5;
-        
-     }
+}
+.details-contact-register{
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin-top: -1rem;
+    padding: 0px;
+    width: 40rem;
+    :first-child {
+        justify-self: flex-start;
+        flex: 0;
+    }
+}
+.cardIconsContact {
+  width: 2rem;
+  height: 2rem;
+  filter: $filter-blue;
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+}
+.cardIconsContactPlus{
+  width: 2rem;
+  height: 2rem;
+  filter: $filter-blue;
+  padding: 0.5rem;
+  filter: $filter-dark;
 }
 </style>

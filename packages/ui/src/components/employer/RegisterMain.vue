@@ -49,13 +49,14 @@ export default defineComponent({
          options:skills.map(skill=>{
            return {value:skill.id, label:skill.habilityName}
          }) 
-      },
+        },
         logo: "" as string,
         firstLineAddress: "" as string,
         secondLineAddress: "" as string,
         city: "" as string,
         state: "" as string,
-        zip: 0 as number
+        zip: 0 as number,
+        contacts: []
       })
 
       function nextRegister() {

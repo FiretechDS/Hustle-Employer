@@ -1,5 +1,6 @@
 <template>
     <div class="register-contact-card" @click="onClick()">
+
     <slot name="body">
     </slot>
   </div>
@@ -21,13 +22,12 @@ export default defineComponent({
 .register-contact-card {
   //animation:anim 1s ease-in-out;
   align-self: center;
-  background: $font-gray;
-  width: 40rem;
+  background:$lighter-gray;
+//  width: 40rem;
   padding: 0.1rem;
   height: 3rem;
   margin: 1rem 0;
   border-radius: 8px;
   cursor: pointer;
-  z-index: -1; //check
 }
 </style>
