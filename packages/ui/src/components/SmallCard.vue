@@ -1,12 +1,14 @@
 <template>
-  <div class="small-card" @click="onClick()">      
-      <div class="icon-container">
-          <div class="icon"> {{firstName[0]}}{{lastName[0]}} </div>
+  <div class="small-card" @click="onClick()">
+      <div class="small-card-body">      
+          <div class="icon-container">
+              <div class="icon"> {{firstName[0]}}{{lastName[0]}} </div>
+          </div>
+          <section class="small-card-info">
+              <p class="name">{{firstName}} {{lastName}}</p>
+              <p class="view-info" @click="onClick()">View Profile</p>
+          </section>
       </div>
-      <section class="small-card-body">
-          <p class="name">{{firstName}} {{lastName}}</p>
-          <p class="view-info" @click="onClick()">View Profile</p>
-      </section>
       <footer class="small-card-footer">
           <p>{{getTimeAgo(date)}}.</p>
       </footer>
@@ -49,7 +51,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 p{
-    padding: 0;
     margin: 0 0.5rem;
     display: inline-block;
     width: 100%;
@@ -57,22 +58,14 @@ p{
 .small-card {
   background: white;
   width: 30rem;//25vw;
-  padding: 0.2rem;
   height: 10rem;
   margin: 1rem 0;
   margin-right: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  display: block;
-}
-.icon-container{
-  width: 7rem;
-  margin: 0rem;
-  display: inline-block;
 }
 .icon {
   background: #FFEDA3;
-  text-align: center;
   color: #29293A;
   border-radius: 100%;
   margin: 1rem;
@@ -85,10 +78,11 @@ p{
   font-weight: bold;
   font-size: 2rem;
 }
-.small-card-body {
-  width: 60%;
+.small-card-body{
+  display: flex;
+}
+.small-card-info {
   margin: 1rem;
-  display: inline-block;
 }
 .name{
     color: $font-dark;
@@ -98,12 +92,13 @@ p{
 }
 .view-info{
     color: #39A9CB;
-    display: inline-flex;
+    display: flex;
     font-weight: bold;
+    //cursor: pointer;
 }
 .small-card-footer{
     filter: $filter-gray;
     margin-left: 1rem ;
-    display: inline-block;
+    display: flex;
 }
 </style>
