@@ -104,13 +104,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, inject, reactive, watch } from "vue";
 import PlusButton from "../PlusButton.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
-import { skills } from "./skills";
 import Loader from "@/components/Loader.vue";
+
+import { usePlocState } from "../../common/UsePlocState";
+import { SkillPloc } from "../../../../core/src";
 export default defineComponent({
   name: "CreateOfferModal",
   components: { Modal, PlusButton, Button, Multiselect, Loader },
@@ -126,6 +128,18 @@ export default defineComponent({
   setup(props, ctx) {
     const state = reactive({
       isModalVisible: false as boolean,
+    });
+    const skillPloc = inject<SkillPloc>("skillsPloc") as SkillPloc;
+    const skillState = usePlocState(skillPloc);
+
+    watch(skillState, (oldState, newState) => {
+      console.log(newState);
+      console.log(oldState);
+      if (oldState.kind === "LoadedSkillsState") {
+        jobOffer.skills.options = oldState.skills.map((skill) => {
+          return { value: skill.number, label: skill.name };
+        });
+      }
     });
     const jobOffer = reactive({
       title: "" as string,
@@ -149,9 +163,7 @@ export default defineComponent({
       endHour: 0 as number,
       skills: {
         value: [] as Array<number>,
-        options: skills.map((skill) => {
-          return { value: skill.id, label: skill.habilityName };
-        }),
+        options: [{ value: 1, label: "Skill Loading Error" }],
       },
       status: 1,
     });

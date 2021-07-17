@@ -8,7 +8,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { dependenciesLocator } from "../../core/src/common/dependencies";
+import {
+  dependenciesLocator,
+  skillLocator,
+} from "../../core/src/common/dependencies";
 import NavBar from "./components/nav-bar/NavBar.vue";
 import ConfirmDialog from "primevue/confirmdialog";
 
@@ -17,6 +20,7 @@ export default defineComponent({
   components: { NavBar, ConfirmDialog },
   provide: {
     jobOfferPloc: dependenciesLocator.provideJobOfferPloc(),
+    skillsPloc: skillLocator.provideSkillProp(),
   },
 });
 </script>

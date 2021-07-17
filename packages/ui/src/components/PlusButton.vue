@@ -28,5 +28,9 @@ export default defineComponent({
   &:hover {
     opacity: 0.8;
   }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 </style>

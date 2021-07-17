@@ -1,11 +1,5 @@
-interface skillModel{
-  id:number,
-  habilityName:string,
-  skillCategoryModel:{
-    id:number,
-    nameCategory:string
-  }
-}
+import { skillModel } from "../../skills/adapter/skillModel";
+
 interface scheduleModel{
   id:number,
   day:string,

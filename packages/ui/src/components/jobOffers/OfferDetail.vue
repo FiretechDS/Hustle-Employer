@@ -217,7 +217,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from "vue";
+import { defineComponent, reactive, PropType,inject } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
@@ -273,10 +273,6 @@ export default defineComponent({
       type: Number,
       required: true,
     },
-    ploc: {
-      type: JobOfferPloc,
-      required: true,
-    },
   },
   components: { Modal, HorizontalCard, Button, Loader },
   created() {
@@ -287,6 +283,7 @@ export default defineComponent({
       isModalVisible: false as boolean,
       loadingDelete: false as boolean,
     });
+    const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
     const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
@@ -308,7 +305,7 @@ export default defineComponent({
     }
     async function deleteOffer() {
       state.loadingDelete = true;
-      const result = await props.ploc.deleteOffer(props.id);
+      const result = await ploc.deleteOffer(props.id);
       createToast(result.value, {
         type: result.success ? "success" : "warning",
         toastBackgroundColor: "#39a9cb",

@@ -13,7 +13,7 @@ import { ToPresentationMapper } from "../presentation/JobPresentationMapper";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
 import { JobHeader } from "./valueObjects/HeaderValueObject";
-import { Skill } from "./valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { OffersInMemoryRepository } from "../adapter/out/OffersInMemoryRepository";
@@ -25,6 +25,7 @@ import { OffersAPIRepository } from "../adapter/out/OffersAPIRepository";
 import { ApplicationToInfraMapper } from "../adapter/JobApplicationToInfraMapper";
 import { dependenciesLocator } from "../../common";
 import { OfferApiRemover } from "../adapter/out/OfferApiRemover";
+import { SkillApiLoader } from "../../skills/adapter/SkillApiLoader";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -65,15 +66,14 @@ try {
 
  async function load(){
   try {
-    const repo = new OfferApiRemover();
+    const repo = new SkillApiLoader();
     const ploc = dependenciesLocator.provideJobOfferPloc()
-    ploc.state.kind==='ErrorOfferState'&& console.log(ploc.state.reason  );
-    const result =await repo.delete(283)
-    console.log(result)
+    const result = await repo.load()
+    result.fold(()=>{},(good)=>{console.log(good)} )
   } catch (error) {
     console.log(error.message)
   }
   
-
 }
+
 load()

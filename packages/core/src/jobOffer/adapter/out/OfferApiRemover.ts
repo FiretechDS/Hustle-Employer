@@ -1,7 +1,7 @@
 import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
 import { DeleteOfferPort } from "../../application/port/out/DeleteOfferPort";
-import apiFetcher from "../api/springBoot";
+import apiFetcher from "../../../common/adapter/api/springBoot";
 
 export class OfferApiRemover implements DeleteOfferPort{
  async delete(offerId: number): Promise<Either<DataError, true>> {

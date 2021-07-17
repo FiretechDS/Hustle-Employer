@@ -48,7 +48,6 @@
             :location="job.location"
             :areOffersActive="offerFilter.active"
             :id="job.id"
-            :ploc="ploc"
           />
         </div>
       </perfect-scrollbar>
@@ -111,11 +110,6 @@ export default defineComponent({
           position: "bottom-center",
           showIcon: true,
         });
-      /* try {
-        message.value = await (await ploc.createOffer(offer)).value;
-      } catch (error) {
-        message.value = error.message;
-      }*/
       message.loading = false;
     }
     return {
