@@ -57,12 +57,13 @@ p{
 }
 .small-card {
   background: white;
-  width: 30rem;//25vw;
+  width: 20vw;//30rem;//25vw;
   height: 10rem;
   margin: 1rem 0;
   margin-right: 1rem;
   border-radius: 8px;
   cursor: pointer;
+  min-width: 30rem;
 }
 .icon {
   background: #FFEDA3;
