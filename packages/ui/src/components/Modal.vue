@@ -8,6 +8,7 @@
             class="btn-close"
             src="@/assets/svg/letra-x.png"
             @click="close"
+            id="close-modal-button"
           />
         </header>
 

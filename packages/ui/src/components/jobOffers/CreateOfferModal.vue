@@ -48,7 +48,7 @@
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
-          <Button buttonText="Publish" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer(true)" id="create-button"/> 
+          <Button buttonText="Publish" iconName="paper-plane.svg" :isPrimary="true" @click="sendOffer(true)" id="publish-button"/> 
            <Button buttonText="Archive" iconName="archive.svg" 
            :isPrimary="false" @click="sendOffer(false)" /> 
         </div>
