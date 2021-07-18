@@ -17,22 +17,21 @@
       <p>{{ state.error }}</p>
     </div>
     <div class="empty" v-if="state.kind === 'EmptyOffersState'">
+      <img :src="require('@/assets/svg/empty.svg')" />
       <h2>{{ state.message }}</h2>
     </div>
     <div v-if="state.kind === 'LoadingOffersState'" class="loading">
       <Loader color="#ffeda3" />
     </div>
     <div v-if="state.kind === 'LoadedOffersState'">
-      <perfect-scrollbar>
-        <div v-bind:key="job.id" v-for="job in state.offers">
+      <div v-if="offerFilter.active">
+        <div class="empty" v-if="state.activeOffers.length === 0">
+          <img :src="require('@/assets/svg/empty.svg')" />
+          <h2>You've no published offers currently.</h2>
+        </div>
+        <div v-bind:key="job.id" v-for="job in state.activeOffers">
           <OfferDetail
             class="card"
-            v-if="
-              (offerFilter.active && job.status === 'Open') ||
-              job.status === 'Closed' ||
-              (!offerFilter.active && job.status === 'Posted') ||
-              job.status === 'Cancelled'
-            "
             :title="job.title"
             :description="job.specialRequirements"
             :salary="job.hourlyRate"
@@ -50,7 +49,35 @@
             :id="job.id"
           />
         </div>
-      </perfect-scrollbar>
+      </div>
+      <div v-else>
+        <div class="empty" v-if="state.archiveOffers.length === 0">
+          <img :src="require('@/assets/svg/empty.svg')" />
+          <h2>You've no archived offers currently.</h2>
+        </div>
+        <div v-else>
+          <div v-bind:key="job.id" v-for="job in state.archiveOffers">
+            <OfferDetail
+              class="card"
+              :title="job.title"
+              :description="job.specialRequirements"
+              :salary="job.hourlyRate"
+              :duration="job.duration"
+              :deadline="job.deadline"
+              :status="job.status"
+              :schedule="{
+                days: job.schedules,
+                hourIn: job.startHour,
+                hourOut: job.endHour,
+              }"
+              :skills="job.skills"
+              :location="job.location"
+              :areOffersActive="offerFilter.active"
+              :id="job.id"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <CreateOfferModal
@@ -146,8 +173,17 @@ export default defineComponent({
   }
   .empty {
     text-align: center;
-    margin-top: 20vh;
+    margin-top: 12vh;
     color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      filter: $filter-blue;
+      width: 25rem;
+      height: 25rem;
+    }
   }
   .loading {
     text-align: center;

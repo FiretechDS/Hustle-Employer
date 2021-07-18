@@ -217,7 +217,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType,inject } from "vue";
+import { defineComponent, reactive, PropType, inject } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
@@ -275,9 +275,6 @@ export default defineComponent({
     },
   },
   components: { Modal, HorizontalCard, Button, Loader },
-  created() {
-    console.log(this.state);
-  },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,

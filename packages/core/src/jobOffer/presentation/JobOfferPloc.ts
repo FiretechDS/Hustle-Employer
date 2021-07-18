@@ -50,7 +50,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
   async deleteOffer(offerNumber:number):Promise<plocResult>{
     const result:plocResult ={success:false,value:'An unexpected error has occurred. '}
     if (this.state.kind==='LoadedOffersState'){
-      const foundOffer =  this.state.offers.find((offer:jobPresentationProps)=>{
+      const foundOffer =  this.state.archiveOffers.find((offer:jobPresentationProps)=>{
        return offer.id===offerNumber
       } )
       if (foundOffer){
@@ -61,7 +61,7 @@ export class JobOfferPloc extends Ploc<OffersState>{
           },
           ()=>{
             result.success=true
-            result.value='Your job offer was removed successfully.'
+            result.value=`"${foundOffer.title}" offer was removed successfully.`
             this.loadOffers()
           }
         )
@@ -72,11 +72,20 @@ export class JobOfferPloc extends Ploc<OffersState>{
   }
 
   private mapToUpdatedState(props: jobPresentationProps[]):OffersState{
+    const activeOffer:jobPresentationProps[]=[]
+    const archiveOffer:jobPresentationProps[]=[]
+    props.forEach(offer=>{
+      if (offer.status==='Open'||offer.status==='Closed'){
+        activeOffer.push(offer)
+      }else if (offer.status==='Posted'||'Cancelled'){
+        archiveOffer.push(offer)
+      }
+    })
+
     return{
       kind:"LoadedOffersState",
-      offers:props.map((offer:jobPresentationProps)=>{
-        return offer
-      })
+      archiveOffers:archiveOffer,
+      activeOffers:activeOffer
     }
   }
 
@@ -105,7 +114,6 @@ export class JobOfferPloc extends Ploc<OffersState>{
     return{
       kind:'EmptyOffersState',
       message:"You've no offers currently.",
-      offers:[]
     }
   }
 }
