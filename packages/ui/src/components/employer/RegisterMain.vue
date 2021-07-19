@@ -126,9 +126,70 @@
                 class="cardIconsContactPlus"
                 @click.stop
                 :src="require('@/assets/svg/plus.svg')"
+                @click="showModal"
               />
             </div>
           </div>
+          <Modal v-show="state.isModalVisible" @close="closeModal()">
+              <template v-slot:header>Contact</template>
+              <template v-slot:body>
+                  <div>
+                    <div class="multiple-items-register.tight">
+                      <input
+                        v-model="contactInfo.firstName"
+                        class="double-input-register-contact margin_between-double"
+                        placeholder="First Name"
+                        id="register-contact-first-name"
+                        type="text"
+                      />
+                      <input
+                        v-model="contactInfo.lastName"
+                        class="double-input-register-contact"
+                        placeholder="Last Name"
+                        id="register-contact-last-name"
+                        type="text"
+                      />
+                    </div>
+                    <div class="multiple-items-register.tight">
+                      <input
+                        v-model="contactInfo.jobtitle"
+                        class="double-input-register-contact margin_between-double"
+                        placeholder="Job title"
+                        id="register-contact-job-title"
+                        type="text"
+                      />
+                      <input
+                        v-model="contactInfo.phoneNumber"
+                        class="double-input-register-contact"
+                        placeholder="Phone Number"
+                        id="register-contact-phone-number"
+                        type="text"
+                      />
+                    </div>
+                    <input
+                      v-model="contactInfo.email"
+                      class="email-input-register-contact"
+                      placeholder="Email"
+                      id="register-contact-email"
+                      type="text"
+                    />
+                  </div>
+              </template>
+              <template v-slot:footer>
+                <div class="card-multiple-items-register">
+                  <Button
+                    buttonText="Save"
+                    :isPrimary="true"
+                    @click="addContact"
+                    id="add-contact-button"
+                    :style="{
+                      width: '15rem',
+                      height: '3.6rem',
+                    }"
+                  />
+                </div>
+              </template>
+          </Modal>
           <div class="gray-line"></div>
           <div v-if="registerInfo.contacts.length === 0">
             <div class="no-contact-register">
@@ -181,7 +242,7 @@
             <Button
               buttonText="Register"
               :isPrimary="true"
-              @click="setPage(1)"
+              @click="register"
               id="register-button"
               :style="{
                 width: '23.6rem',
@@ -203,6 +264,8 @@ import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
 import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
+import Modal from "../Modal.vue"
+import ContactInfoType from "./types/ContactInfo"
 
 export default defineComponent({
   setup() {
@@ -221,9 +284,17 @@ export default defineComponent({
       secondLineAddress: "" as string,
       city: "" as string,
       state: "" as string,
-      zip: 0 as number,
-      contacts: [],
+      zip: "" as string,
+      contacts: [] as Array<ContactInfoType>,
     });
+
+    const contactInfo = reactive({
+      firstName: "" as string,
+      lastName: "" as string,
+      jobTitle: "" as string,
+      phoneNumber: "" as string,
+      email: "" as string
+    })
 
     var page = ref(1);
 
@@ -231,10 +302,44 @@ export default defineComponent({
       page.value = actual;
     }
 
-    return { registerInfo, page, setPage };
+    const state = reactive({
+      isModalVisible: false as boolean,
+    });
+    function showModal(): void {
+      state.isModalVisible = true;
+      console.log("open");
+    }
+    function closeModal(): void {
+      state.isModalVisible = false;
+      console.log("closed");
+    }
+
+    function addContact(): void{
+      console.log(contactInfo);
+      registerInfo.contacts.push(contactInfo);
+      closeModal();
+    //  setContactToDefault();
+    }
+
+    function setContactToDefault(): void{
+      contactInfo.firstName = "";
+      contactInfo.lastName = "";
+      contactInfo.phoneNumber = "";
+      contactInfo.jobTitle = "";
+      contactInfo.email = "";
+    }
+
+    function register(): void{
+      console.log('Registrando');
+    }
+
+    return { registerInfo, page, setPage, state, showModal, closeModal, contactInfo, addContact, register };
   },
-  components: { WhiteVerticalCard, Button, Multiselect, GrayCard },
+  components: { WhiteVerticalCard, Button, Multiselect, GrayCard, Modal },
   name: "RegisterMain",
+  created() {
+    console.log(this.state);
+  },
 });
 </script>
 
@@ -452,5 +557,34 @@ export default defineComponent({
   width: 3.5rem;
   height: 3.5rem;
   cursor: pointer;
+}
+
+//contact info form
+.double-input-register-contact {
+  font-family: "Poppins";
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  border-radius: 8px;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  width: 15.7rem;
+  text-indent: 0.7rem;
+}
+.margin_between-double{
+  margin-right: 1rem;
+}
+.email-input-register-contact{
+  font-family: "Poppins";
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  border-radius: 8px;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  width: 34rem;
+  text-indent: 0.7rem;
 }
 </style>
