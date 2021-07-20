@@ -1,4 +1,6 @@
 import JobOfferPage from "@/views/JobOfferPage.vue"
+import LoginPage from "@/views/LoginPage.vue"
+import RegisterPage from "@/views/RegisterPage.vue"
 import {createRouter,createWebHistory}  from "vue-router";
 //we can implement lazyloading hereee lets gooo
 const routes = [
@@ -6,6 +8,16 @@ const routes = [
     path: "/",
     name: "Ofertas de trabajo",
     component: JobOfferPage
+  },
+  {
+    path: "/login",
+    name: "Login ",
+    component: LoginPage
+  },
+  {
+    path: "/register",
+    name: "Register ",
+    component: RegisterPage
   },
 
 ];
