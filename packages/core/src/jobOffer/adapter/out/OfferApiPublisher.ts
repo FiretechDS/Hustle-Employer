@@ -2,7 +2,7 @@ import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
 import { PublishOfferPort } from "../../application/port/out/PublishOfferPort";
 import { jobCreationProps } from "../../domain/JobDomainMapper";
-import apiFetcher from "../api/springBoot";
+import apiFetcher from "../../../common/adapter/api/springBoot";
 import { ApplicationToInfraMapper } from "../JobApplicationToInfraMapper";
 
 export class OfferApiPublisher implements PublishOfferPort{

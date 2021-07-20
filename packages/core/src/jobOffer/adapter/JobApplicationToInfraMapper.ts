@@ -9,7 +9,7 @@ export class ApplicationToInfraMapper{
       id:1,
       deadline:offer.deadline.toLocaleDateString(),
       statusJobOfferModel:offer.status+1,
-      specialRequirements:offer.specialRequirements?offer.specialRequirements:'None.',
+      specialRequirements:offer.specialRequirements?offer.specialRequirements:'This offer has no special requirements.',
       skillModel: offer.skills.map(skill =>{
         return skill.number
       } ),

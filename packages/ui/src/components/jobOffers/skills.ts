@@ -28,7 +28,7 @@ type skillType={
 
 export const skills:skillType[] = skillNames.map(
   (skill,index)=>{
-    return {...skill,id:index}
+    return {...skill,id:index+1}
     
   }
 )

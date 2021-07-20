@@ -13,7 +13,7 @@ import { ToPresentationMapper } from "../presentation/JobPresentationMapper";
 import { Deadline } from "./valueObjects/DeadlineValueObject";
 import { Duration } from "./valueObjects/DurationValueObject";
 import { JobHeader } from "./valueObjects/HeaderValueObject";
-import { Skill } from "./valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { OffersInMemoryRepository } from "../adapter/out/OffersInMemoryRepository";
@@ -23,6 +23,9 @@ import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
 import { LoadOffersService } from "../application/services/LoadOffersService";
 import { OffersAPIRepository } from "../adapter/out/OffersAPIRepository";
 import { ApplicationToInfraMapper } from "../adapter/JobApplicationToInfraMapper";
+import { dependenciesLocator } from "../../common";
+import { OfferApiRemover } from "../adapter/out/OfferApiRemover";
+import { SkillApiLoader } from "../../skills/adapter/SkillApiLoader";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -55,8 +58,6 @@ try {
   }
   const mappedOffer = ApplicationToInfraMapper.map(offer)
   const offerDto ={...mappedOffer, EmployerId:mappedOffer.employerId, statusJobOfferModelId:mappedOffer.statusJobOfferModel}
-  
-  console.log(offerDto)
 
 } catch (error) {
   console.log('Caught error: '+error.message)
@@ -65,18 +66,14 @@ try {
 
  async function load(){
   try {
-    const repo = new OffersAPIRepository();
-    const loadService = new LoadOffersService(repo);
-    const createService = new PublishOfferService(new OfferinMemoryPublisher())
-    const ploc = new JobOfferPloc(loadService,createService );
-    ploc.state.kind==='ErrorOfferState'&& console.log(ploc.state.reason  );
-    const result =await repo.loadOffers(2);
-    result.fold( 
-      (error)=>{ console.log(error)}
-    ,(jobs)=>{console.log(jobs) })
+    const repo = new SkillApiLoader();
+    const ploc = dependenciesLocator.provideJobOfferPloc()
+    const result = await repo.load()
+    result.fold(()=>{},(good)=>{console.log(good)} )
   } catch (error) {
     console.log(error.message)
   }
   
-
 }
+
+load()

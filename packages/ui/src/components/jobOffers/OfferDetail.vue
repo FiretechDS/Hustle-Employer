@@ -11,15 +11,15 @@
       <template v-slot:buttons v-if="areOffersActive">
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/postulantes.svg')"
           />
-          <span class="tooltiptext"> Aspirant </span>
+          <span class="tooltiptext"> Candidate </span>
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
@@ -27,15 +27,16 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
+            @click="file"
             :src="require('@/assets/svg/archive.svg')"
           />
           <span class="tooltiptext"> Archive </span>
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             @click="showModal"
             :src="require('@/assets/svg/more.svg')"
@@ -46,7 +47,7 @@
       <template v-slot:buttons v-else>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/paper-plane.svg')"
           />
@@ -54,7 +55,7 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/duplicate.svg')"
           />
@@ -62,20 +63,22 @@
         </div>
         <div class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
           <span class="tooltiptext"> Update </span>
         </div>
-        <div class="icon tooltip">
+        <div v-if="!state.loadingDelete" class="icon tooltip">
           <img
-            class="cardIcons"
+            class="cardIcons highlight-icon"
             @click.stop
+            @click="deleteModal"
             :src="require('@/assets/svg/delete.svg')"
           />
           <span class="tooltiptext"> Delete </span>
         </div>
+        <Loader v-else color="#39a9cb" size="8px" />
       </template>
     </HorizontalCard>
     <Modal v-show="state.isModalVisible" @close="closeModal()">
@@ -94,43 +97,58 @@
             <li class="small-columns-modal-offer-detail">
               <p class="title-modal-offer">Deadline</p>
             </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Status</p>
+            </li>
           </ul>
           <ul class="columns-modal-offer-detail">
             <li>
-              <p class="value-modal-offer">{{ salary }}</p>
+              <p class="value-modal-offer">${{ salary }}</p>
             </li>
             <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ duration }}</p>
+              <p class="value-modal-offer">{{ duration }} hours</p>
             </li>
             <li class="small-columns-modal-offer-detail">
               <p class="value-modal-offer">{{ deadline }}</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="value-modal-offer">{{ status }}</p>
             </li>
           </ul>
         </div>
 
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Schedule</p>
-          <ul class="list-modal-offer">
-            <li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
-              <div class="value-modal-offer">
-                <p>
-                  {{ day }} {{ schedule.hourIn }}:00 -{{ schedule.hourOut }}:00
-                </p>
-              </div>
-            </li>
-          </ul>
+          <perfect-scrollbar>
+            <ul class="list-modal-offer">
+              <li
+                v-for="day in schedule.days"
+                :key="schedule.days.indexOf(day)"
+              >
+                <div class="value-modal-offer">
+                  <p>
+                    {{ day }} {{ schedule.hourIn }}:00 -{{
+                      schedule.hourOut
+                    }}:00
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
         </div>
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Skills</p>
-          <ul class="list-modal-offer">
-            <li v-for="skill in skills" :key="skill.name">
-              <div class="value-modal-offer">
-                <p>
-                  {{ skill.name }}
-                </p>
-              </div>
-            </li>
-          </ul>
+          <p class="title-modal-offer">Required Skills</p>
+          <perfect-scrollbar>
+            <ul class="list-modal-offer">
+              <li v-for="skill in skills" :key="skill.name">
+                <div class="value-modal-offer">
+                  <p>
+                    {{ skill.name }}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
         </div>
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Location</p>
@@ -188,7 +206,7 @@
                 buttonText="Delete"
                 iconName="delete.svg"
                 :isPrimary="false"
-                @click="deleteOffer()"
+                @click="deleteModal"
               />
             </li>
           </ul>
@@ -199,10 +217,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from "vue";
+import { defineComponent, reactive, PropType, inject } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
+import { JobOfferPloc } from "../../../../core/build/jobOffer/presentation";
+import { useConfirm } from "primevue/useconfirm";
+import Loader from "../Loader.vue";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -246,25 +269,61 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    id: {
+      type: Number,
+      required: true,
+    },
   },
-  components: { Modal, HorizontalCard, Button },
-  created() {
-    console.log(this.state);
-  },
-  setup() {
+  components: { Modal, HorizontalCard, Button, Loader },
+  setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
+      loadingDelete: false as boolean,
     });
+    const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
+    const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
     }
     function closeModal(): void {
       state.isModalVisible = false;
     }
+    function deleteModal() {
+      confirm.require({
+        message: `Are you sure you want to delete ${props.title}?`,
+        header: "Delete Offer",
+        accept: () => {
+          deleteOffer();
+        },
+        reject: () => {
+          //callback to execute when user rejects the action
+        },
+      });
+    }
+    async function deleteOffer() {
+      state.loadingDelete = true;
+      const result = await ploc.deleteOffer(props.id);
+      createToast(result.value, {
+        type: result.success ? "success" : "warning",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
+    }
+    function file(): void {
+      createToast("Job offer was moved to archive.", {
+        type: "success",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
+    }
     return {
       state,
       showModal,
       closeModal,
+      deleteModal,
+      file,
     };
   },
 });
@@ -285,5 +344,10 @@ export default defineComponent({
   height: 3rem;
   filter: $filter-blue;
   flex: 1;
+}
+.ps {
+  min-height: 6rem;
+  max-height: 12rem;
+  width: 20rem;
 }
 </style>

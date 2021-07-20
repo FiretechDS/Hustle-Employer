@@ -78,6 +78,7 @@ export default defineComponent({
   color: $font-dark;
   justify-content: space-between;
   font-size: $medium-font;
+  margin-left: 4rem;
 }
 
 .modal-footer {

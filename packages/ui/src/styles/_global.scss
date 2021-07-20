@@ -1,6 +1,8 @@
 @import 'multiselect';
 @import 'variables';
 @import 'tooltip';
+@import 'conf-modal.scss';
+@import 'dropdown';
 /* Font styles */
 @font-face {
   font-family: 'Poppins';
@@ -39,7 +41,12 @@
   src: local('Poppins'),
     url('/fonts/Poppins/Poppins-Semibold.ttf') format('truetype');
 }
-
+.highlight-icon {
+  opacity: 1;
+  &:hover {
+    opacity: 0.8;
+  }
+}
 body {
   margin: 0;
   background-color: $background-color;
@@ -60,6 +67,7 @@ html {
   display: flex;
   width: 60vw;
   justify-content: space-around;
+  align-items: center;
   list-style-type: none;
   :first-child {
     justify-self: flex-start;
@@ -73,6 +81,7 @@ html {
 //DETAIL OFFER MODAL
 .title-modal-offer {
   color: $font-dark;
+  font-weight: bolder;
 }
 
 .value-modal-offer {
@@ -107,7 +116,7 @@ html {
 }
 
 .list-modal-offer {
-  list-style: none;
+  list-style: disc;
   padding-inline-start: 1rem;
 }
 
