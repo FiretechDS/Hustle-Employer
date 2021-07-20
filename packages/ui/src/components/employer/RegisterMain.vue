@@ -152,7 +152,7 @@
                     </div>
                     <div class="multiple-items-register.tight">
                       <input
-                        v-model="contactInfo.jobtitle"
+                        v-model="contactInfo.jobTitle"
                         class="double-input-register-contact margin_between-double"
                         placeholder="Job title"
                         id="register-contact-job-title"
@@ -201,7 +201,7 @@
             <div>
               <li
                 v-for="contact in registerInfo.contacts"
-                :key="registerInfo.contacts.indexOf(id)"
+                v-bind:key="contact.id"
                 class="list-contacts-register"
               >
                 <GrayCard>
@@ -214,7 +214,7 @@
                         <p>{{ contact.lastName }}</p>
                       </li>
                       <li>
-                        <p>{{ contact.role }}</p>
+                        <p>{{ contact.jobTitle }}</p>
                       </li>
                       <li>
                         <div class="icon tooltip">
@@ -227,7 +227,7 @@
                         <div class="icon tooltip">
                           <img
                             class="cardIconsContact"
-                            @click.stop
+                            @click="deleteContact(contact.id)"
                             :src="require('@/assets/svg/delete.svg')"
                           />
                         </div>
@@ -289,6 +289,7 @@ export default defineComponent({
     });
 
     const contactInfo = reactive({
+      id: 1 as number,
       firstName: "" as string,
       lastName: "" as string,
       jobTitle: "" as string,
@@ -315,13 +316,26 @@ export default defineComponent({
     }
 
     function addContact(): void{
-      console.log(contactInfo);
-      registerInfo.contacts.push(contactInfo);
+      const newContact = {
+        id: contactInfo.id,
+        firstName : contactInfo.firstName,
+        lastName : contactInfo.lastName,
+        jobTitle: contactInfo.jobTitle,
+        phoneNumber: contactInfo.phoneNumber,
+        email: contactInfo.email
+      }
+      registerInfo.contacts.push(newContact);
+      console.log(registerInfo.contacts);
       closeModal();
-    //  setContactToDefault();
+      setContactToDefault();
+    }
+
+    function changeID(): void{
+      contactInfo.id = registerInfo.contacts.length + 1;
     }
 
     function setContactToDefault(): void{
+      contactInfo.id = registerInfo.contacts.length + 1;
       contactInfo.firstName = "";
       contactInfo.lastName = "";
       contactInfo.phoneNumber = "";
@@ -329,11 +343,17 @@ export default defineComponent({
       contactInfo.email = "";
     }
 
-    function register(): void{
-      console.log('Registrando');
+    function deleteContact(idDelete: number): void{
+      registerInfo.contacts = registerInfo.contacts.filter(contact => contact.id != idDelete);
     }
 
-    return { registerInfo, page, setPage, state, showModal, closeModal, contactInfo, addContact, register };
+    function register(): void{
+      console.log('Registrando');
+      console.log(registerInfo);
+      //AQUI VA LA FUNCION A COLOCAR PARA GUARDARLO
+    }
+
+    return { registerInfo, page, setPage, state, showModal, closeModal, contactInfo, addContact, register, deleteContact };
   },
   components: { WhiteVerticalCard, Button, Multiselect, GrayCard, Modal },
   name: "RegisterMain",
@@ -403,6 +423,7 @@ export default defineComponent({
   width: 20rem;
   margin-bottom: 2.5rem;
   margin-right: 0;
+  color: $font-gray;
   :first-child {
     margin-right: 0;
   }
