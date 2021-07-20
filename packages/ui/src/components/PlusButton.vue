@@ -1,6 +1,6 @@
 <template>
   <div class="plusButton">
-    <img class="button" src="@/assets/svg/plus.svg" @click="onClick()" />
+    <img class="button" src="@/assets/svg/plus.svg" @click="onClick()" id="create-new-offer-button"/>
   </div>
 </template>
 <script lang="ts">
