@@ -2,7 +2,7 @@
   <div class="candidatePageCointainer">
     <div class="header">
         <h2 class="job-title">UI/UX Developer</h2>
-        <p class="total-candidates">Total Candidates: 8</p>
+        <p class="total-candidates">Total Candidates: 5</p>
         <div class="candidates-sorter">
           <p class="sorter-text">Show</p>
           <select class="sorter-select" v-model="sortType.value">
@@ -44,23 +44,31 @@
       </div>
     </div-->
     <div class="candidate-cards">
-      <SmallCard firstName='Luis' lastName='Castilo' date='2021-07-11'/>
-      <SmallCard firstName='Sebastian' lastName='González' date='2021-07-13'/>
-      <SmallCard firstName='David' lastName='Ortuño' date='2021-07-17'/>
-      <SmallCard firstName='Lionel' lastName='Messi' date='2021-07-11'/>
-      <SmallCard firstName='Cristiano' lastName='Ronaldo' date='2021-07-13'/>
-      <SmallCard firstName='Juan José' lastName='Pérez' date='2021-07-17'/>
-      <SmallCard firstName='Pep' lastName='Guardiola' date='2021-07-17'/>
-      <SmallCard firstName='Jose' lastName='Mourinho' date='2021-07-17'/>
+      <CandidateDetail 
+        firstName='Luis' 
+        middleName='Alejandro' 
+        lastName='Castillo' 
+        dateApplied='2021-07-11' 
+        phoneNumber='+58 424 1513995' 
+        educationLevel='Bachelors degree'
+        birthDate='25 may 1995'
+        streetAddress='25th street, Alabama Park, Terracota'
+        cityAddress='San Francisco'
+        stateAddress='Washington, DC.'
+      />
+      <CandidateDetail firstName='Sebastian' middleName='Alejandro' lastName='González' dateApplied='2021-07-13'/>
+      <CandidateDetail firstName='David' lastName='Ortuño' dateApplied='2021-07-17'/>
+      <CandidateDetail firstName='Lionel' lastName='Messi' dateApplied='2021-07-18'/>
+      <CandidateDetail firstName='Cristiano' lastName='Ronaldo' dateApplied='2021-07-19'/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject, reactive } from 'vue';
-import  SmallCard from '@/components/SmallCard.vue';
+import CandidateDetail from '@/components/jobOffers/CandidateDetail.vue';
 export default defineComponent({
-  components: {SmallCard},
+  components: {CandidateDetail},
   name: 'JobOfferCandidatesMain',
   setup(){
     const sortType = reactive({value:'mostRecent' as String})
