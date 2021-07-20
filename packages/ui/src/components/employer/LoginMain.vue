@@ -58,7 +58,12 @@ export default defineComponent({
       password: "" as string,
     });
 
-    return { loginData };
+    function login(): void{
+      console.log("Login");
+      console.log(loginData);
+    }
+
+    return { loginData, login };
   },
   components: { WhiteVerticalCard, Button },
   name: "LoginMain",
