@@ -40,6 +40,9 @@ export class AddressEmployer extends ValueObject<AddressProps>{
         if (zip===0){
             throw new Error("ZIP can't be blank")
         }
+        if ((zip.toString().length===4)&&(zip.toString().length===5)){
+            throw new Error("Invalid ZIP")
+        }
         return new AddressEmployer({firstLineAddress: firstLineAddress, secondLineAddress: secondLineAddress, state:state, city: city, zip:zip })
     }
 

@@ -11,7 +11,7 @@ export interface RegisterProps{
     identifierEmployer: IdentifierEmployer
 }
 
-export class Register extends Entity<RegisterProps>{
+export class Profile extends Entity<RegisterProps>{
     get addressEmployer(){
         return this.props.addressEmployer;
     }
@@ -29,8 +29,8 @@ export class Register extends Entity<RegisterProps>{
         super(props,id)
     }
 
-    public static registerEmployer(props: RegisterProps, id?:number):Register{
-        return new Register(props,id);
+    public static registerEmployer(props: RegisterProps, id?:number):Profile{
+        return new Profile(props,id);
     }
 
 }

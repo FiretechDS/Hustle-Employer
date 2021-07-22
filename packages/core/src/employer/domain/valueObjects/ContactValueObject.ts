@@ -41,6 +41,23 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
             throw new Error("Email can't be blank")
         }
 
+        //Number phone validation
+        const phoneString = phoneNumber.toString();     //Para hacer las validaciones se usara el numero como string
+        var firstDigit = phoneString.substr(0,1);       //Agarra el primer digito
+        if (parseInt(firstDigit)===1){                  //US numbers empiezan por 1
+            if(phoneString.substr(0).length!==10){      //Si el numero es 1, la longitud del resto del numero debe ser 10
+                throw new Error("Invalid US Number")
+            }
+        }
+        else{
+            var twoDigits = phoneString.substr(0,2);
+            if(parseInt(twoDigits)===58){               //Venezuelan numbers empiezan por +58
+                if(phoneString.substr(0).length!==10){  //Si empiezan por +58 deben tener 10 numeros de longitud
+                    throw new Error("Invalid Venezuelan Number")
+                }
+            }
+        }
+
         return new EmployerContact({firstName:firstName, lastName:lastName, jobTitle:jobTitle, email:email, phoneNumber:phoneNumber, id:id})
     }
 

@@ -5,7 +5,7 @@ export interface LoginProps{
     identifierEmployer: IdentifierEmployer
 }
 
-export class Login extends Entity<LoginProps>{
+export class Credentials extends Entity<LoginProps>{
     get identifierEmployer(){
         return this.props.identifierEmployer;
     }
@@ -14,8 +14,8 @@ export class Login extends Entity<LoginProps>{
         super(props,id)
     }
 
-    public static registerEmployer(props: LoginProps, id?:number):Login{
-        return new Login(props,id);
+    public static registerEmployer(props: LoginProps, id?:number):Credentials{
+        return new Credentials(props,id);
     }
 
 }

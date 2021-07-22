@@ -86,7 +86,7 @@
               class="zip-input-register"
               placeholder="ZIP"
               id="mail-login"
-              type="text"
+              type="number"
             />
           </div>
           <Button
@@ -163,7 +163,7 @@
                         class="double-input-register-contact"
                         placeholder="Phone Number"
                         id="register-contact-phone-number"
-                        type="text"
+                        type="tel"
                       />
                     </div>
                     <input
