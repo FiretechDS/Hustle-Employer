@@ -6,6 +6,7 @@
           <slot name="header"> This is the default title! </slot>
           <img
             class="btn-close"
+            :hidden="hideX"
             src="@/assets/svg/letra-x.png"
             @click="close"
             id="close-modal-button"
@@ -26,10 +27,16 @@
 
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "Modal",
+  props:{
+    hideX:{
+      type: Boolean as PropType<boolean>,
+      default:false
+    }
+  },
   setup(props, ctx) {
     function close() {
       ctx.emit("close");

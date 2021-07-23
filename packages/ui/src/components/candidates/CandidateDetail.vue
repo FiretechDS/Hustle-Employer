@@ -5,7 +5,7 @@
     :lastName="lastName"
     :date="dateApplied"
   />
-  <Modal v-show="state.isModalVisible" @close="closeModal()">
+  <Modal :hideX="true" v-show="state.isModalVisible" @close="closeModal()">
     <template v-slot:header class="modal-header-aye">
       <div class="candidate-modal-header">
         <div>{{ firstName }} {{ middleName }} {{ lastName }}</div>
