@@ -32,7 +32,13 @@
                 placeholder="Days"
                 mode="multiple"
                 class="schedule-multiselect"
-              />
+              >
+                <template v-slot:multiplelabel="{ values }">
+                  <div class="multiselect-multiple-label">
+                    {{ values.length }} days selected
+                  </div>
+                </template>
+              </Multiselect>
               <Multiselect
                 :options="getHourOptions()"
                 v-model="jobOffer.startHour"
@@ -70,6 +76,11 @@
               class="skills-multiselect"
               id="skills-input"
             >
+              <template v-slot:multiplelabel="{ values }">
+                <div class="multiselect-multiple-label">
+                  {{ values.length }} skills selected
+                </div>
+              </template>
             </Multiselect>
             <p class="subtitle">Special Requirements:</p>
             <textarea
@@ -302,7 +313,7 @@ textarea {
   justify-content: space-between;
   align-items: center;
   .hour-multiselect {
-    width: 10rem;
+    width: 12rem;
   }
   .schedule-multiselect {
     margin-right: 0;
