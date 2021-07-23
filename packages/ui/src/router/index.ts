@@ -16,7 +16,7 @@ const routes = [
     name: "Candidatos",
     component: CandidatesPage
   },
-
+  {
     path: "/login",
     name: "Login ",
     component: LoginPage
@@ -25,7 +25,7 @@ const routes = [
     path: "/register",
     name: "Register ",
     component: RegisterPage
-  },
+  }
 
 
 ];

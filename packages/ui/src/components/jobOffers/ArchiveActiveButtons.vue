@@ -11,7 +11,7 @@
         'border-top-left-radius': '5px',
         'border-bottom-left-radius': '5px',
       }"
-      buttonText="Published"
+      :buttonText="leftText"
     />
     <Button
       @click="handleClick(false)"
@@ -25,17 +25,27 @@
         'border-top-right-radius': '5px',
         'border-bottom-right-radius': '5px',
       }"
-      buttonText="Archive"
+      :buttonText="rightText"
     />
   </div>
 </template>
 <script lang="ts">
 import { reactive } from "@vue/reactivity";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import Button from "../Button.vue";
 
 export default defineComponent({
   components: { Button },
+  props: {
+    leftText: {
+      type: String as PropType<string>,
+      default: "Published",
+    },
+    rightText: {
+      type: String as PropType<string>,
+      default: "Archive",
+    },
+  },
   setup(props, ctx) {
     function handleClick(isActive: boolean) {
       isClicked.active = isActive;

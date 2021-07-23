@@ -16,6 +16,11 @@
         <router-link to="/jobs">
           <li class="link" :class="{ selected: path === '/jobs' }">Jobs</li>
         </router-link>
+        <router-link to="/messages">
+          <li class="link" :class="{ selected: path === '/messages' }">
+            Messages
+          </li>
+        </router-link>
       </ul>
       <div class="right">
         <div class="dropdown">
@@ -64,7 +69,7 @@ export default defineComponent({
   justify-content: center;
   .left {
     margin-right: auto;
-    margin-left: 5rem;
+    margin-left: 10rem;
     width: 16rem;
     display: flex;
     justify-content: center;
@@ -75,7 +80,7 @@ export default defineComponent({
   }
   .center {
     display: flex;
-    width: 60rem;
+    width: 50rem;
     align-items: center;
     justify-content: space-around;
     color: $font-gray;
@@ -86,7 +91,7 @@ export default defineComponent({
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-right: 8rem;
+    margin-right: 10rem;
     width: 13rem;
   }
   .link {
