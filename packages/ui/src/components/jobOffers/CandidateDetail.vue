@@ -248,7 +248,7 @@ export default defineComponent({
 }
 .small-card{
       display: inline-block;
-      margin: 1.5rem 2vw;
+      margin: 1.5rem 1rem;
       text-align: initial;
   }
 .title-modal {

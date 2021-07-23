@@ -78,7 +78,7 @@ export default defineComponent({
   flex-direction: column;
   .header{
       display: flex;
-      margin: 0 10vw//10rem;
+      margin: 0 15rem//10rem;
   }
   .job-title {
     font-size: $medium-font;
@@ -139,11 +139,11 @@ export default defineComponent({
   .candidate-cards{
       //text-align: center;
       //margin: 0 8vw;
-      margin: 0 0 0 7vw;
+      margin: 0; //0 0 10rem;
   }
   .small-card{
       display: inline-block;
-      margin: 1.5rem 2vw;
+      margin: 1.5rem 1rem;
       text-align: initial;
   }
 }
