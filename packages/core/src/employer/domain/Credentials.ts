@@ -14,7 +14,7 @@ export class Credentials extends Entity<LoginProps>{
         super(props,id)
     }
 
-    public static registerEmployer(props: LoginProps, id?:number):Credentials{
+    public static loginEmployer(props: LoginProps, id?:number):Credentials{
         return new Credentials(props,id);
     }
 

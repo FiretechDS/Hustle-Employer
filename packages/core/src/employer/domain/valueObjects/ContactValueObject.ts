@@ -27,6 +27,10 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
         this.email = props.email;
     }
 
+    public static createList():Array<EmployerContact>{
+        return new Array<EmployerContact>
+    }
+
     public static create(id:number, firstName:string, lastName:string, jobTitle:string, phoneNumber:number, email:string){
         if (firstName.trim()===''){
             throw new Error("First name can't be blank")

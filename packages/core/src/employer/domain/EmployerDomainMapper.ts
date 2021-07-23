@@ -1,0 +1,56 @@
+import { Profile } from "./Profile";
+import { Credentials } from "./Credentials";
+import { AddressEmployer } from "./valueObjects/AddressValueObject";
+import { IdentifierEmployer } from "./valueObjects/IdentifiersValueObject";
+import { EmployerContact } from "./valueObjects/ContactValueObject";
+import { EmployerProfile } from "./valueObjects/CompanyProfileValueObject";
+import { Skill, skillMappedProps } from "../../skills/domain/Skill";
+
+export interface ProfileProps{
+    id?: number,
+    email: string,
+    password: string,
+    logoURL: string,
+    companyName: string,
+    skills:skillMappedProps[] 
+    firstLineAddress: string,
+    secondLineAddress: string,
+    state: string,
+    city: string,
+    zip: number,
+    contacts: Array<EmployerContact>
+}
+
+export type profileCreatedProps={
+    [P in keyof ProfileProps]-?:ProfileProps[P]
+}
+
+export class ProfileToDomainMapper{
+    static map(props:ProfileProps):Profile{
+        return Profile.registerEmployer({
+            identifierEmployer: IdentifierEmployer.create(props.email, props.password),
+            employerContact: EmployerContact.createList,   //Aqui jeje
+            employerPofile: EmployerProfile.create(props.companyName, props.logoURL),
+            addressEmployer: AddressEmployer.create(props.firstLineAddress, props.secondLineAddress,props.state, props.city, props.zip),
+            companyName: EmployerProfile.create(props.companyName, props.logoURL),
+        },props.id)
+  
+      }
+}
+
+export interface LoginProps{
+    email: string,
+    password: string
+}
+
+export type LoginCreatedProps={
+    [P in keyof LoginProps]-?:LoginProps[P]
+}
+
+export class LoginToDomainMapper{
+    static map(props:LoginProps):Credentials{
+        return Credentials.loginEmployer({
+            identifierEmployer: IdentifierEmployer.create(props.email, props.password)
+        })
+      }
+}
