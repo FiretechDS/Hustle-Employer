@@ -5,7 +5,7 @@ import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { HourlyRate } from "./valueObjects/HourlyRateValueObject";
 import { Location } from "./valueObjects/LocationValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
-import { Skill, skillMappedProps } from "./valueObjects/SkillValueObject";
+import { Skill, skillMappedProps } from "../../skills/domain/Skill";
 import { Status } from "./valueObjects/StatusValueObject";
 
 export interface jobCreationProps{

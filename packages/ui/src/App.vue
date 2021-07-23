@@ -1,22 +1,27 @@
 <template>
   <div class="container">
-    <NavBar/> 
+    <NavBar />
     <router-view />
+    <ConfirmDialog></ConfirmDialog>
   </div>
-
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { dependenciesLocator } from "../../core/src/common/dependencies";
-import NavBar from './components/nav-bar/NavBar.vue'
+import {
+  dependenciesLocator,
+  skillLocator,
+} from "../../core/src/common/dependencies";
+import NavBar from "./components/nav-bar/NavBar.vue";
+import ConfirmDialog from "primevue/confirmdialog";
 
 export default defineComponent({
   name: "App",
-  components: {NavBar},
-  provide:{
-    jobOfferPloc:dependenciesLocator.provideJobOfferPloc()
-  }
+  components: { NavBar, ConfirmDialog },
+  provide: {
+    jobOfferPloc: dependenciesLocator.provideJobOfferPloc(),
+    skillsPloc: skillLocator.provideSkillProp(),
+  },
 });
 </script>
 

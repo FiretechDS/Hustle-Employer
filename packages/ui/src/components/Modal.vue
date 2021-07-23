@@ -8,6 +8,7 @@
             class="btn-close"
             src="@/assets/svg/letra-x.png"
             @click="close"
+            id="close-modal-button"
           />
         </header>
 
@@ -77,6 +78,7 @@ export default defineComponent({
   color: $font-dark;
   justify-content: space-between;
   font-size: $medium-font;
+  margin-left: 4rem;
 }
 
 .modal-footer {

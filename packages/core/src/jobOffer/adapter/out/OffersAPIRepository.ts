@@ -2,7 +2,7 @@ import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
 import { JobApplicationProps } from "../../application/JobApplicationModel";
 import { LoadOffersPort } from "../../application/port/out/LoadOffersPort";
-import apiFetcher from "../api/springBoot";
+import apiFetcher from "../../../common/adapter/api/springBoot";
 import { InfraToApplicationMapper } from "../JobInfraApplicationMapper";
 import { JobOffersWeb } from "../OfferWebModel";
 

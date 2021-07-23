@@ -1,6 +1,6 @@
 <template>
   <div class="plusButton">
-    <img class="button" src="@/assets/svg/plus.svg" @click="onClick()" />
+    <img class="button" src="@/assets/svg/plus.svg" @click="onClick()" id="create-new-offer-button"/>
   </div>
 </template>
 <script lang="ts">
@@ -25,5 +25,12 @@ export default defineComponent({
   bottom: 50px;
   right: 30px;
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 </style>

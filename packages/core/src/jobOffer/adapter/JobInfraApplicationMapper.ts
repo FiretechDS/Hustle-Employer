@@ -1,6 +1,6 @@
 import { JobOffersWeb } from "./OfferWebModel";
 import { JobApplicationProps } from "../application/JobApplicationModel";
-import { Skill } from "../domain/valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 
 
 export class InfraToApplicationMapper{

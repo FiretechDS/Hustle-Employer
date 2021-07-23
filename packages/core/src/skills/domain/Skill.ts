@@ -1,4 +1,4 @@
-import { ValueObject } from "../../../common/domain/ValueObject";
+import { ValueObject } from "../../common/domain/ValueObject";
 
 //export type skillCategory='technical'|'soft'
 enum skillCategory {
@@ -27,22 +27,25 @@ export class Skill extends ValueObject<skillProps>{
     this.number = props.number;
   }
 
-  public static create(nameProp: string, categoryProp:string, skillNumber:number ):Skill{
+  public static create(nameProp: string, categoryProp:string|number, skillNumber:number ):Skill{
       if (nameProp.trim()===''){
         throw new Error("Skill name can't be blank")
       }
       let cat:skillCategory;
-      switch (categoryProp.toLowerCase().trim()){
-        case 'soft':
-          cat=skillCategory.Soft
-          break;
-        case 'technical':
-          cat =skillCategory.Technical
-          break;
-        default:
-          throw new Error(`Skill category [${categoryProp}] must be either "soft" or "technical"`)
-          
-      }
+      if (typeof categoryProp==='number'){
+        cat = categoryProp===1?skillCategory.Soft:skillCategory.Technical
+      }else
+        switch (categoryProp.toLowerCase().trim()){
+          case 'soft':
+            cat=skillCategory.Soft
+            break;
+          case 'technical':
+            cat =skillCategory.Technical
+            break;
+          default:
+            throw new Error(`Skill category [${categoryProp}] must be either "soft" or "technical"`)
+            
+        }
       return new Skill({category:cat, name:nameProp.toLowerCase().trim(),number:skillNumber });
   }
  public static createList(skills:skillMappedProps[]):Skill[]{

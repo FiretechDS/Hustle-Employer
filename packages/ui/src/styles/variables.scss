@@ -7,7 +7,8 @@ $highlit-darkblue: #2940d3;
 $font-dark: #2b2b2b;
 $font-gray: #747474;
 $font-light: #c4c4c4;
-$lighter-gray: #e7e7e7;
+//$lighter-gray: #e7e7e7;
+$lighter-gray: #f3f3f3;
 //Filters (colors for svg) https://codepen.io/sosuke/pen/Pjoqqp
 $filter-blue: invert(81%) sepia(23%) saturate(7224%) hue-rotate(158deg)
   brightness(88%) contrast(78%);
@@ -15,14 +16,18 @@ $filter-light-gray: invert(98%) sepia(0%) saturate(1196%) hue-rotate(128deg)
   brightness(85%) contrast(84%);
 $filter-gray: invert(49%) sepia(12%) saturate(0%) hue-rotate(140deg)
   brightness(92%) contrast(88%);
+$filter-dark: invert(12%) sepia(12%) saturate(15%) hue-rotate(322deg)
+  brightness(97%) contrast(88%);
 $filter-white: invert(89%) sepia(100%) saturate(0%) hue-rotate(66deg)
   brightness(110%) contrast(99%);
 $filter-yellow: invert(87%) sepia(37%) saturate(382%) hue-rotate(347deg)
   brightness(103%) contrast(101%);
+$filter-mustard: invert(59%) sepia(8%) saturate(3007%) hue-rotate(11deg)
+  brightness(91%) contrast(90%);
 // Font sizes
 $small-font: 1.2rem;
 $normal-font: 1.4rem;
+$medium-small-font: 1.9rem;
 $medium-font: 2.4rem;
 $large-font: 3.4rem;
 $xlarge-font: 5.4rem;
-$xxlarge-font: 7.8rem;

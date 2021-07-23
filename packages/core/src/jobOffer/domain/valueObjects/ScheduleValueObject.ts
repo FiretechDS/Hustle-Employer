@@ -40,7 +40,9 @@ export class Schedule extends ValueObject<scheduleProps>{
     if (startHourProps<=0||startHourProps>24||endHourProps<=0||endHourProps>24){
       throw new Error(`Schedules hours must be a valid hour between 06:00-23:00`)
     }
-    
+    if(startHourProps>=endHourProps){
+      throw new Error(`The starting hour (${startHourProps}:00) should be before the ending hour (${endHourProps}:00)`)
+    }
 
     return new Schedule({days:daySet as Set<days>,startHour: startHourProps,endHour:endHourProps} )
   }

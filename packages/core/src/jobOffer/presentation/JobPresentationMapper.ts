@@ -1,5 +1,5 @@
 import { JobOffer } from "../domain/JobOffer";
-import { Skill } from "../domain/valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 import { jobPresentationProps } from "./JobPresentationModel";
 
 

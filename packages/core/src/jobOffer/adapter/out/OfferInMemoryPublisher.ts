@@ -1,6 +1,5 @@
 import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
-import { JobApplicationProps } from "../../application/JobApplicationModel";
 import { PublishOfferPort } from "../../application/port/out/PublishOfferPort";
 import { jobCreationProps } from "../../domain/JobDomainMapper";
 import { ApplicationToInfraMapper } from "../JobApplicationToInfraMapper";
