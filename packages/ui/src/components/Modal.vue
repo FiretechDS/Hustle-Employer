@@ -68,7 +68,7 @@ export default defineComponent({
 .modal-header,
 .modal-footer {
   padding: 15px;
-  display: flex;
+  //display: flex;
 }
 
 .modal-header {

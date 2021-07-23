@@ -43,23 +43,13 @@
           <div class="fields-modal-column">
             <p class="info-title">Certificates</p>
             <li class="info-list-values">
-              <p class="info-value">Elemento1</p>
-              <p class="info-value">Elemento2</p>
+              <p class="info-value" v-for="certificate in certificates" :key="certificate.name">{{certificate.name}}</p>
             </li>
-            <!--li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
-              <div class="value-modal-offer">
-                <p>
-                  {{ day }} {{ schedule.hourIn }}:00 -{{ schedule.hourOut }}:00
-                </p>
-              </div>
-            </li-->
           </div>
           <div class="fields-modal-column">
             <p class="info-title">Skills</p>
             <li class="info-list-values">
-              <p class="info-value">Elemento1</p>
-              <p class="info-value">Elemento2</p>
-              <p class="info-value">Elemento3</p>
+              <p class="info-value" v-for="skill in skills" :key="skill.name">{{skill.name}}</p>
             </li>
           </div>
         </div>
@@ -67,14 +57,13 @@
           <div class="fields-modal-column">
             <p class="info-title">Work Experience</p>
             <li class="info-list-values">
-              <p class="info-value">Elemento1</p>
-              <p class="info-value">Elemento2</p>
+              <p class="info-value" v-for="work in workExperience" :key="work.name">{{work.name}}</p>
             </li>
           </div>
           <div class="fields-modal-column">
             <p class="info-title">References</p>
             <li class="info-list-values">
-              <p class="info-value">Elemento1</p>
+              <p class="info-value" v-for="reference in references" :key="reference.name">{{reference.name}}</p>
             </li>
           </div>
         </div>
@@ -180,6 +169,18 @@ export default defineComponent({
     stateAddress: {
       type: String,
     },
+    certificates: {
+      type: Array as PropType<{ name: string }[]>,
+    },
+    skills: {
+      type: Array as PropType<{ name: string }[]>,
+    },
+    workExperience: {
+      type: Array as PropType<{ name: string }[]>,
+    },
+    references: {
+      type: Array as PropType<{ name: string }[]>,
+    },
   },
   components: { Modal, SmallCard, Button },
   created() {
@@ -228,7 +229,6 @@ export default defineComponent({
   margin-right: 0rem;
   font-weight: bold;
   font-size: 2rem;
-  margin-left: auto;
   margin-right: 2em;
 }
 .icon {

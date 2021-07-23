@@ -14,48 +14,25 @@
           </select>
         </div>
     </div>
-    <!--div class="error" v-if="state.kind === 'ErrorOfferState'">
-      <img :src="require('@/assets/svg/disconnected.svg')" />
-      <h2 class>{{ state.reason }}</h2>
-      <p>{{state.error}} </p>
-    </div>
-    <div class="empty" v-if="state.kind==='EmptyOffersState'">
-      <h2>{{state.message}}</h2>
-    </div>
-    <div v-if="state.kind === 'LoadingOffersState'" class="loading">
-      <Loader color="#ffeda3"/>
-    </div>
-    <div v-if="state.kind === 'LoadedOffersState'">
-      <div v-bind:key="job.id"
-      v-for="job in state.offers">
-        <OfferDetail
-          v-if="(offerFilter.active&&job.status==='Open')||(!offerFilter.active&&job.status==='Posted')"
-          :title="job.title"
-          :description="job.specialRequirements"
-          :salary="job.hourlyRate"
-          :duration="job.duration"
-          :deadline="job.deadline"
-          :status="job.status"
-          :schedule="{days: job.schedules,hourIn:job.startHour, hourOut:job.endHour}"
-          :skills="job.skills"
-          :location="job.location"
-          :areOffersActive="offerFilter.active"
-        />
-      </div>
-    </div-->
     <div class="candidate-cards">
+      <!--una vez se tenga el Ploc de candidatos se puede hacer el v-for-->
       <CandidateDetail 
-        firstName='Luis' 
-        middleName='Alejandro' 
-        lastName='Castillo' 
-        dateApplied='2021-07-11' 
-        phoneNumber='+58 424 1513995' 
-        educationLevel='Bachelors degree'
-        birthDate='25 may 1995'
-        streetAddress='25th street, Alabama Park, Terracota'
-        cityAddress='San Francisco'
-        stateAddress='Washington, DC.'
+        :firstName='data.firstName'
+        :middleName='data.middleName'
+        :lastName='data.lastName' 
+        :dateApplied='data.dateApplied' 
+        :phoneNumber='data.phoneNumber' 
+        :educationLevel='data.educationLevel'
+        :birthDate='data.birthDate'
+        :streetAddress='data.streetAddress'
+        :cityAddress='data.cityAddress'
+        :stateAddress='data.stateAddress'
+        :certificates='data.certificates'
+        :skills='data.skills'
+        :workExperience='data.workExperience'
+        :references='data.references'
       />
+      <!--more examples-->
       <CandidateDetail firstName='Sebastian' middleName='Alejandro' lastName='González' dateApplied='2021-07-13'/>
       <CandidateDetail firstName='David' lastName='Ortuño' dateApplied='2021-07-17'/>
       <CandidateDetail firstName='Lionel' lastName='Messi' dateApplied='2021-07-18'/>
@@ -65,14 +42,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive } from 'vue';
+import { defineComponent, inject, PropType, reactive } from 'vue';
 import CandidateDetail from '@/components/jobOffers/CandidateDetail.vue';
 export default defineComponent({
   components: {CandidateDetail},
   name: 'JobOfferCandidatesMain',
   setup(){
     const sortType = reactive({value:'mostRecent' as String})
-    return{sortType}
+    const data = {
+      firstName:'Luis',
+      middleName:'Alejandro',
+      lastName:'Castillo', 
+      dateApplied:'2021-07-11', 
+      phoneNumber:'+58 424 1513995', 
+      educationLevel:'Bachelors degree',
+      birthDate:'25 may 1995',
+      streetAddress:'25th street, Alabama Park, Terracota',
+      cityAddress:'San Francisco',
+      stateAddress:'Washington, DC.',
+      certificates: [{name:'Certificado en DDD'},{name:'Certificado en SCRUM'}],
+      workExperience: [{name:'Desarrollador de Backend'},{name:'Diseñador de Interfaces'}],
+      skills: [{name:'Experiencia diseñando en Figma'},{name:'Sabe desarrollar en TypeScript'},{name:'Sabe trabajar en equipo'}],
+      references: [{name:'Steve Jobs'}]
+    }
+    return{sortType, data}
   }
 })
 </script>
