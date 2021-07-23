@@ -57,13 +57,12 @@ p{
 }
 .small-card {
   background: white;
-  width: 20vw;//30rem;//25vw;
   height: 10rem;
   margin: 1rem 0;
   margin-right: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  min-width: 30rem;
+  width: 30rem;
 }
 .icon {
   background: #FFEDA3;
@@ -84,12 +83,16 @@ p{
 }
 .small-card-info {
   margin: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .name{
     color: $font-dark;
     display: inline-block;
     font-weight: bolder;
     font-size: 1.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .view-info{
     color: #39A9CB;
