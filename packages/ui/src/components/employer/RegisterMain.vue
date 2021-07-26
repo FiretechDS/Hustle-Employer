@@ -1,9 +1,9 @@
 <template>
-  <div v-if="page === 1">
+  <div class="register-container" v-if="page === 1">
     <WhiteVerticalCard>
       <template v-slot:header>Employer Register</template>
       <template v-slot:body>
-        <div class="content-register">
+        <form class="content-register">
           <div class="multiple-items-register">
             <input
               v-model="registerInfo.email"
@@ -71,21 +71,18 @@
               v-model="registerInfo.state"
               class="location-input-register"
               placeholder="State"
-              id="mail-login"
               type="text"
             />
             <input
               v-model="registerInfo.city"
               class="location-input-register"
               placeholder="City"
-              id="mail-login"
               type="text"
             />
             <input
               v-model="registerInfo.zip"
               class="zip-input-register"
               placeholder="ZIP"
-              id="mail-login"
               type="text"
             />
           </div>
@@ -100,11 +97,11 @@
               'margin-bottom': '2rem',
             }"
           />
-        </div>
+        </form>
       </template>
     </WhiteVerticalCard>
   </div>
-  <div v-else>
+  <div v-else class="register-container">
     <WhiteVerticalCard>
       <template v-slot:header>
         <div class="title-two">
@@ -131,64 +128,64 @@
             </div>
           </div>
           <Modal v-show="state.isModalVisible" @close="closeModal()">
-              <template v-slot:header>Contact</template>
-              <template v-slot:body>
-                  <div>
-                    <div class="multiple-items-register.tight">
-                      <input
-                        v-model="contactInfo.firstName"
-                        class="double-input-register-contact margin_between-double"
-                        placeholder="First Name"
-                        id="register-contact-first-name"
-                        type="text"
-                      />
-                      <input
-                        v-model="contactInfo.lastName"
-                        class="double-input-register-contact"
-                        placeholder="Last Name"
-                        id="register-contact-last-name"
-                        type="text"
-                      />
-                    </div>
-                    <div class="multiple-items-register.tight">
-                      <input
-                        v-model="contactInfo.jobTitle"
-                        class="double-input-register-contact margin_between-double"
-                        placeholder="Job title"
-                        id="register-contact-job-title"
-                        type="text"
-                      />
-                      <input
-                        v-model="contactInfo.phoneNumber"
-                        class="double-input-register-contact"
-                        placeholder="Phone Number"
-                        id="register-contact-phone-number"
-                        type="text"
-                      />
-                    </div>
-                    <input
-                      v-model="contactInfo.email"
-                      class="email-input-register-contact"
-                      placeholder="Email"
-                      id="register-contact-email"
-                      type="text"
-                    />
-                  </div>
-              </template>
-              <template v-slot:footer>
-                <div class="card-multiple-items-register">
-                  <Button
-                    buttonText="Save"
-                    :isPrimary="true"
-                    @click="addContact"
-                    id="add-contact-button"
-                    :style="{
-                      width: '15rem',
-                      height: '3.6rem',
-                    }"
+            <template v-slot:header>Contact</template>
+            <template v-slot:body>
+              <div>
+                <div class="multiple-items-register.tight">
+                  <input
+                    v-model="contactInfo.firstName"
+                    class="double-input-register-contact margin_between-double"
+                    placeholder="First Name"
+                    id="register-contact-first-name"
+                    type="text"
+                  />
+                  <input
+                    v-model="contactInfo.lastName"
+                    class="double-input-register-contact"
+                    placeholder="Last Name"
+                    id="register-contact-last-name"
+                    type="text"
                   />
                 </div>
-              </template>
+                <div class="multiple-items-register.tight">
+                  <input
+                    v-model="contactInfo.jobTitle"
+                    class="double-input-register-contact margin_between-double"
+                    placeholder="Job title"
+                    id="register-contact-job-title"
+                    type="text"
+                  />
+                  <input
+                    v-model="contactInfo.phoneNumber"
+                    class="double-input-register-contact"
+                    placeholder="Phone Number"
+                    id="register-contact-phone-number"
+                    type="text"
+                  />
+                </div>
+                <input
+                  v-model="contactInfo.email"
+                  class="email-input-register-contact"
+                  placeholder="Email"
+                  id="register-contact-email"
+                  type="text"
+                />
+              </div>
+            </template>
+            <template v-slot:footer>
+              <div class="card-multiple-items-register">
+                <Button
+                  buttonText="Save"
+                  :isPrimary="true"
+                  @click="addContact"
+                  id="add-contact-button"
+                  :style="{
+                    width: '15rem',
+                    height: '3.6rem',
+                  }"
+                />
+              </div>
+            </template>
           </Modal>
           <div class="gray-line"></div>
           <div v-if="registerInfo.contacts.length === 0">
@@ -264,8 +261,8 @@ import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
 import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
-import Modal from "../Modal.vue"
-import ContactInfoType from "./types/ContactInfo"
+import Modal from "../Modal.vue";
+import ContactInfoType from "./types/ContactInfo";
 
 export default defineComponent({
   setup() {
@@ -294,8 +291,8 @@ export default defineComponent({
       lastName: "" as string,
       jobTitle: "" as string,
       phoneNumber: "" as string,
-      email: "" as string
-    })
+      email: "" as string,
+    });
 
     var page = ref(1);
 
@@ -315,26 +312,26 @@ export default defineComponent({
       console.log("closed");
     }
 
-    function addContact(): void{
+    function addContact(): void {
       const newContact = {
         id: contactInfo.id,
-        firstName : contactInfo.firstName,
-        lastName : contactInfo.lastName,
+        firstName: contactInfo.firstName,
+        lastName: contactInfo.lastName,
         jobTitle: contactInfo.jobTitle,
         phoneNumber: contactInfo.phoneNumber,
-        email: contactInfo.email
-      }
+        email: contactInfo.email,
+      };
       registerInfo.contacts.push(newContact);
       console.log(registerInfo.contacts);
       closeModal();
       setContactToDefault();
     }
 
-    function changeID(): void{
+    function changeID(): void {
       contactInfo.id = registerInfo.contacts.length + 1;
     }
 
-    function setContactToDefault(): void{
+    function setContactToDefault(): void {
       contactInfo.id = registerInfo.contacts.length + 1;
       contactInfo.firstName = "";
       contactInfo.lastName = "";
@@ -343,17 +340,30 @@ export default defineComponent({
       contactInfo.email = "";
     }
 
-    function deleteContact(idDelete: number): void{
-      registerInfo.contacts = registerInfo.contacts.filter(contact => contact.id != idDelete);
+    function deleteContact(idDelete: number): void {
+      registerInfo.contacts = registerInfo.contacts.filter(
+        (contact) => contact.id != idDelete
+      );
     }
 
-    function register(): void{
-      console.log('Registrando');
+    function register(): void {
+      console.log("Registrando");
       console.log(registerInfo);
       //AQUI VA LA FUNCION A COLOCAR PARA GUARDARLO
     }
 
-    return { registerInfo, page, setPage, state, showModal, closeModal, contactInfo, addContact, register, deleteContact };
+    return {
+      registerInfo,
+      page,
+      setPage,
+      state,
+      showModal,
+      closeModal,
+      contactInfo,
+      addContact,
+      register,
+      deleteContact,
+    };
   },
   components: { WhiteVerticalCard, Button, Multiselect, GrayCard, Modal },
   name: "RegisterMain",
@@ -593,10 +603,10 @@ export default defineComponent({
   width: 15.7rem;
   text-indent: 0.7rem;
 }
-.margin_between-double{
+.margin_between-double {
   margin-right: 1rem;
 }
-.email-input-register-contact{
+.email-input-register-contact {
   font-family: "Poppins";
   margin-bottom: 2.5rem;
   display: inline-block;
@@ -607,5 +617,18 @@ export default defineComponent({
   background: $lighter-gray;
   width: 34rem;
   text-indent: 0.7rem;
+}
+.register-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+      115.8deg,
+      rgba(57, 169, 203, 0.8) 2.27%,
+      rgba(53, 112, 138, 0.8) 18.55%,
+      rgba(48, 53, 71, 0.8) 92.22%
+    ),
+    url("../../../public/img/blue-buildings.jpg");
+  background-blend-mode: darken;
 }
 </style>

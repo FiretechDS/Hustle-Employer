@@ -9,7 +9,10 @@
           <li class="link" :class="{ selected: path === '/' }">Offers</li>
         </router-link>
         <router-link to="/candidates">
-          <li class="link" :class="{ selected: path === '/candidates' }">
+          <li
+            class="link"
+            :class="{ selected: path.indexOf('/candidates') >= 0 }"
+          >
             Candidates
           </li>
         </router-link>
