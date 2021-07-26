@@ -1,4 +1,4 @@
-import { jobCreationProps } from "../../jobOffer/domain/JobDomainMapper";
+import { jobCreationProps } from "../../src/jobOffer/domain/JobDomainMapper";
 
 export class JobOfferMother{
   static createValid():jobCreationProps{

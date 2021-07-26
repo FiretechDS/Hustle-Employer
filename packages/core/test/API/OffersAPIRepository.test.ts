@@ -1,7 +1,7 @@
-import { Either } from '../../common/domain/Either';;
-import { OffersAPIRepository } from '../../jobOffer/adapter/out/OffersAPIRepository';
-import {JobApplicationProps} from '../../jobOffer/application/JobApplicationModel';
-import { DataError } from '../../common/domain/DataError';
+import { Either } from '../../src/common/domain/Either';;
+import { OffersAPIRepository } from '../../src/jobOffer/adapter/out/OffersAPIRepository';
+import {JobApplicationProps} from '../../src/jobOffer/application/JobApplicationModel';
+import { DataError } from '../../src/common/domain/DataError';
 
 describe('API', () =>{
     test('Test de Integracion con API', async () => {

@@ -1,12 +1,12 @@
-import { PublishOfferService } from '../../jobOffer/application/services/PublishOfferService';
-import { Either } from '../../common/domain/Either';
-import { OfferinMemoryPublisher } from '../../jobOffer/adapter/out/OfferInMemoryPublisher';
-import { PublishOfferPort } from '../../jobOffer/application/port/out/PublishOfferPort';
-import { PublishOfferUseCase } from '../../jobOffer/application/port/in/PublishOfferUseCase';
-import { jobCreationProps } from '../../jobOffer/domain/JobDomainMapper';
+import { PublishOfferService } from '../../src/jobOffer/application/services/PublishOfferService';
+import { Either } from '../../src/common/domain/Either';
+import { OfferinMemoryPublisher } from '../../src/jobOffer/adapter/out/OfferInMemoryPublisher';
+import { PublishOfferPort } from '../../src/jobOffer/application/port/out/PublishOfferPort';
+import { PublishOfferUseCase } from '../../src/jobOffer/application/port/in/PublishOfferUseCase';
+import { jobCreationProps } from '../../src/jobOffer/domain/JobDomainMapper';
 import { JobOfferMother } from './JobOfferMother';
-import { DataError } from '../../common/domain/DataError';
-import { jobPresentationProps } from '../../jobOffer/presentation';
+import { DataError } from '../../src/common/domain/DataError';
+import { jobPresentationProps } from '../../src/jobOffer/presentation';
 
 describe('Create Offer',  () => {
   test('Prueba de valores validos',async () => {
