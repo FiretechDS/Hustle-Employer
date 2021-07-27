@@ -26,6 +26,7 @@ import { ApplicationToInfraMapper } from "../adapter/JobApplicationToInfraMapper
 import { dependenciesLocator } from "../../common";
 import { OfferApiRemover } from "../adapter/out/OfferApiRemover";
 import { SkillApiLoader } from "../../skills/adapter/SkillApiLoader";
+import { SkillMother } from "../../skills/mother/skillMother";
 try {
  // const line:Deadline = Deadline.create(new Date("2021-06-27"));
   //console.log(line.value); 
@@ -39,8 +40,6 @@ try {
   const title='New job'
   const skillProps = [{name:'Cook',category:'Technical'}, {name:'Clean',category:'soft'} ]
   const days =[['tuesday','monday'],['friday','monday']]
-
-  console.log(Schedule.getDayNumber('sunday'))
   const offer:jobCreationProps={
     deadline:new Date('2022-01-02'),
     creationDate: new Date(),
@@ -76,4 +75,5 @@ try {
   
 }
 
-load()
+const skills = SkillMother.createValid(3)
+console.log(skills)

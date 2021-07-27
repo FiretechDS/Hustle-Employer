@@ -28,13 +28,6 @@ describe('Delete offer', ()=>{
     const deleteUseCase = new RemoveOfferService(port)
     const offer = JobOfferMother.createValid()
     const successOrError = await deleteUseCase.delete(offer)
-    successOrError.fold(
-      (left)=>{
-        console.log(left.message)
-      },()=>{
-
-      }
-    )
     expect(successOrError.isLeft()).toBe(false)
     expect(successOrError.isRight()).toBe(true)
   })
