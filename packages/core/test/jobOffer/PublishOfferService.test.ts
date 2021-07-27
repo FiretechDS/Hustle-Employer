@@ -4,7 +4,7 @@ import { OfferinMemoryPublisher } from '../../src/jobOffer/adapter/out/OfferInMe
 import { PublishOfferPort } from '../../src/jobOffer/application/port/out/PublishOfferPort';
 import { PublishOfferUseCase } from '../../src/jobOffer/application/port/in/PublishOfferUseCase';
 import { jobCreationProps } from '../../src/jobOffer/domain/JobDomainMapper';
-import { JobOfferMother } from './JobOfferMother';
+import { JobOfferMother } from './mother/JobOfferMother';
 import { DataError } from '../../src/common/domain/DataError';
 import { jobPresentationProps } from '../../src/jobOffer/presentation';
 

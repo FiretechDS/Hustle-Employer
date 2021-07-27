@@ -7,3 +7,5 @@ const apiFetcher = axios.create({
 })
 
 export default apiFetcher
+
+module.exports = apiFetcher
