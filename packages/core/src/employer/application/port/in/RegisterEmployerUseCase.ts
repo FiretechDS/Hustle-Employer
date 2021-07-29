@@ -6,5 +6,5 @@ import { RegisterPort } from "../out/RegisterPort";
 
 export interface RegisterEmployerUseCase{
     RegisterPort : RegisterPort,
-    publish(props: ProfileProps):Promise<Either<DataError, registerPresentationProps>>
+//    publish(props: ProfileProps):Promise<Either<DataError, registerPresentationProps>>
 }

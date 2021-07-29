@@ -29,10 +29,9 @@ export class ProfileToDomainMapper{
     static map(props:ProfileProps):Profile{
         return Profile.registerEmployer({
             identifierEmployer: IdentifierEmployer.create(props.email, props.password),
-            employerContact: EmployerContact.createList,   //Aqui jeje
-            employerPofile: EmployerProfile.create(props.companyName, props.logoURL),
+            employerContacts: EmployerContact.createList(props.contacts),   
+            employerProfile: EmployerProfile.create(props.companyName, props.logoURL),
             addressEmployer: AddressEmployer.create(props.firstLineAddress, props.secondLineAddress,props.state, props.city, props.zip),
-            companyName: EmployerProfile.create(props.companyName, props.logoURL),
         },props.id)
   
       }

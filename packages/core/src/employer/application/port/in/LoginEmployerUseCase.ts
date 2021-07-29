@@ -6,5 +6,5 @@ import { LoginPort } from "../out/LoginPort";
 
 export interface LoginEmployerUseCase{
     LoginPort : LoginPort,
-    publish(props: LoginProps):Promise<Either<DataError, loginPresentationProps>>
+//    publish(props: LoginProps):Promise<Either<DataError, loginPresentationProps>>
 }

@@ -6,7 +6,7 @@ import { IdentifierEmployer } from "./valueObjects/IdentifiersValueObject";
 
 export interface RegisterProps{
     addressEmployer: AddressEmployer,
-    employerContact: Array<EmployerContact>,
+    employerContacts:EmployerContact[],
     employerProfile: EmployerProfile,
     identifierEmployer: IdentifierEmployer
 }
@@ -16,7 +16,7 @@ export class Profile extends Entity<RegisterProps>{
         return this.props.addressEmployer;
     }
     get employerContact(){
-        return this.props.employerContact;
+        return this.props.employerContacts;
     }
     get employerProfile(){
         return this.props.employerProfile;

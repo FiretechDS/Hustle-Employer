@@ -9,6 +9,10 @@ interface ContactInfoProps{
     email: string
 }
 
+export type contactMappedProps = {
+    [P in keyof ContactInfoProps ]:ContactInfoProps[P] extends number? number: string 
+  }
+
 export class EmployerContact extends ValueObject<ContactInfoProps>{
     readonly id: number;
     readonly firstName: string;
@@ -27,8 +31,16 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
         this.email = props.email;
     }
 
-    public static createList():Array<EmployerContact>{
-        return new Array<EmployerContact>
+    public static createList(contacts:contactMappedProps[]):EmployerContact[]{
+        const contactList: EmployerContact[] = [];
+        if(contacts.length===0){
+            throw new Error('You must enter at least one contact')
+        }
+        contacts.forEach( prop =>{
+            const contact = this.create(prop.id,prop.firstName,prop.lastName,prop.jobTitle,prop.phoneNumber,prop.email);
+            contactList.push(contact);
+          })
+          return contactList;
     }
 
     public static create(id:number, firstName:string, lastName:string, jobTitle:string, phoneNumber:number, email:string){
