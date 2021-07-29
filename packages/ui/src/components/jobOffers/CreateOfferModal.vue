@@ -144,11 +144,10 @@ export default defineComponent({
     const skillPloc = inject<SkillPloc>("skillsPloc") as SkillPloc;
     const skillState = usePlocState(skillPloc);
 
-    watch(skillState, (oldState, newState) => {
-      console.log(newState);
-      console.log(oldState);
-      if (oldState.kind === "LoadedSkillsState") {
-        jobOffer.skills.options = oldState.skills.map((skill) => {
+    watch(skillState, (value, oldState) => {
+      console.log(value);
+      if (value.kind === "LoadedSkillsState") {
+        jobOffer.skills.options = value.skills.map((skill) => {
           return { value: skill.number, label: skill.name };
         });
       }

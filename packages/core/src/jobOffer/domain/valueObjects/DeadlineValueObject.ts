@@ -17,12 +17,15 @@ export class Deadline extends ValueObject<DeadlineProps>{
 
   public static create(deadline:Date,createdAt?:Date):Deadline{
     const currentDate:Date = new Date()
-    if ((createdAt && createdAt>deadline)||(!createdAt && deadline<currentDate)){
+    if (!createdAt && deadline<currentDate){
       throw new Error(`Deadline date "${deadline.toDateString()}" must be newer than current date: "${currentDate.toDateString()}"`)
-      
-    }else{ 
+    }else if(createdAt && createdAt>deadline){
+      throw new Error(`Deadline date "${deadline.toDateString()}" must be newer than creation date: "${createdAt.toDateString()}"`)
+    }
+    else{ 
+      deadline.setDate(deadline.getDate()+1)
       return new Deadline({
-        value:deadline 
+        value:deadline
       }) 
     }
   }

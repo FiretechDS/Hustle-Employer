@@ -1,90 +1,85 @@
 <template>
   <div>
     <HorizontalCard
-      :title="title"
-      :salary="salary"
-      :status="status"
-      :duration="duration"
-      :deadline="deadline"
+      :title="offer.title"
+      :salary="offer.hourlyRate"
+      :status="offer.status"
+      :duration="offer.duration"
+      :deadline="offer.deadline"
       :onClick="showModal"
     >
-      <template v-slot:buttons v-if="areOffersActive">
-        <div class="icon tooltip">
+      <template v-slot:buttons v-if="state.loading">
+        <div class="loader">
+          <Loader class="loader" color="#39a9cb" size="8px" />
+        </div>
+      </template>
+      <template v-slot:buttons v-else-if="areOffersActive && !state.loading">
+        <div class="icon tooltip" @click.stop>
           <img
             class="cardIcons highlight-icon"
-            @click.stop
             :src="require('@/assets/svg/postulantes.svg')"
           />
           <span class="tooltiptext"> Candidate </span>
         </div>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop>
           <img
             class="cardIcons highlight-icon"
-            @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
           <span class="tooltiptext"> Update </span>
         </div>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop @click="fileOrPublish('Posted')">
           <img
             class="cardIcons highlight-icon"
-            @click.stop
-            @click="file"
             :src="require('@/assets/svg/archive.svg')"
           />
           <span class="tooltiptext"> Archive </span>
         </div>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop @click="showModal">
           <img
             class="cardIcons highlight-icon"
-            @click.stop
-            @click="showModal"
             :src="require('@/assets/svg/more.svg')"
           />
           <span class="tooltiptext"> Details </span>
         </div>
       </template>
       <template v-slot:buttons v-else>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop @click="fileOrPublish('Open')">
           <img
             class="cardIcons highlight-icon"
-            @click.stop
             :src="require('@/assets/svg/paper-plane.svg')"
           />
           <span class="tooltiptext"> Publish </span>
         </div>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop @click="duplicate">
           <img
             class="cardIcons highlight-icon"
-            @click.stop
             :src="require('@/assets/svg/duplicate.svg')"
           />
           <span class="tooltiptext"> Duplicate </span>
         </div>
-        <div class="icon tooltip">
+        <div class="icon tooltip" @click.stop>
           <img
             class="cardIcons highlight-icon"
-            @click.stop
             :src="require('@/assets/svg/edit.svg')"
           />
           <span class="tooltiptext"> Update </span>
         </div>
-        <div v-if="!state.loadingDelete" class="icon tooltip">
+        <div class="icon tooltip" @click.stop @click="deleteModal">
           <img
             class="cardIcons highlight-icon"
-            @click.stop
-            @click="deleteModal"
             :src="require('@/assets/svg/delete.svg')"
           />
           <span class="tooltiptext"> Delete </span>
         </div>
-        <Loader v-else color="#39a9cb" size="8px" />
       </template>
     </HorizontalCard>
     <Modal v-show="state.isModalVisible" @close="closeModal()">
-      <template v-slot:header> {{ title }}</template>
+      <template v-slot:header> {{ offer.title }}</template>
       <template v-slot:body>
-        <p class="fields-modal-offer value-modal-offer">{{ description }}</p>
+        <p class="fields-modal-offer value-modal-offer">
+          {{ offer.specialRequirements }}
+        </p>
 
         <div class="fields-modal-offer">
           <ul class="columns-modal-offer-detail">
@@ -103,16 +98,16 @@
           </ul>
           <ul class="columns-modal-offer-detail">
             <li>
-              <p class="value-modal-offer">${{ salary }}</p>
+              <p class="value-modal-offer">${{ offer.hourlyRate }}</p>
             </li>
             <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ duration }} hours</p>
+              <p class="value-modal-offer">{{ offer.duration }} hours</p>
             </li>
             <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ deadline }}</p>
+              <p class="value-modal-offer">{{ offer.deadline }}</p>
             </li>
             <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ status }}</p>
+              <p class="value-modal-offer">{{ offer.status }}</p>
             </li>
           </ul>
         </div>
@@ -122,14 +117,12 @@
           <perfect-scrollbar>
             <ul class="list-modal-offer">
               <li
-                v-for="day in schedule.days"
-                :key="schedule.days.indexOf(day)"
+                v-for="day in offer.schedules"
+                :key="offer.schedules.indexOf(day)"
               >
                 <div class="value-modal-offer">
                   <p>
-                    {{ day }} {{ schedule.hourIn }}:00 -{{
-                      schedule.hourOut
-                    }}:00
+                    {{ day }} {{ offer.startHour }}:00 -{{ offer.endHour }}:00
                   </p>
                 </div>
               </li>
@@ -140,7 +133,7 @@
           <p class="title-modal-offer">Required Skills</p>
           <perfect-scrollbar>
             <ul class="list-modal-offer">
-              <li v-for="skill in skills" :key="skill.name">
+              <li v-for="skill in offer.skills" :key="skill.name">
                 <div class="value-modal-offer">
                   <p>
                     {{ skill.name }}
@@ -152,7 +145,7 @@
         </div>
         <div class="fields-modal-offer">
           <p class="title-modal-offer">Location</p>
-          <p class="value-modal-offer">{{ location }}</p>
+          <p class="value-modal-offer">{{ offer.location }}</p>
         </div>
       </template>
       <template v-slot:footer>
@@ -164,7 +157,7 @@
                 iconName="postulantes.svg"
                 :styles="{ width: '15rem' }"
                 :isPrimary="false"
-                @click="openApplications()"
+                @click="goToCandidates()"
               />
             </li>
             <li>
@@ -180,7 +173,7 @@
                 buttonText="Archive"
                 iconName="archive.svg"
                 :isPrimary="false"
-                @click="file()"
+                @click="fileOrPublish('Posted')"
               />
             </li>
           </ul>
@@ -190,7 +183,7 @@
                 buttonText="Publish"
                 iconName="paper-plane.svg"
                 :isPrimary="false"
-                @click="publish()"
+                @click="fileOrPublish('Open')"
               />
             </li>
             <li>
@@ -223,62 +216,30 @@ import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
-import { JobOfferPloc } from "../../../../core/build/jobOffer/presentation";
+import {
+  JobOfferPloc,
+  jobPresentationProps,
+} from "../../../../core/src/jobOffer/presentation";
 import { useConfirm } from "primevue/useconfirm";
 import Loader from "../Loader.vue";
 
 export default defineComponent({
   name: "OfferDetail",
   props: {
-    title: {
-      type: String,
-    },
-    salary: {
-      type: Number,
-    },
-    description: {
-      type: String,
-    },
-    duration: {
-      type: Number,
-    },
-    deadline: {
-      type: String,
-    },
-    schedule: {
-      type: Object as PropType<{
-        id: number;
-        days: string[];
-        hourIn: string;
-        hourOut: string;
-      }>,
-    },
-    skills: {
-      type: Array as PropType<{ name: string; category: string }[]>,
-    },
-    status: {
-      type: String,
-    },
-    job: {
-      type: Object,
-    },
-    location: {
-      type: String,
+    offer: {
+      type: Object as () => jobPresentationProps,
+      required: true,
     },
     areOffersActive: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: true,
-    },
-    id: {
-      type: Number,
-      required: true,
     },
   },
   components: { Modal, HorizontalCard, Button, Loader },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
-      loadingDelete: false as boolean,
+      loading: false as boolean,
     });
     const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
     const confirm = useConfirm();
@@ -290,7 +251,7 @@ export default defineComponent({
     }
     function deleteModal() {
       confirm.require({
-        message: `Are you sure you want to delete ${props.title}?`,
+        message: `Are you sure you want to delete ${props.offer.title}?`,
         header: "Delete Offer",
         accept: () => {
           deleteOffer();
@@ -300,30 +261,50 @@ export default defineComponent({
         },
       });
     }
-    async function deleteOffer() {
-      state.loadingDelete = true;
-      const result = await ploc.deleteOffer(props.id);
-      createToast(result.value, {
-        type: result.success ? "success" : "warning",
+    function toast(message: string, success: boolean): void {
+      createToast(message, {
+        type: success ? "success" : "warning",
         toastBackgroundColor: "#39a9cb",
         position: "bottom-center",
         showIcon: true,
       });
     }
-    function file(): void {
-      createToast("Job offer was moved to archive.", {
-        type: "success",
-        toastBackgroundColor: "#39a9cb",
-        position: "bottom-center",
-        showIcon: true,
+    async function deleteOffer() {
+      state.loading = true;
+      const result = await ploc.deleteOffer(props.offer.id);
+      toast(result.value, result.success);
+    }
+    async function fileOrPublish(status: "Posted" | "Open"): Promise<void> {
+      state.loading = true;
+      const result = await ploc.updateOffer(props.offer.id, {
+        ...props.offer,
+        status: status,
       });
+      const msg = result.success
+        ? `${props.offer.title} was moved to ${
+            status === "Posted" ? "archive" : "published"
+          }.`
+        : result.value;
+      toast(msg, result.success);
+      state.loading = false;
+    }
+
+    async function duplicate(): Promise<void> {
+      state.loading = true;
+      const result = await ploc.createOffer(props.offer);
+      const msg = `${
+        result.success ? "Offer duplicated succesfully" : result.value
+      }`;
+      toast(msg, result.success);
+      state.loading = false;
     }
     return {
       state,
       showModal,
       closeModal,
       deleteModal,
-      file,
+      fileOrPublish,
+      duplicate,
     };
   },
 });
@@ -349,5 +330,9 @@ export default defineComponent({
   min-height: 6rem;
   max-height: 12rem;
   width: 20rem;
+}
+.loader {
+  height: 1.5rem;
+  margin-left: 4rem;
 }
 </style>

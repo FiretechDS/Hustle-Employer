@@ -6,7 +6,7 @@ export class ApplicationToInfraMapper{
   static map (offer: jobCreationProps ):jobOfferCreateDto{
     return{
       ...offer,
-      id:1,
+      id:offer.id?offer.id: 1,
       deadline:offer.deadline.toLocaleDateString(),
       statusJobOfferModel:offer.status+1,
       specialRequirements:offer.specialRequirements?offer.specialRequirements:'This offer has no special requirements.',
