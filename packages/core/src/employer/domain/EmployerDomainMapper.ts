@@ -7,12 +7,11 @@ import { EmployerProfile } from "./valueObjects/CompanyProfileValueObject";
 import { Skill, skillMappedProps } from "../../skills/domain/Skill";
 
 export interface ProfileProps{
-    id?: number,
     email: string,
     password: string,
     logoURL: string,
     companyName: string,
-    skills:skillMappedProps[] 
+    skills:skillMappedProps[] , 
     firstLineAddress: string,
     secondLineAddress: string,
     state: string,
@@ -32,7 +31,8 @@ export class ProfileToDomainMapper{
             employerContacts: EmployerContact.createList(props.contacts),   
             employerProfile: EmployerProfile.create(props.companyName, props.logoURL),
             addressEmployer: AddressEmployer.create(props.firstLineAddress, props.secondLineAddress,props.state, props.city, props.zip),
-        },props.id)
+            skills: Skill.createList(props.skills)
+        })
   
       }
 }

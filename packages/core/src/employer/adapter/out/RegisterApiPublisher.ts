@@ -6,11 +6,3 @@ import { ProfileToPresentationMapper } from "../../presentation/EmployerPresenta
 import { ProfileApplicationProps } from "../../application/EmployerAplicationModel";
 import { RegisterEmployerUseCase } from "../../application/port/in/RegisterEmployerUseCase";
 import { RegisterPort } from "../../application/port/out/RegisterPort";
-
-//export class RegisterService implements RegisterEmployerUseCase{
-//    registerPort: RegisterPort;
-//
-//    constructor(port: RegisterPort){
-//        this.registerPort: port
-//    }
-//}

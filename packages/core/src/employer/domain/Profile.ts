@@ -3,12 +3,14 @@ import { AddressEmployer } from "./valueObjects/AddressValueObject";
 import { EmployerContact } from "./valueObjects/ContactValueObject";
 import { EmployerProfile } from "./valueObjects/CompanyProfileValueObject";
 import { IdentifierEmployer } from "./valueObjects/IdentifiersValueObject";
+import { Skill } from "../../skills/domain/Skill";
 
 export interface RegisterProps{
     addressEmployer: AddressEmployer,
     employerContacts:EmployerContact[],
     employerProfile: EmployerProfile,
-    identifierEmployer: IdentifierEmployer
+    identifierEmployer: IdentifierEmployer,
+    skills: Skill[]
 }
 
 export class Profile extends Entity<RegisterProps>{
@@ -24,13 +26,16 @@ export class Profile extends Entity<RegisterProps>{
     get identifierEmployer(){
         return this.props.identifierEmployer;
     }
-
-    private constructor(props:RegisterProps, id?:number){
-        super(props,id)
+    get skills(){
+        return this.props.skills;
     }
 
-    public static registerEmployer(props: RegisterProps, id?:number):Profile{
-        return new Profile(props,id);
+    private constructor(props:RegisterProps){
+        super(props)
+    }
+
+    public static registerEmployer(props: RegisterProps):Profile{
+        return new Profile(props);
     }
 
 }
