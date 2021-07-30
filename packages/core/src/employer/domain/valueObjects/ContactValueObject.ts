@@ -57,6 +57,13 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
             throw new Error("Email can't be blank")
         }
 
+
+        const emailRegExp = new RegExp(/^(([^<>()[\]{}'^?\\.,!|//#%*-+=&;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+        if (!emailRegExp.test(email)){
+            throw new Error("Invalid email")
+        }
+        
+
         //Number phone validation
         const phoneString = phoneNumber.toString();     //Para hacer las validaciones se usara el numero como string
         var firstDigit = phoneString.substr(0,1);       //Agarra el primer digito
@@ -68,7 +75,8 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
         else{
             var twoDigits = phoneString.substr(0,2);
             if(parseInt(twoDigits)===58){               //Venezuelan numbers empiezan por +58
-                if(phoneString.substr(0).length!==10){  //Si empiezan por +58 deben tener 10 numeros de longitud
+                if(phoneString.substr(2).length!==10){  //Si empiezan por +58 deben tener 10 numeros de longitud
+                    console.log(phoneString.substr(1));
                     throw new Error("Invalid Venezuelan Number")
                 }
             }

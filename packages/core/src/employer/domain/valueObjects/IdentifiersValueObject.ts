@@ -22,20 +22,20 @@ export class IdentifierEmployer extends ValueObject<IdentifierProps>{
         if (password.trim()===''){
             throw new Error("Password can't be blank")
         }
-        if(password.toString().length>=8){
+        if(password.toString().length<=8){
             throw new Error("Password should have at least 8 characters")
         }
 
         const passwordRegExp = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-        if (passwordRegExp.test(email)){
+        if (!passwordRegExp.test(password)){
             throw new Error("Password must contain at least 1 lowercase, 1 uppercase, 1 number, 1 special character and at least 8 characters long")
         }
 
-        const emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        if (emailRegExp.test(email)){
+        const emailRegExp = new RegExp(/^(([^<>()[\]{}'^?\\.,!|//#%*-+=&;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+        if (!emailRegExp.test(email)){
             throw new Error("Invalid email")
         }
-
+        
         return new IdentifierEmployer({email: email, password:password})
     }
 }

@@ -18,7 +18,8 @@ export class ProfileToPresentationMapper {
             skills:profile.skills.map((skill:Skill)=>{
                 return {name:skill.name, category:skill.category, number:skill.number }
             }),
-            contacts:profile.employerContact
+            contacts:profile.employerContact,
+            id: profile.idValue
         }
         return mapped
     }

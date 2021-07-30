@@ -7,6 +7,7 @@ import { EmployerProfile } from "./valueObjects/CompanyProfileValueObject";
 import { Skill, skillMappedProps } from "../../skills/domain/Skill";
 
 export interface ProfileProps{
+    id?: number,
     email: string,
     password: string,
     logoURL: string,
@@ -38,6 +39,7 @@ export class ProfileToDomainMapper{
 }
 
 export interface LoginProps{
+    id?: number,
     email: string,
     password: string
 }

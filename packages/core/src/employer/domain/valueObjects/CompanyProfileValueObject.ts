@@ -3,7 +3,6 @@ import { ValueObject } from "../../../common/domain/ValueObject";
 interface CompanyProfileProps{
     companyName: string,
     logoURL: string
-    //skills?
 }
 
 export class EmployerProfile extends ValueObject<CompanyProfileProps>{

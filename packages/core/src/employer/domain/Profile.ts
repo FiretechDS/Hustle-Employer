@@ -29,9 +29,12 @@ export class Profile extends Entity<RegisterProps>{
     get skills(){
         return this.props.skills;
     }
+    get idValue(){
+        return this.id
+    }
 
-    private constructor(props:RegisterProps){
-        super(props)
+    private constructor(props:RegisterProps, id?: number){
+        super(props, id)
     }
 
     public static registerEmployer(props: RegisterProps):Profile{
