@@ -47,6 +47,10 @@
                     jobStatusName="In Progress"
                     jobDuration="70"
                     jobStatus="4"
+                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, esse itaque unde nam ipsum doloremque officiis. Voluptatum assumenda natus porro officia illum ducimus earum perferendis, facilis provident eum sint qui."
+                    educationLevel="Bachelor Degree"
+                    cityAddress="Orlando"
+                    stateAddress="Florida"
                     review=""
                 />
               </div>
@@ -64,6 +68,10 @@
                 jobStatus="5"
                 jobStatusName="Finished"
                 jobDuration="70"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, esse itaque unde nam ipsum doloremque officiis. Voluptatum assumenda natus porro officia illum ducimus earum perferendis, facilis provident eum sint qui."
+                educationLevel="Bachelor Degree"
+                cityAddress="Orlando"
+                stateAddress="Florida"
                 review=""
                 rating=""
             />
@@ -81,6 +89,10 @@
                 jobDuration="70"
                 review="Muy bueno"
                 rating="5"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, esse itaque unde nam ipsum doloremque officiis. Voluptatum assumenda natus porro officia illum ducimus earum perferendis, facilis provident eum sint qui."
+                educationLevel="Bachelor Degree"
+                cityAddress="Orlando"
+                stateAddress="Florida"
             />
             </div>
         </div>
@@ -99,6 +111,10 @@
                 jobDuration="70"
                 review="Regular"
                 rating="3"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, esse itaque unde nam ipsum doloremque officiis. Voluptatum assumenda natus porro officia illum ducimus earum perferendis, facilis provident eum sint qui."
+                educationLevel="Bachelor Degree"
+                cityAddress="Orlando"
+                stateAddress="Florida"
             />
             </div>
         </div>

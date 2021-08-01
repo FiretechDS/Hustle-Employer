@@ -35,7 +35,7 @@
       <div class="fields-modal-row">
         <div class="fields-modal-column">
           <p class="info-title">Duration</p>
-          <p class="info-value">{{ jobDuration }} Hours</p>
+          <p class="info-value">{{ jobDuration }} hours</p>
         </div>
         <div class="fields-modal-column">
           <p class="info-title">Start Date</p>
