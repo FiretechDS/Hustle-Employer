@@ -92,9 +92,6 @@
             <li class="small-columns-modal-offer-detail">
               <p class="title-modal-offer">Deadline</p>
             </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">Status</p>
-            </li>
           </ul>
           <ul class="columns-modal-offer-detail">
             <li>
@@ -106,47 +103,64 @@
             <li class="small-columns-modal-offer-detail">
               <p class="value-modal-offer">{{ offer.deadline }}</p>
             </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="value-modal-offer">{{ offer.status }}</p>
+          </ul>
+        </div>
+        <div class="listRow">
+          <div class="">
+            <p class="title-modal-offer">Schedule</p>
+            <perfect-scrollbar>
+              <ul class="list-modal-offer">
+                <li
+                  v-for="day in offer.schedules"
+                  :key="offer.schedules.indexOf(day)"
+                >
+                  <div class="value-modal-offer">
+                    <p>
+                      {{ day }} {{ offer.startHour }}:00 -{{ offer.endHour }}:00
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="">
+            <p class="title-modal-offer">Required Skills</p>
+            <perfect-scrollbar>
+              <ul class="list-modal-offer">
+                <li v-for="skill in offer.skills" :key="skill.name">
+                  <div class="value-modal-offer">
+                    <p>
+                      {{ skill.name }}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="">
+            <p class="title-modal-offer">Address</p>
+            <p class="value-modal-offer">{{ offer.location }}</p>
+          </div>
+        </div>
+        <div class="fields-modal-offer">
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Location</p>
             </li>
           </ul>
         </div>
-
-        <div class="fields-modal-offer">
-          <p class="title-modal-offer">Schedule</p>
-          <perfect-scrollbar>
-            <ul class="list-modal-offer">
-              <li
-                v-for="day in offer.schedules"
-                :key="offer.schedules.indexOf(day)"
-              >
-                <div class="value-modal-offer">
-                  <p>
-                    {{ day }} {{ offer.startHour }}:00 -{{ offer.endHour }}:00
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-        <div class="fields-modal-offer">
-          <p class="title-modal-offer">Required Skills</p>
-          <perfect-scrollbar>
-            <ul class="list-modal-offer">
-              <li v-for="skill in offer.skills" :key="skill.name">
-                <div class="value-modal-offer">
-                  <p>
-                    {{ skill.name }}
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-        <div class="fields-modal-offer">
-          <p class="title-modal-offer">Location</p>
-          <p class="value-modal-offer">{{ offer.location }}</p>
-        </div>
+        <MapComponent
+          :position="providePosition"
+          :styling="{
+            height: '20rem',
+            width: '80%',
+            'margin-right': 'auto',
+            'margin-left': 'auto',
+            'border-radius': '5px',
+            'margin-top': '2rem',
+          }"
+          :zoom="10"
+        />
       </template>
       <template v-slot:footer>
         <div class="offer-detail-footer">
@@ -210,7 +224,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, inject } from "vue";
+import { defineComponent, reactive, PropType, inject, computed } from "vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
@@ -222,6 +236,7 @@ import {
 } from "../../../../core/src/jobOffer/presentation";
 import { useConfirm } from "primevue/useconfirm";
 import Loader from "../Loader.vue";
+import MapComponent from "../map/MapComponent.vue";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -235,7 +250,7 @@ export default defineComponent({
       default: true,
     },
   },
-  components: { Modal, HorizontalCard, Button, Loader },
+  components: { Modal, HorizontalCard, Button, Loader, MapComponent },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
@@ -249,6 +264,13 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
     }
+
+    const providePosition = computed(() => {
+      return {
+        lat: props.offer.latitude,
+        lng: props.offer.longitude,
+      };
+    });
     function deleteModal() {
       confirm.require({
         message: `Are you sure you want to delete ${props.offer.title}?`,
@@ -305,6 +327,7 @@ export default defineComponent({
       deleteModal,
       fileOrPublish,
       duplicate,
+      providePosition,
     };
   },
 });
@@ -319,6 +342,18 @@ export default defineComponent({
   width: 3rem;
   height: 3rem;
   align-items: center;
+}
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 5rem;
+  //padding-right: 13rem;
+  margin-left: 1rem;
+  :first-child {
+    flex: 0;
+    width: 19.2rem;
+  }
 }
 .cardIcons {
   width: 3rem;

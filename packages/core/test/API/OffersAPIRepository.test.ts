@@ -7,7 +7,10 @@ describe('API', () =>{
     test('Test de Integracion con API', async () => {
         var repository = new OffersAPIRepository();
         var loadResult: Either<DataError, JobApplicationProps[]> = await repository.loadOffers(100);
-        
+        loadResult.fold(
+            (error)=>console.log(error),
+            ()=>{}
+        )
         expect(loadResult.isLeft()).toBe(false);
         expect(loadResult.isRight()).toBe(true);
 

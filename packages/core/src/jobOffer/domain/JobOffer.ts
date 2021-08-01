@@ -7,6 +7,7 @@ import { Location } from "./valueObjects/LocationValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
 import { Skill } from "../../skills/domain/Skill";
 import { Status } from "./valueObjects/StatusValueObject";
+import { Position } from "./valueObjects/PositionValueObject";
 
 export interface JobOfferProps{
   deadline:Deadline;
@@ -18,6 +19,7 @@ export interface JobOfferProps{
   schedules:Schedule;
   location:Location;
   employerId:number,
+  position:Position
 }
 
 export class JobOffer extends Entity<JobOfferProps>{
@@ -47,6 +49,9 @@ export class JobOffer extends Entity<JobOfferProps>{
   }
   get employer(){
     return this.props.employerId;
+  }
+  get position(){
+    return this.props.position
   }
   public get idValue():number{
     return this.id

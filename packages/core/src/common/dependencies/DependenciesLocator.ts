@@ -3,7 +3,6 @@ import { OfferApiPublisher } from "../../jobOffer/adapter/out/OfferApiPublisher"
 import { OfferApiRemover } from "../../jobOffer/adapter/out/OfferApiRemover";
 import { OfferApiUpdater } from "../../jobOffer/adapter/out/OfferApiUpdater";
 import { OffersAPIRepository } from "../../jobOffer/adapter/out/OffersAPIRepository";
-import { OffersInMemoryRepository } from "../../jobOffer/adapter/out/OffersInMemoryRepository";
 import { LoadOffersService } from "../../jobOffer/application/services/LoadOffersService";
 import { PublishOfferService } from "../../jobOffer/application/services/PublishOfferService";
 import { RemoveOfferService } from "../../jobOffer/application/services/RemoveOfferService";
@@ -13,7 +12,7 @@ import { JobOfferPloc } from "../../jobOffer/presentation";
 function provideJobOfferPloc(workLocal?:boolean):JobOfferPloc{
   //Adapters
   const createOfferRepo = workLocal? new OfferinMemoryPublisher():new OfferApiPublisher();
-  const getOfferRepo = workLocal? new OffersInMemoryRepository(): new OffersAPIRepository();
+  const getOfferRepo =  new OffersAPIRepository();
   const deleteOfferRepo = new OfferApiRemover()
   const updateOfferRepo = new OfferApiUpdater()
   //Use cases

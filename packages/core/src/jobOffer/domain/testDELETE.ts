@@ -16,7 +16,6 @@ import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { Skill } from "../../skills/domain/Skill";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
-import { OffersInMemoryRepository } from "../adapter/out/OffersInMemoryRepository";
 import { JobOfferPloc } from "../presentation";
 import { PublishOfferService } from "../application/services/PublishOfferService";
 import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
@@ -52,12 +51,23 @@ try {
     skills:[{name:'Java',number:1,category:1}],
     title:'UI/UX Developer',
     hourlyRate:400,
-    location:'Los Angeles'
+    location:'Los Angeles',
+    latitude:4,
+    longitude:100
 
   }
   const mappedOffer = ApplicationToInfraMapper.map(offer)
   const offerDto ={...mappedOffer, EmployerId:mappedOffer.employerId, statusJobOfferModelId:mappedOffer.statusJobOfferModel}
 
+
+  const password ="aAaaaaaaa1*"
+  const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+
+        if (!password.match(passwordRegExp)){
+            throw new Error("Password must contain at least 1 lowercase, 1 uppercase, 1 number, 1 special character and at least 8 characters long")
+        }else{
+          console.log('valid password: '+ password)
+        } 
 } catch (error) {
   console.log('Caught error: '+error.message)
 }
@@ -75,5 +85,3 @@ try {
   
 }
 
-const skills = SkillMother.createValid(3)
-console.log(skills)

@@ -3,6 +3,7 @@ import CandidatesPage from "@/views/CandidatesPage.vue";
 import LoginPage from "@/views/LoginPage.vue"
 import RegisterPage from "@/views/RegisterPage.vue"
 import CandidateSelect from "@/components/candidates/CandidateSelect.vue"
+import MapComponent from "@/components/map/MapComponent.vue"
 import {createRouter,createWebHistory}  from "vue-router";
 //we can implement lazyloading hereee lets gooo
 const routes = [
@@ -30,6 +31,11 @@ const routes = [
     path: "/register",
     name: "Register ",
     component: RegisterPage
+  },
+  {
+    path:"/map-test",
+    name:"map",
+    component: MapComponent
   }
 
 

@@ -9,7 +9,10 @@ export class SkillPloc extends Ploc<SkillsState>{
     super(skillsInitialState)
     this.loadSkills()
   }
-
+  reload(){
+    this.changeState({kind:'LoadingSkillsState'})
+    this.loadSkills()
+  }
   private async loadSkills(){
     const skillsOrError= await this.loadSkillsUseCase.findSkills()
     skillsOrError.fold(

@@ -14,7 +14,7 @@
             />
             <input
               v-model="jobOffer.location"
-              placeholder="Location"
+              placeholder="Address"
               id="location-input"
             />
             <input
@@ -89,6 +89,16 @@
               placeholder="Description"
               id="description-input"
             />
+            <p class="subtitle">Location:</p>
+            <MapComponent
+              :clickable="true"
+              @locationUpdated="updateLocation"
+              :styling="{
+                height: '20rem',
+                width: '100%',
+                'border-radius': '5px',
+              }"
+            />
             <p class="form-result">{{ message.value }}</p>
           </form>
           <Loader class="loader" :loading="message.loading" color="#2940d3" />
@@ -122,12 +132,13 @@ import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
 import Loader from "@/components/Loader.vue";
-
+import MapComponent from "@/components/map/MapComponent.vue";
 import { usePlocState } from "../../common/UsePlocState";
 import { SkillPloc } from "../../../../core/src";
+import { jobCreatePresentationProps } from "../../../../core/src/jobOffer/presentation";
 export default defineComponent({
   name: "CreateOfferModal",
-  components: { Modal, PlusButton, Button, Multiselect, Loader },
+  components: { Modal, PlusButton, Button, Multiselect, Loader, MapComponent },
   props: {
     message: {
       type: Object,
@@ -177,6 +188,8 @@ export default defineComponent({
         options: [{ value: 1, label: "Skill Loading Error" }],
       },
       status: 1,
+      latitude: 0,
+      longitude: 0,
     });
     const stringHelper = reactive({
       duration: "" as string,
@@ -184,6 +197,9 @@ export default defineComponent({
     });
 
     function showModal(): void {
+      if (skillState.value.kind === "ErrorSkillsState") {
+        skillPloc.reload();
+      }
       state.isModalVisible = true;
     }
     function closeModal(): void {
@@ -191,7 +207,11 @@ export default defineComponent({
       setValuesToDefault();
       ctx.emit("resetMsg");
     }
-
+    function updateLocation(location: { lat: number; lng: number }) {
+      jobOffer.latitude = location.lat;
+      jobOffer.longitude = location.lng;
+      console.log(location);
+    }
     function getHourOptions(): Object[] {
       let i = 5;
       const options = [];
@@ -224,7 +244,7 @@ export default defineComponent({
       jobOffer.duration = Number(stringHelper.duration);
       const status = willPublish ? "Open" : "Posted";
       console.log(jobOffer);
-      const newOffer = {
+      const newOffer: jobCreatePresentationProps = {
         ...jobOffer,
         employerId: 1,
         status: status,
@@ -248,12 +268,17 @@ export default defineComponent({
       closeModal,
       sendOffer,
       getHourOptions,
+      updateLocation,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.create-job-offer-body-div {
+  height: fit-content;
+  width: fit-content;
+}
 div {
   color: grey;
   padding: 10px;

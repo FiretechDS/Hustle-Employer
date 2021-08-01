@@ -13,9 +13,12 @@ export interface JobOffersWeb{
   title:string,
   location:string,
   deadline:string,
+  createdOn:string,
   specialRequirements:string,
   duration:number,
   hourlyRate:number,
+  latitude:string,
+  length:string,
   statusJobOfferModel:{
     id:number,
     description:string

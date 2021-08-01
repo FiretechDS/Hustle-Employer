@@ -22,6 +22,8 @@ export class ToPresentationMapper {
       location:jobOffer.location.value,
       startHour:jobOffer.schedules.startHour,
       endHour:jobOffer.schedules.endHour,
+      latitude:jobOffer.position.latitude,
+      longitude:jobOffer.position.longitude
     } 
    return mapped
   }
