@@ -5,6 +5,7 @@ export class ApplicationToInfraMapper{
         return{
             ...profile,
             companyName: profile.companyName,
+            companyLogo:profile.logoURL,
             specialRequirement: 'none',
             email: profile.email,
             password: profile.password,

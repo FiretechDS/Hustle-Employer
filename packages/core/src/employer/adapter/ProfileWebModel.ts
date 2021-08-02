@@ -17,6 +17,7 @@ interface Address{
 
 export interface ProfileWebModel{
     companyName: string,
+    companyLogo:string,
     specialRequirement: string,
     password: string,
     email: string,

@@ -4,19 +4,24 @@ import { GetSkillsQuery } from "../application/port/in/GetSkillsQuery";
 import { Skill } from "../domain/Skill";
 import { skillsInitialState, SkillsState } from "./SkillsState";
 export class SkillPloc extends Ploc<SkillsState>{
+
   constructor(private loadSkillsUseCase:GetSkillsQuery){
     super(skillsInitialState)
     this.loadSkills()
   }
+  reload(){
+    this.changeState({kind:'LoadingSkillsState'})
+    this.loadSkills()
+  }
   private async loadSkills(){
-   const skillsOrError= await this.loadSkillsUseCase.findSkills()
-   skillsOrError.fold(
-     (error=>{
-      this.changeState(this.handleError(error))
-     }),(skills=>{
-        this.changeState(this.handleLoaded(skills))
-     })
-   )
+    const skillsOrError= await this.loadSkillsUseCase.findSkills()
+    skillsOrError.fold(
+      (error=>{
+        this.changeState(this.handleError(error))
+      }),(skills=>{
+          this.changeState(this.handleLoaded(skills))
+      })
+    )
   }
   private handleLoaded(skills:Skill[]):SkillsState{
     return{

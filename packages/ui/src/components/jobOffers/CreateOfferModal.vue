@@ -14,7 +14,7 @@
             />
             <input
               v-model="jobOffer.location"
-              placeholder="Location"
+              placeholder="Address"
               id="location-input"
             />
             <input
@@ -32,7 +32,13 @@
                 placeholder="Days"
                 mode="multiple"
                 class="schedule-multiselect"
-              />
+              >
+                <template v-slot:multiplelabel="{ values }">
+                  <div class="multiselect-multiple-label">
+                    {{ values.length }} days selected
+                  </div>
+                </template>
+              </Multiselect>
               <Multiselect
                 :options="getHourOptions()"
                 v-model="jobOffer.startHour"
@@ -70,6 +76,11 @@
               class="skills-multiselect"
               id="skills-input"
             >
+              <template v-slot:multiplelabel="{ values }">
+                <div class="multiselect-multiple-label">
+                  {{ values.length }} skills selected
+                </div>
+              </template>
             </Multiselect>
             <p class="subtitle">Special Requirements:</p>
             <textarea
@@ -77,6 +88,16 @@
               v-model="jobOffer.specialRequirements"
               placeholder="Description"
               id="description-input"
+            />
+            <p class="subtitle">Location:</p>
+            <MapComponent
+              :clickable="true"
+              @locationUpdated="updateLocation"
+              :styling="{
+                height: '20rem',
+                width: '100%',
+                'border-radius': '5px',
+              }"
             />
             <p class="form-result">{{ message.value }}</p>
           </form>
@@ -111,12 +132,13 @@ import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
 import Loader from "@/components/Loader.vue";
-
+import MapComponent from "@/components/map/MapComponent.vue";
 import { usePlocState } from "../../common/UsePlocState";
 import { SkillPloc } from "../../../../core/src";
+import { jobCreatePresentationProps } from "../../../../core/src/jobOffer/presentation";
 export default defineComponent({
   name: "CreateOfferModal",
-  components: { Modal, PlusButton, Button, Multiselect, Loader },
+  components: { Modal, PlusButton, Button, Multiselect, Loader, MapComponent },
   props: {
     message: {
       type: Object,
@@ -133,11 +155,10 @@ export default defineComponent({
     const skillPloc = inject<SkillPloc>("skillsPloc") as SkillPloc;
     const skillState = usePlocState(skillPloc);
 
-    watch(skillState, (oldState, newState) => {
-      console.log(newState);
-      console.log(oldState);
-      if (oldState.kind === "LoadedSkillsState") {
-        jobOffer.skills.options = oldState.skills.map((skill) => {
+    watch(skillState, (value, oldState) => {
+      console.log(value);
+      if (value.kind === "LoadedSkillsState") {
+        jobOffer.skills.options = value.skills.map((skill) => {
           return { value: skill.number, label: skill.name };
         });
       }
@@ -167,6 +188,8 @@ export default defineComponent({
         options: [{ value: 1, label: "Skill Loading Error" }],
       },
       status: 1,
+      latitude: 0,
+      longitude: 0,
     });
     const stringHelper = reactive({
       duration: "" as string,
@@ -174,6 +197,9 @@ export default defineComponent({
     });
 
     function showModal(): void {
+      if (skillState.value.kind === "ErrorSkillsState") {
+        skillPloc.reload();
+      }
       state.isModalVisible = true;
     }
     function closeModal(): void {
@@ -181,7 +207,11 @@ export default defineComponent({
       setValuesToDefault();
       ctx.emit("resetMsg");
     }
-
+    function updateLocation(location: { lat: number; lng: number }) {
+      jobOffer.latitude = location.lat;
+      jobOffer.longitude = location.lng;
+      console.log(location);
+    }
     function getHourOptions(): Object[] {
       let i = 5;
       const options = [];
@@ -214,7 +244,7 @@ export default defineComponent({
       jobOffer.duration = Number(stringHelper.duration);
       const status = willPublish ? "Open" : "Posted";
       console.log(jobOffer);
-      const newOffer = {
+      const newOffer: jobCreatePresentationProps = {
         ...jobOffer,
         employerId: 1,
         status: status,
@@ -238,12 +268,17 @@ export default defineComponent({
       closeModal,
       sendOffer,
       getHourOptions,
+      updateLocation,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.create-job-offer-body-div {
+  height: fit-content;
+  width: fit-content;
+}
 div {
   color: grey;
   padding: 10px;
@@ -302,7 +337,7 @@ textarea {
   justify-content: space-between;
   align-items: center;
   .hour-multiselect {
-    width: 10rem;
+    width: 12rem;
   }
   .schedule-multiselect {
     margin-right: 0;

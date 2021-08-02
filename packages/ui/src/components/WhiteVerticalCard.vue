@@ -38,6 +38,7 @@ export default defineComponent({
   margin-top: 18rem;
   max-width: 50rem;
   max-height: 80rem;
+  box-shadow: 8px 18px 34px 10px rgba(0, 0, 0, 0.25);
 }
 .white-card-header {
   color: $font-dark;

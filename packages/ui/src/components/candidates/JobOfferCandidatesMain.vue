@@ -1,6 +1,10 @@
 <template>
   <div class="candidatePageCointainer">
     <div class="header">
+      <router-link to="/candidates">
+        <img class="arrow" :src="require('@/assets/svg/arrow_back.svg')" />
+      </router-link>
+
       <h2 class="job-title">UI/UX Developer</h2>
       <p class="total-candidates">Total Candidates: 5</p>
       <div class="candidates-sorter">
@@ -106,6 +110,7 @@ export default defineComponent({
   .header {
     display: flex;
     margin: 0 15rem; //10rem;;
+    align-items: center;
   }
   .job-title {
     font-size: $medium-font;
@@ -172,6 +177,24 @@ export default defineComponent({
     display: inline-block;
     margin: 1.5rem 1rem;
     text-align: initial;
+  }
+  .back {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    img {
+      filter: $filter-white;
+      width: 5rem;
+      height: 5rem;
+    }
+    font-size: $medium-small-font;
+  }
+  .arrow {
+    filter: $filter-white;
+    width: 5rem;
+    height: 5rem;
+    transform: translateX(-8rem);
+    cursor: pointer;
   }
 }
 </style>

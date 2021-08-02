@@ -179,6 +179,8 @@ export default defineComponent({
   }
   .job-card-container{
     margin-left: 2rem;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

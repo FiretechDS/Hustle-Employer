@@ -1,9 +1,17 @@
 <template>
   <div class="jobPageCointainer">
     <ArchiveActiveButtons @handleClick="handleFilter" />
-    <h2 class="title">
-      {{ offerFilter.active ? "Published" : "Archived" }} Offers
-    </h2>
+    <div class="title-section">
+      <img
+        :src="require('@/assets/svg/refresh.svg')"
+        alt="refresh"
+        class="refresh"
+        @click="reload"
+      />
+      <h2 class="title">
+        {{ offerFilter.active ? "Published" : "Archived" }} Offers
+      </h2>
+    </div>
     <ul class="columns-job-offer">
       <li>Title</li>
       <li class="small-columns-job-offer">Rate/hour</li>
@@ -32,21 +40,8 @@
         <div v-bind:key="job.id" v-for="job in state.activeOffers">
           <OfferDetail
             class="card"
-            :title="job.title"
-            :description="job.specialRequirements"
-            :salary="job.hourlyRate"
-            :duration="job.duration"
-            :deadline="job.deadline"
-            :status="job.status"
-            :schedule="{
-              days: job.schedules,
-              hourIn: job.startHour,
-              hourOut: job.endHour,
-            }"
-            :skills="job.skills"
-            :location="job.location"
+            :offer="job"
             :areOffersActive="offerFilter.active"
-            :id="job.id"
           />
         </div>
       </div>
@@ -59,21 +54,8 @@
           <div v-bind:key="job.id" v-for="job in state.archiveOffers">
             <OfferDetail
               class="card"
-              :title="job.title"
-              :description="job.specialRequirements"
-              :salary="job.hourlyRate"
-              :duration="job.duration"
-              :deadline="job.deadline"
-              :status="job.status"
-              :schedule="{
-                days: job.schedules,
-                hourIn: job.startHour,
-                hourOut: job.endHour,
-              }"
-              :skills="job.skills"
-              :location="job.location"
+              :offer="job"
               :areOffersActive="offerFilter.active"
-              :id="job.id"
             />
           </div>
         </div>
@@ -88,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive } from "vue";
+import { defineComponent, inject, reactive, watch } from "vue";
 import CreateOfferModal from "@/components/jobOffers/CreateOfferModal.vue";
 import OfferDetail from "@/components/jobOffers/OfferDetail.vue";
 import {
@@ -117,6 +99,7 @@ export default defineComponent({
       value: "" as string,
       loading: false as boolean,
     });
+
     const offerFilter = reactive({ active: true });
 
     function handleFilter(active: boolean): void {
@@ -125,6 +108,11 @@ export default defineComponent({
     function resetMsg(): void {
       message.value = "";
     }
+
+    function reload(): void {
+      ploc.reload();
+    }
+
     async function createOffer(offer: jobPresentationProps): Promise<void> {
       resetMsg();
       message.loading = true;
@@ -147,6 +135,7 @@ export default defineComponent({
       offerFilter,
       handleFilter,
       resetMsg,
+      reload,
     };
   },
 });
@@ -158,8 +147,19 @@ export default defineComponent({
   margin: 5rem 19rem;
   display: flex;
   flex-direction: column;
-  .title {
-    font-size: $medium-font;
+  .title-section {
+    display: flex;
+    align-items: center;
+    .refresh {
+      width: 3rem;
+      height: 3rem;
+      filter: $filter-white;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .title {
+      font-size: $medium-font;
+    }
   }
   .error {
     text-align: center;

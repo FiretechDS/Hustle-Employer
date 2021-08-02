@@ -1,5 +1,6 @@
 <template>
   <button
+    :disabled="isDisabled"
     @click="onClick"
     class="button"
     :style="[
@@ -32,7 +33,7 @@
       ]"
     />
 
-    <span class="span">{{ buttonText }} </span>
+    <span class="span" :style="{ fontSize: fontSize }">{{ buttonText }} </span>
   </button>
 </template>
 <script lang="ts">
@@ -60,6 +61,14 @@ export default defineComponent({
     styles: {
       type: Object as PropType<Object>,
     },
+    fontSize: {
+      type: String as PropType<string>,
+      default: "1.6rem",
+    },
+    isDisabled: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
   },
 });
 </script>
@@ -76,17 +85,17 @@ export default defineComponent({
   justify-content: space-around;
   transition: all 0.2s ease-in-out;
 
-  &:hover {
+  &:hover:enabled {
     transform: scale(1.1);
   }
   .span {
-    font-size: 1.6rem;
     text-align: center;
     font-family: "Poppins";
     font-weight: bolder;
   }
   &:disabled {
     opacity: 0.7;
+    cursor: default;
   }
 }
 .icon {
