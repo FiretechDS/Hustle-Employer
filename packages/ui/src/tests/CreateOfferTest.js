@@ -6,7 +6,7 @@ module.exports = {
             duration: '200',
             title: 'Acceptance test',
             hourlyRate: '100',
-            location: 'Caracas, Venezuela',
+            location: 'New York, US',
             description: 'This is an acceptance test.'
         };
 
@@ -15,7 +15,7 @@ module.exports = {
             .waitForElementVisible('body')
             .assert.visible('#create-new-offer-button')
             .click('#create-new-offer-button')
-            .waitForElementVisible('.modal')
+            .waitForElementVisible('.create-job-offer-form')
             .assert.visible('.create-job-offer-form')
             .setValue('#title-input',validOffer.title)
             .setValue('#location-input',validOffer.location)
@@ -39,8 +39,9 @@ module.exports = {
             .keys("\uE015")
             .keys("\uE007")
             .setValue('#description-input',validOffer.description)
-            .assert.visible('#publish-button')
-            .click('#publish-button')
+            .assert.visible('#create-button')
+            .click('#create-button')
+            .waitForElementVisible('.form-result')
             .assert.containsText('.form-result', 'Offer published successfully')
             //Not-happy-path Validation: when duration equals 0
             //.assert.containsText('.form-result', 'Job duration must be greater than zero')
