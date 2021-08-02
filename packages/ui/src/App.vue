@@ -10,6 +10,7 @@
 import { defineComponent } from "vue";
 import {
   dependenciesLocator,
+  registerLocator,
   skillLocator,
 } from "../../core/src/common/dependencies";
 import NavBar from "./components/nav-bar/NavBar.vue";
@@ -21,6 +22,7 @@ export default defineComponent({
   provide: {
     jobOfferPloc: dependenciesLocator.provideJobOfferPloc(),
     skillsPloc: skillLocator.provideSkillProp(),
+    registerService: registerLocator.provideRegisterService(),
   },
 });
 </script>
