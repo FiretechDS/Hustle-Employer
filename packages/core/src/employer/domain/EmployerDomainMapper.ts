@@ -2,7 +2,7 @@ import { Profile } from "./Profile";
 import { Credentials } from "./Credentials";
 import { AddressEmployer } from "./valueObjects/AddressValueObject";
 import { IdentifierEmployer } from "./valueObjects/IdentifiersValueObject";
-import { EmployerContact } from "./valueObjects/ContactValueObject";
+import { contactMappedProps, EmployerContact } from "./valueObjects/ContactValueObject";
 import { EmployerProfile } from "./valueObjects/CompanyProfileValueObject";
 import { Skill, skillMappedProps } from "../../skills/domain/Skill";
 
@@ -18,7 +18,7 @@ export interface ProfileProps{
     state: string,
     city: string,
     zip: number,
-    contacts: Array<EmployerContact>
+    contacts: contactMappedProps[]
 }
 
 export type profileCreatedProps={

@@ -14,16 +14,16 @@ export class RegisterService implements RegisterEmployerUseCase{
     async register(props:ProfileProps):Promise<Either<DataError,true>>{
         try {
             //Validate rules inside domain value objects
-            const domainMapped = ProfileToDomainMapper.map(props);
-            const serviceResult:Either<DataError,true> = await this.registerPort.publish(props);
-            const errorOrOffer:Either<DataError,true>= serviceResult.fold( 
+            ProfileToDomainMapper.map(props);
+            const serviceResult:Either<DataError,true> = await this.registerPort.register(props);
+            const errorOrRegistered:Either<DataError,true>= serviceResult.fold( 
             (error)=>{
               return Either.left(error)
             },(()=>{
               return Either.right(true)
             } )
             )
-            return errorOrOffer
+            return errorOrRegistered
           } catch (error) {
             return Either.left({kind:'UnexpectedError',message:error})
           }

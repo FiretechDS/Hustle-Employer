@@ -26,5 +26,5 @@ export interface ProfileWebModel{
 }
 
 export type ProfileCreateDto={
-    [P in keyof ProfileWebModel]:ProfileWebModel[P] extends "listContact"?Array<Object>: ProfileWebModel[P] extends Array<Object>?Array<number>:P extends "id"?number: ProfileWebModel[P]
+    [P in keyof ProfileWebModel]:P extends "listContact"?Array<Object>: ProfileWebModel[P] extends Array<Object>?Array<number>:P extends "id"?number: ProfileWebModel[P]
 }
