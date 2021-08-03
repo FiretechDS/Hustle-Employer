@@ -1,14 +1,33 @@
 <template>
-    <div v-if="page === 1" class="profile-card-container">
+    <div class="profile-card-container">
       <ProfileCard>
         <template v-slot:header>My profile</template>
         <template v-slot:body>
           <div class="rows-profile">
             <img :src="info.logoURL" class="image-profile">
             <div class="company-name-profile">
-              <p>{{info.companyName}}</p>
+              <div class="row-item-profile">
+                <input
+                  v-model="info.companyName"
+                  class="title-value-info-input mt-5"
+                  :class="{titleeditable: page === 2 }"
+                  id="company-name-profile"
+                  type="text"
+                />
+                <input
+                  v-model="info.logoURL"
+                  class="value-info-input"
+                  :class="{editable: page === 2 }"
+                  id="logo-profile"
+                  type="text"
+                  v-if="page === 2"
+                />
+              </div>
+              
             </div>
-            <img src="@/assets/svg/edit-pencil.svg" class="edit-profile">
+            <img src="@/assets/svg/edit-pencil.svg" class="edit-profile" @click="setPage(2)" v-if="page === 1">
+            <img src="@/assets/svg/check.svg" class="confirm-edit-profile" @click="setPage(1)" v-if="page === 2">
+            <img src="@/assets/svg/cancel.svg" class="cancel-edit-profile" @click="setPage(1)" v-if="page === 2">
           </div>
           <div class="rows-profile">
             <div class="row-item-profile ">
@@ -24,10 +43,22 @@
                 </ul>
                 <ul class="columns-profile-info">
                   <li>
-                    <p class="value-info">{{info.email}}</p>
+                    <input
+                      v-model="info.email"
+                      class="value-info-input"
+                      :class="{editable: page === 2 }"
+                      id="mail-profile"
+                      type="text"
+                    />
                   </li>
                   <li class="small-columns-profile-info">
-                    <p class="value-info">{{info.password}}</p>
+                    <input
+                      v-model="info.password"
+                      class="value-info-input"
+                      :class="{editable: page === 2 }"
+                      id="password-profile"
+                      type="password"
+                    />
                   </li>
                 </ul>
                 <p class="title-info">Required Skills</p>
@@ -83,9 +114,21 @@
                 <p class="big-title-profile">Address</p>
                 <div class="address-profile"> 
                   <p class="title-info">First Line</p>
-                  <p class="value-info">{{info.address.firstLine}}</p>
+                  <input
+                      v-model="info.address.firstLine"
+                      class="long-address-value-info-input"
+                      :class="{longaddresseditable: page === 2 }"
+                      id="city-profile"
+                      type="text"
+                    />
                   <p class="title-info">Second Line</p>
-                  <p class="value-info">{{info.address.secondLine}}</p>
+                  <input
+                      v-model="info.address.secondLine"
+                      class="long-address-value-info-input"
+                      :class="{longaddresseditable: page === 2 }"
+                      id="city-profile"
+                      type="text"
+                    />
 
                   <ul class="columns-profile-info">
                   <li>
@@ -100,13 +143,31 @@
                 </ul>
                 <ul class="columns-profile-info">
                   <li>
-                    <p class="value-info">{{info.address.city}}</p>
+                    <input
+                      v-model="info.address.city"
+                      class="address-value-info-input"
+                      :class="{addresseditable: page === 2 }"
+                      id="city-profile"
+                      type="text"
+                    />
                   </li>
                   <li class="small-columns-profile-info">
-                    <p class="value-info">{{info.address.state}}</p>
+                    <input
+                      v-model="info.address.state"
+                      class="address-value-info-input"
+                      :class="{addresseditable: page === 2 }"
+                      id="state-profile"
+                      type="text"
+                    />
                   </li>
                   <li class="small-columns-profile-info">
-                    <p class="value-info">{{info.address.zip}}</p>
+                    <input
+                      v-model="info.address.zip"
+                      class="address-value-info-input"
+                      :class="{addresseditable: page === 2 }"
+                      id="zip-profile"
+                      type="text"
+                    />
                   </li>
                 </ul>
                 </div>
@@ -164,9 +225,6 @@
           </div>
         </template>
       </ProfileCard>
-    </div>
-    <div v-else>
-
     </div>
 </template>
 
@@ -302,18 +360,136 @@ export default defineComponent({
   font-size: $medium-font;
   text-align: initial;
   margin: 0rem;
+  cursor: default;
 }
 .title-info {
   color: $font-dark;
   font-size: $normal-font;
   margin-bottom: 0rem;
   text-align: initial;
+  cursor: default;
 }
 .value-info {
   color: $font-gray;
   font-size: $normal-font;
   margin-bottom: 0rem;
   text-align: initial;
+  cursor: default;
+}
+.value-info-input {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-right: 1rem;
+  margin-top:1.2rem;
+  border-color: white;
+  border: 0px;
+  cursor: default;
+}
+.editable {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-top: 1.2rem;
+  border-radius: 8px;
+  margin-left: -1rem;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  text-indent: 0.7rem;
+  border: 0px;
+  cursor: text;
+}
+.address-value-info-input {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-right: 1rem;
+  margin-top:1.2rem;
+  border-color: white;
+  border: 0px;
+  cursor: default;
+  width: 10rem;
+  margin-bottom: 5rem;
+}
+.addresseditable {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-top: 1.2rem;
+  border-radius: 8px;
+  margin-left: -1rem;
+  width: 10rem;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  text-indent: 0.7rem;
+  border: 0px;
+  margin-bottom: 5rem;
+  cursor: text;
+}
+.long-address-value-info-input {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-right: 1rem;
+  margin-top:1.2rem;
+  border-color: white;
+  border: 0px;
+  cursor: default;
+  width: 35rem
+}
+.longaddresseditable {
+  color: $font-gray;
+  font-size: $normal-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-top: 1.2rem;
+  border-radius: 8px;
+  margin-left: -1rem;
+  width: 35rem;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  text-indent: 0.7rem;
+  border: 0px;
+  cursor: text;
+}
+.title-value-info-input {
+  color: $font-dark;
+  font-size: $large-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-right: 1rem;
+  margin-top:1.2rem;
+  border-color: white;
+  border: 0px;
+  cursor: default;
+  width: 50rem
+}
+.titleeditable {
+  font-size: $large-font;
+  margin-bottom: 0rem;
+  text-align: initial;
+  margin-top: 1.2rem;
+  border-radius: 8px;
+  margin-left: -1rem;
+  width: 50rem;
+  border-color: transparent;
+  padding: 6px;
+  color: $font-gray;
+  background: $lighter-gray;
+  text-indent: 0.7rem;
+  border: 0px;
+  cursor: text;
 }
 .address-profile{
   text-align: initial;
@@ -342,7 +518,26 @@ export default defineComponent({
   width: 3rem;
   filter: $filter-blue;
   margin-top: 6.2rem;
-  margin-left: 10rem;
+  margin-left: 20rem;
+  margin-right: 5rem;
   display: flex;
+}
+.confirm-edit-profile{
+  height: 3rem;
+  width: 3rem;
+  filter: $filter-blue;
+  margin-top: 6.2rem;
+  margin-left: 20rem;
+  margin-right: 5rem;
+  display: flex;
+}
+.cancel-edit-profile{
+  height: 3rem;
+  width: 3rem;
+  margin-top: 6.2rem;
+  margin-left: 2rem;
+  margin-right: 5rem;
+  display: flex;
+  filter: $filter-red;
 }
 </style>
