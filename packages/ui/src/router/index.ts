@@ -5,22 +5,32 @@ import RegisterPage from "@/views/RegisterPage.vue"
 import JobsPage from "@/views/JobsPage.vue"
 import CandidateSelect from "@/components/candidates/CandidateSelect.vue"
 import {createRouter,createWebHistory}  from "vue-router";
+import { store } from "@/store";
 //we can implement lazyloading hereee lets gooo
 const routes = [
   {
-    path: "/",
+    path: "/offers",
     name: "Job offers",
-    component: JobOfferPage
+    component: JobOfferPage,
+    meta:{
+      requiresAuth:true
+    }
   },
    {
     path: "/candidates",
     name: "Select candidates",
-    component: CandidateSelect
+    component: CandidateSelect,
+    meta:{
+      requiresAuth:true
+    }
   },
   {
     path: "/candidates/:id",
     name: "Candidates",
-    component: CandidatesPage
+    component: CandidatesPage,
+    meta:{
+      requiresAuth:true
+    }
   },
   {
     path: "/login",
@@ -34,8 +44,11 @@ const routes = [
   },
   {
     path: "/jobs",
-    name: "Trabajos ",
-    component: JobsPage
+    name: "Jobs",
+    component: JobsPage,
+    meta:{
+      requiresAuth:true
+    }
   },
 ];
 const router = createRouter({
@@ -43,6 +56,19 @@ const router = createRouter({
   routes
 });
 
-
+router.beforeEach((to,from,next)=>{
+  const requiresAuth = to.matched.some(record=>record.meta.requiresAuth)
+  const isAuthenticated = store.getters['authModule/authenticated']
+  if (to.path==='/'){
+    if (isAuthenticated){
+      next({path:'/offers'})
+    }else{
+      next({path:'/login'})
+    }
+  }
+  else if (requiresAuth && !isAuthenticated){
+    next({path:'/login'})
+  }else next()
+} )
 
 export default router;

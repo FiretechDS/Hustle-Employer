@@ -272,6 +272,8 @@ import { SkillPloc, validateEmployer } from "../../../../core/src";
 import { RegisterEmployerUseCase } from "../../../../core/src/employer/application/port/in/RegisterEmployerUseCase";
 import { ProfileProps } from "../../../../core/src/employer/domain/EmployerDomainMapper";
 import Loader from "../Loader.vue";
+import { useStore } from "vuex";
+import { loginProps } from "../../../../core/build/src/employer/domain/EmployerDomainMapper";
 
 export default defineComponent({
   setup() {
@@ -280,6 +282,7 @@ export default defineComponent({
       "registerService"
     ) as RegisterEmployerUseCase;
     const skillState = usePlocState(skillPloc);
+    const store = useStore();
     const message = ref("");
     const loading = ref(false);
     const registerInfo = reactive({
@@ -400,13 +403,18 @@ export default defineComponent({
       loading.value = true;
       const registerResult = await registerService.register(map());
       registerResult.fold(
-        (err) => {
+        async (err) => {
           const msg: string =
             err.kind === "ApiError" ? err.message : err.message.message;
           message.value = msg;
         },
-        () => {
-          message.value = "Success";
+        async () => {
+          message.value = "";
+          const loginData: loginProps = {
+            email: registerInfo.email,
+            password: registerInfo.password,
+          };
+          await store.dispatch("authModule/login", loginData);
         }
       );
       loading.value = false;

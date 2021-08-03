@@ -38,18 +38,18 @@ export class ProfileToDomainMapper{
       }
 }
 
-export interface LoginProps{
+export interface loginProps{
     id?: number,
     email: string,
     password: string
 }
 
 export type LoginCreatedProps={
-    [P in keyof LoginProps]-?:LoginProps[P]
+    [P in keyof loginProps]-?:loginProps[P]
 }
 
 export class LoginToDomainMapper{
-    static map(props:LoginProps):Credentials{
+    static map(props:loginProps):Credentials{
         return Credentials.loginEmployer({
             identifierEmployer: IdentifierEmployer.create(props.email, props.password)
         })
