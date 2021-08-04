@@ -18,7 +18,7 @@ export interface ProfileProps{
     state: string,
     city: string,
     zip: number,
-    contacts: contactMappedProps[]
+    contacts: contactMappedProps[],
 }
 
 export type profileCreatedProps={

@@ -10,6 +10,6 @@ store.subscribe((mutation)=>{
         localStorage.removeItem('user')
       }
     break;
-
+    default: ;
   }
 })

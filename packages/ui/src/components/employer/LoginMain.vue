@@ -29,6 +29,7 @@
           <Button
             buttonText="Login"
             :isPrimary="true"
+            @keyup.enter="login()"
             @click="login()"
             id="login-button"
             :style="{ width: '23.6rem', height: '3.6rem' }"
@@ -74,7 +75,6 @@ export default defineComponent({
       error: "" as string,
     });
     const store = useStore();
-    console.log(store.getters["authModule/user"]);
     async function login(): Promise<void> {
       state.error = "";
       state.loading = true;
