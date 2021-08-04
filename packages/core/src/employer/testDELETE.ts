@@ -9,6 +9,7 @@ import { RegisterApi } from "./adapter/out/RegisterApiPublisher";
 import { ApplicationToInfraMapper } from "./adapter/ProfileApplicationToInfraMapper";
 import { LoginService } from "./application/services/LoginService";
 import { LoginApi } from "./adapter/out/LoginApi";
+import { registerLocator } from "../common";
 
 
     const register:ProfileProps={
@@ -40,17 +41,7 @@ import { LoginApi } from "./adapter/out/LoginApi";
             email:"luiscastillo@gmail.com"
         }]
     } 
-    const registerService:RegisterService = new RegisterService(new RegisterApi())
-  async function registerFunction(){
-    try {
-       const res = await registerService.register(register)
-       const infraMapped = ApplicationToInfraMapper.map(register)
-       console.log(infraMapped)
-        console.log(res)
-    } catch (error) {
-        console.log(error)
-    }
-    }
+
    async function loginFunction(){
        const loginService = new LoginService(new LoginApi())
         const credentials:loginProps = {
@@ -60,50 +51,7 @@ import { LoginApi } from "./adapter/out/LoginApi";
        const res = await loginService.login(credentials)
        console.log(res)
    }
-   loginFunction()
-    //const perfil:ProfileToDomainMapper = ProfileToDomainMapper.map(register);
-    const contact = {
-        id: 1,
-        firstName:"David",
-        lastName: "Ortuño",
-        jobTitle:"Developer",
-        phoneNumber: 584126110189,
-        email:"ortuod@gmail.com"
-    };
-    const cvo = EmployerContact.create(contact.id,contact.firstName,contact.lastName,contact.jobTitle,contact.phoneNumber,contact.email);
-    
-    const contacts = [{
-        id: 1,
-        firstName:"David",
-        lastName: "Ortuño",
-        jobTitle:"Developer",
-        phoneNumber: 584126110189,
-        email:"ortuod@gmail.com"
-    },{
-        id: 2,
-        firstName:"David",
-        lastName: "Ortuño",
-        jobTitle:"Developer",
-        phoneNumber: 584126110189,
-        email:"ortuod@gmail.com"
-    }]
-    const csvo = EmployerContact.createList(contacts);
-
-    /* const credentials = {
-        email: "daortuno.17@est.ucab.edu.ve",
-        password: "David1311*"
-    } 
-    const crvo = IdentifierEmployer.create(credentials.email,credentials.password);
-    console.log(crvo);
-    
-    /*const dir = {
-        firstLineAddress: "Avenida 1",
-        secondLineAddress: "Qta Mis Amores",
-        city: "Caracas",
-        state: "DF",
-        zip: 1030,
-    }
-    const avo = AddressEmployer.create(dir.firstLineAddress,dir.secondLineAddress,dir.city,dir.state,dir.zip);
-    console.log(avo); */
-
+  
+   const loginService = registerLocator.provideLoginService()
+   console.log(loginService)
 

@@ -1,8 +1,7 @@
 import router from "@/router"
 import { Module } from "vuex"
-import {registerLocator} from '../../../core/src'
 import { loginProps } from "../../../core/src/employer/domain/EmployerDomainMapper"
-
+import {registerLocator} from "../../../core/src/common/dependencies/RegisterDependencies"
 const noUser:loginProps={
   id:undefined,
   email:'',
