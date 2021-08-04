@@ -33,15 +33,6 @@ export enum enumEducationLevel{
     'Profesional Degree' = 10
 }
 
-export enum statusEmployee{
-    'Created' = 0,
-    'Pending Aproval' = 1,
-    'Available' = 2,
-    'Not Available' = 3,
-    'Rejected' = 4,
-    'Suspended' = 5
-}
-
 export interface candidateProps{
     firstName: string,
     middleName: string,
@@ -57,6 +48,5 @@ export interface candidateProps{
     certificates: Array<certificatesList>,
     skills: skillMappedProps[],
     workExperience: Array<workExperienceList>,
-    references: Array<referenceList>,
-    status: statusEmployee
+    references: Array<referenceList>
 }
