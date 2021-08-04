@@ -1,12 +1,12 @@
 import { LoginMother } from './mother/LoginMother';
 import { Either } from '../common/domain/Either';
-import { DataError } from '../../src/common/domain/DataError';
-import { LoginEmployerUseCase } from '../../src/employer/application/port/in/LoginEmployerUseCase';
-import { LoginPort } from '../../src/employer/application/port/out/LoginPort';
-import { LoginService } from '../../src/employer/application/services/LoginService';
-import { ProfileProps, profileCreatedProps } from "../../src/employer/domain/EmployerDomainMapper";
-import { LoginApi } from '../../src/employer/adapter/out/LoginApi'
-import { loginProps, LoginCreatedProps } from "../../src/employer/domain/EmployerDomainMapper";
+import { DataError } from '../common/domain/DataError';
+import { LoginEmployerUseCase } from '../employer/application/port/in/LoginEmployerUseCase';
+import { LoginPort } from '../employer/application/port/out/LoginPort';
+import { LoginService } from '../employer/application/services/LoginService';
+import { ProfileProps, profileCreatedProps } from "../employer/domain/EmployerDomainMapper";
+import { LoginApi } from '../employer/adapter/out/LoginApi'
+import { loginProps, LoginCreatedProps } from "../employer/domain/EmployerDomainMapper";
 
 describe('Login Employer', () =>{
     test('Prueba de valores validos',async () => {

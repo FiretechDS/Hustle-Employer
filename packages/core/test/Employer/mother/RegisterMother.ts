@@ -35,7 +35,7 @@ export class RegisterMother{
             firstLineAddress: 'Colinas de Santa Monica',
             secondLineAddress: 'Final Av Simon Planas',
             city: 'Caracas',
-            state: '',
+            state: 'DC',
             zip: 1030,
             contacts:[{
                 id: 500,
