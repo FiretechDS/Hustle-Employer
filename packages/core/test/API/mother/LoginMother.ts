@@ -3,8 +3,8 @@ import { loginProps, LoginCreatedProps } from "../../../src/employer/domain/Empl
 export class LoginMother{
     static createValid():LoginCreatedProps{
         const credentials:loginProps={
-            email: 'rrhhstaff@firetech.com',
-            password: 'Firetech1234*'
+            email: 'luiscasm2501@yomail.com',
+            password: 'Gothitelle1*'
         }
         return credentials as LoginCreatedProps
     }

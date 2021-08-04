@@ -2,107 +2,111 @@
   <div>
     <PlusButton :onClick="showModal" />
     <Modal v-show="state.isModalVisible" @close="closeModal()">
-      <template v-slot:header> Post new offer </template>
+      <template v-slot:header>
+        <div class="header">
+          <span class="title">Create offer</span>
+          <div v-if="message.loading" :loading="message.loading" class="loader">
+            <Loader color="#39a9cb" />
+          </div>
+        </div>
+      </template>
       <template v-slot:body>
-        <div class="create-job-offer-body-div">
-          <form class="create-job-offer-form">
-            <p class="subtitle">Job:</p>
-            <input
-              v-model="jobOffer.title"
-              placeholder="Title"
-              id="title-input"
-            />
-            <input
-              v-model="jobOffer.location"
-              placeholder="Address"
-              id="location-input"
-            />
-            <input
-              type="number"
-              v-model="stringHelper.hourlyRate"
-              placeholder="HourlyRate ($)"
-              id="hourlyRate-input"
-            />
-            <p class="subtitle">Schedule:</p>
-            <div class="schedule-options">
-              <Multiselect
-                :options="jobOffer.schedules.options"
-                v-bind="jobOffer.schedules"
-                v-model="jobOffer.schedules.value"
-                placeholder="Days"
-                mode="multiple"
-                class="schedule-multiselect"
-              >
-                <template v-slot:multiplelabel="{ values }">
-                  <div class="multiselect-multiple-label">
-                    {{ values.length }} days selected
-                  </div>
-                </template>
-              </Multiselect>
-              <Multiselect
-                :options="getHourOptions()"
-                v-model="jobOffer.startHour"
-                placeholder="Start hour"
-                class="hour-multiselect"
-                id="start-hour-input"
-              />
-              <Multiselect
-                :options="getHourOptions()"
-                v-model="jobOffer.endHour"
-                placeholder="End hour"
-                class="hour-multiselect"
-                id="end-hour-input"
-              />
-            </div>
-            <p class="subtitle">Deadline:</p>
-            <input
-              type="date"
-              v-model="jobOffer.deadline"
-              placeholder="Deadline"
-              id="deadline-input"
-            />
-            <input
-              type="number"
-              v-model="stringHelper.duration"
-              placeholder="Duration (hours)"
-              id="duration-input"
-            />
+        <form class="create-job-offer-form">
+          <p class="subtitle">Job:</p>
+          <input
+            v-model="jobOffer.title"
+            placeholder="Title"
+            id="title-input"
+          />
+          <input
+            v-model="jobOffer.location"
+            placeholder="Address"
+            id="location-input"
+          />
+          <input
+            type="number"
+            v-model="stringHelper.hourlyRate"
+            placeholder="HourlyRate ($)"
+            id="hourlyRate-input"
+          />
+          <p class="subtitle">Schedule:</p>
+          <div class="schedule-options">
             <Multiselect
-              :options="jobOffer.skills.options"
-              v-bind="jobOffer.skills"
-              v-model="jobOffer.skills.value"
-              placeholder="Skills"
+              :options="jobOffer.schedules.options"
+              v-bind="jobOffer.schedules"
+              v-model="jobOffer.schedules.value"
+              placeholder="Days"
               mode="multiple"
-              class="skills-multiselect"
-              id="skills-input"
+              class="schedule-multiselect"
             >
               <template v-slot:multiplelabel="{ values }">
                 <div class="multiselect-multiple-label">
-                  {{ values.length }} skills selected
+                  {{ values.length }} days selected
                 </div>
               </template>
             </Multiselect>
-            <p class="subtitle">Special Requirements:</p>
-            <textarea
-              class="description-input"
-              v-model="jobOffer.specialRequirements"
-              placeholder="Description"
-              id="description-input"
+            <Multiselect
+              :options="getHourOptions()"
+              v-model="jobOffer.startHour"
+              placeholder="Start hour"
+              class="hour-multiselect"
+              id="start-hour-input"
             />
-            <p class="subtitle">Location:</p>
-            <MapComponent
-              :clickable="true"
-              @locationUpdated="updateLocation"
-              :styling="{
-                height: '20rem',
-                width: '100%',
-                'border-radius': '5px',
-              }"
+            <Multiselect
+              :options="getHourOptions()"
+              v-model="jobOffer.endHour"
+              placeholder="End hour"
+              class="hour-multiselect"
+              id="end-hour-input"
             />
-            <p class="form-result">{{ message.value }}</p>
-          </form>
-          <Loader class="loader" :loading="message.loading" color="#2940d3" />
-        </div>
+          </div>
+          <p class="subtitle">Deadline:</p>
+          <input
+            type="date"
+            v-model="jobOffer.deadline"
+            placeholder="Deadline"
+            id="deadline-input"
+          />
+          <input
+            type="number"
+            v-model="stringHelper.duration"
+            placeholder="Duration (hours)"
+            id="duration-input"
+          />
+          <Multiselect
+            :options="jobOffer.skills.options"
+            v-bind="jobOffer.skills"
+            v-model="jobOffer.skills.value"
+            placeholder="Skills"
+            mode="multiple"
+            class="skills-multiselect"
+            id="skills-input"
+          >
+            <template v-slot:multiplelabel="{ values }">
+              <div class="multiselect-multiple-label">
+                {{ values.length }} skills selected
+              </div>
+            </template>
+          </Multiselect>
+          <p class="subtitle">Special Requirements:</p>
+          <textarea
+            class="description-input"
+            v-model="jobOffer.specialRequirements"
+            placeholder="Description"
+            id="description-input"
+          />
+          <p class="subtitle">Location:</p>
+          <MapComponent
+            :clickable="true"
+            @locationUpdated="updateLocation"
+            :styling="{
+              height: '20rem',
+              width: '100%',
+              'border-radius': '5px',
+            }"
+          />
+          <p class="form-result">{{ message.value }}</p>
+        </form>
       </template>
       <template v-slot:footer>
         <div class="create-job-offer-footer">
@@ -136,6 +140,7 @@ import MapComponent from "@/components/map/MapComponent.vue";
 import { usePlocState } from "../../common/UsePlocState";
 import { SkillPloc } from "../../../../core/src";
 import { jobCreatePresentationProps } from "../../../../core/src/jobOffer/presentation";
+import { skills } from "./skills";
 export default defineComponent({
   name: "CreateOfferModal",
   components: { Modal, PlusButton, Button, Multiselect, Loader, MapComponent },
@@ -187,7 +192,9 @@ export default defineComponent({
       endHour: 0 as number,
       skills: {
         value: [] as Array<number>,
-        options: [{ value: 1, label: "Skill Loading Error" }],
+        options: skills.map((skill) => {
+          return { label: skill.habilityName, value: skill.id };
+        }),
       },
       status: 1,
       latitude: 0,
@@ -274,10 +281,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.create-job-offer-body-div {
-  height: fit-content;
-  width: fit-content;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
+.loader {
+  transform: translate(3rem, -1rem);
+}
+
 div {
   color: grey;
   padding: 10px;
@@ -287,6 +299,7 @@ div {
 .create-job-offer-form {
   margin: 0rem 1rem;
   width: 80%;
+  height: 70rem;
   margin-left: auto;
   margin-right: auto;
   display: flex;

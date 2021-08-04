@@ -106,7 +106,7 @@
           </ul>
         </div>
         <div class="listRow">
-          <div class="">
+          <div class="flexRow">
             <p class="title-modal-offer">Schedule</p>
             <perfect-scrollbar>
               <ul class="list-modal-offer">
@@ -123,7 +123,7 @@
               </ul>
             </perfect-scrollbar>
           </div>
-          <div class="">
+          <div class="flexRow">
             <p class="title-modal-offer">Required Skills</p>
             <perfect-scrollbar>
               <ul class="list-modal-offer">
@@ -137,7 +137,7 @@
               </ul>
             </perfect-scrollbar>
           </div>
-          <div class="">
+          <div class="flexRow">
             <p class="title-modal-offer">Address</p>
             <p class="value-modal-offer">{{ offer.location }}</p>
           </div>
@@ -350,11 +350,15 @@ export default defineComponent({
   justify-content: space-between;
   align-items: flex-start;
   padding: 0 5rem;
+  width: 85%;
   //padding-right: 13rem;
   margin-left: 1rem;
-  :first-child {
+  /*:first-child {
     flex: 0;
     width: 19.2rem;
+  }*/
+  .flexRow {
+    flex: 1;
   }
 }
 .cardIcons {

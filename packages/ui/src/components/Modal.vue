@@ -31,11 +31,11 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "Modal",
-  props:{
-    hideX:{
+  props: {
+    hideX: {
       type: Boolean as PropType<boolean>,
-      default:false
-    }
+      default: false,
+    },
   },
   setup(props, ctx) {
     function close() {
@@ -71,6 +71,7 @@ export default defineComponent({
   flex-direction: column;
   border-radius: 8px;
   max-width: 70rem;
+  max-height: 100vh;
 }
 
 .modal-header,
