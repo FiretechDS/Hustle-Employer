@@ -23,11 +23,10 @@
                   v-if="page === 2"
                 />
               </div>
-              
             </div>
-            <img src="@/assets/svg/edit-pencil.svg" class="edit-profile" @click="setPage(2)" v-if="page === 1">
-            <img src="@/assets/svg/check.svg" class="confirm-edit-profile" @click="setPage(1)" v-if="page === 2">
-            <img src="@/assets/svg/cancel.svg" class="cancel-edit-profile" @click="setPage(1)" v-if="page === 2">
+            <img src="@/assets/svg/edit-pencil.svg" class="edit-profile" @click="editProfile()" v-if="page === 1">
+            <img src="@/assets/svg/check.svg" class="confirm-edit-profile" @click="saveProfile()" v-if="page === 2">
+            <img src="@/assets/svg/cancel.svg" class="cancel-edit-profile" @click="cancel()" v-if="page === 2">
           </div>
           <div class="rows-profile">
             <div class="row-item-profile ">
@@ -233,13 +232,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
+import { createToast } from "mosha-vue-toastify";
 import ProfileCard from "../ProfileCard.vue"
 
 export default defineComponent({
   components: { ProfileCard },
   name: "ProfileMain",
   setup(){
-    const info={
+    var info={
       companyName: 'Firetech',
       logoURL: 'https://i1.wp.com/i.imgflip.com/2ejoc0.jpg',
       email: 'staff@firetech.com',
@@ -272,17 +272,56 @@ export default defineComponent({
       },
     };
 
+    /*const oldValues={
+        companyName : info.companyName,
+        logoURL : info.logoURL,
+        email : info.email,
+        password : info.password,
+        address : {
+          firstLine : info.address.firstLine
+          secondLine : info.address.secondLine,
+          state : info.address.state,
+          city : info.address.city,
+          zip : info.address.zip
+        },
+        skills : info.skills,
+        contacts : info.contacts
+      } */
+
     var isModalVisible = true;
 
     var page=ref(1);
 
-    function setPage(actual: number): void {
-      page.value = actual;
+    function editProfile(): void {
+      page.value = 2;
+      
+    }
+
+    function saveProfile(): void {
+      page.value = 1;
+      toast('Profile updated',true);
+    }
+
+    function cancel(): void{
+      page.value = 1;
+      toast('Operation cancelled',false);
+    }
+
+    function toast(message: string, success: boolean): void {
+      createToast(message, {
+        type: success ? "success" : "warning",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
     }
     console.log(isModalVisible);
     return{
-      page, 
-      setPage, 
+      page,  
+      editProfile,
+      saveProfile,
+      cancel,
+      toast,
       info
     }
   },
