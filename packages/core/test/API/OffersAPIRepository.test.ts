@@ -3,7 +3,7 @@ import { OffersAPIRepository } from '../../src/jobOffer/adapter/out/OffersAPIRep
 import {JobApplicationProps} from '../../src/jobOffer/application/JobApplicationModel';
 import { DataError } from '../../src/common/domain/DataError';
 
-describe('API', () =>{
+describe('Load offers integration test', () =>{
     test('Test de Integracion con API', async () => {
         var repository = new OffersAPIRepository();
         var loadResult: Either<DataError, JobApplicationProps[]> = await repository.loadOffers(100);

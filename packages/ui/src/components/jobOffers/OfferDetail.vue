@@ -366,7 +366,7 @@ export default defineComponent({
 .ps {
   min-height: 6rem;
   max-height: 12rem;
-  width: 20rem;
+  // width: 20rem;
 }
 .loader {
   height: 1.5rem;

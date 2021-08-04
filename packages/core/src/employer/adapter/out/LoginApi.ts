@@ -19,10 +19,13 @@ export class LoginApi implements LoginPort{
           
         } 
         return Either.right(mappedData)
-      }
-      return Either.left({kind:'ApiError',message:"Failed to connect to server, try again later",statusCode:loginResponse.status,error:loginResponse.statusText})
+      }else 
+      return Either.left({kind:'ApiError',message:"Failed to connect to server, try again later.",statusCode:loginResponse.status,error:loginResponse.statusText})
     } catch (error) {
-      return Either.left({kind:'UnexpectedError',message:new Error('Incorrect email or password')})
+      if(error.message==='Request failed with status code 401'){
+          return Either.left({kind:'ApiError',message:"The password or email don't match.",statusCode:401,error:'Unauthorized'})
+      }else
+      return Either.left({kind:'UnexpectedError',message:new Error('Sorry, login failed by an unknown error, try again later.')})
     }
   }
   
