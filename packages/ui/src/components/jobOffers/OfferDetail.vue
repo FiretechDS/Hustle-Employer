@@ -166,13 +166,14 @@
         <div class="offer-detail-footer">
           <ul v-if="areOffersActive" class="footer-offer-detail">
             <li>
-              <Button
-                buttonText="Applicants"
-                iconName="postulantes.svg"
-                :styles="{ width: '15rem' }"
-                :isPrimary="false"
-                @click="goToCandidates()"
-              />
+              <router-link :to="`/candidates/${offer.id}`">
+                <Button
+                  buttonText="Applicants"
+                  iconName="postulantes.svg"
+                  :styles="{ width: '15rem' }"
+                  :isPrimary="false"
+                />
+              </router-link>
             </li>
             <li>
               <Button
@@ -260,6 +261,7 @@ export default defineComponent({
     const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
+      console.log(ploc);
     }
     function closeModal(): void {
       state.isModalVisible = false;

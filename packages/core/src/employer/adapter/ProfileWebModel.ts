@@ -26,6 +26,16 @@ export interface ProfileWebModel{
     createAddressCommand:Address
 }
 
+export interface ProfileWebResponse{
+    companyName: string,
+    companyLogo:string,
+    specialRequirement: string,
+    status:string,
+    skillModelList:skillModel[],
+    contactResponse:Contact[],
+    addressResponse:Address
+}
+
 export type ProfileCreateDto={
     [P in keyof ProfileWebModel]:P extends "listContact"?Array<Object>: ProfileWebModel[P] extends Array<Object>?Array<number>:P extends "id"?number: ProfileWebModel[P]
 }

@@ -1,5 +1,5 @@
 import { Profile } from "./domain/Profile";
-import { ProfileProps } from "./domain/EmployerDomainMapper";
+import { loginProps, ProfileProps } from "./domain/EmployerDomainMapper";
 import { ProfileToDomainMapper } from "./domain/EmployerDomainMapper";
 import { EmployerContact } from "./domain/valueObjects/ContactValueObject";
 import { IdentifierEmployer } from "./domain/valueObjects/IdentifiersValueObject";
@@ -7,6 +7,8 @@ import { AddressEmployer } from "./domain/valueObjects/AddressValueObject";
 import { RegisterService } from "./application/services/RegisterService";
 import { RegisterApi } from "./adapter/out/RegisterApiPublisher";
 import { ApplicationToInfraMapper } from "./adapter/ProfileApplicationToInfraMapper";
+import { LoginService } from "./application/services/LoginService";
+import { LoginApi } from "./adapter/out/LoginApi";
 
 
     const register:ProfileProps={
@@ -49,7 +51,16 @@ import { ApplicationToInfraMapper } from "./adapter/ProfileApplicationToInfraMap
         console.log(error)
     }
     }
-    registerFunction()
+   async function loginFunction(){
+       const loginService = new LoginService(new LoginApi())
+        const credentials:loginProps = {
+            email:"luiscasm2501@yomail.com",
+            password:"Gothitelle1*"
+        }
+       const res = await loginService.login(credentials)
+       console.log(res)
+   }
+   loginFunction()
     //const perfil:ProfileToDomainMapper = ProfileToDomainMapper.map(register);
     const contact = {
         id: 1,

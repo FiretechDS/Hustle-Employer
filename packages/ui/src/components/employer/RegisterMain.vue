@@ -3,7 +3,7 @@
     <WhiteVerticalCard>
       <template v-slot:header>Employer Register</template>
       <template v-slot:body>
-        <form class="content-register">
+        <form @submit.prevent="setPage(2)" class="content-register">
           <div class="multiple-items-register">
             <input
               v-model="registerInfo.email"
@@ -87,7 +87,9 @@
               type="number"
             />
           </div>
+          <p class="error">{{ message }}</p>
           <Button
+            @click.stop
             buttonText="Next"
             :isPrimary="true"
             @click="setPage(2)"
@@ -176,6 +178,9 @@
               </li>
             </div>
           </div>
+          <Loader class="loading" :loading="loading" color="#39a9cb" />
+          <p class="error">{{ message }}</p>
+
           <div class="register-button-final">
             <Button
               buttonText="Register"
@@ -222,7 +227,7 @@
           <input
             v-model="contactInfo.phoneNumber"
             class="double-input-register-contact"
-            placeholder="Phone Number"
+            placeholder="Phone (584129998877)"
             id="register-contact-phone-number"
             type="tel"
           />
@@ -254,7 +259,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, inject } from "vue";
 import WhiteVerticalCard from "../WhiteVerticalCard.vue";
 import Button from "../Button.vue";
 import Multiselect from "@vueform/multiselect";
@@ -262,9 +267,24 @@ import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
 import Modal from "../Modal.vue";
 import ContactInfoType from "./types/ContactInfo";
+import { usePlocState } from "../../common/UsePlocState";
+import { SkillPloc, validateEmployer } from "../../../../core/src";
+import { RegisterEmployerUseCase } from "../../../../core/src/employer/application/port/in/RegisterEmployerUseCase";
+import { ProfileProps } from "../../../../core/src/employer/domain/EmployerDomainMapper";
+import Loader from "../Loader.vue";
+import { useStore } from "vuex";
+import { loginProps } from "../../../../core/build/src/employer/domain/EmployerDomainMapper";
 
 export default defineComponent({
   setup() {
+    const skillPloc = inject<SkillPloc>("skillsPloc") as SkillPloc;
+    const registerService = inject<RegisterEmployerUseCase>(
+      "registerService"
+    ) as RegisterEmployerUseCase;
+    const skillState = usePlocState(skillPloc);
+    const store = useStore();
+    const message = ref("");
+    const loading = ref(false);
     const registerInfo = reactive({
       companyName: "" as string,
       email: "" as string,
@@ -296,7 +316,20 @@ export default defineComponent({
     var page = ref(1);
 
     function setPage(actual: number): void {
-      page.value = actual;
+      message.value = "";
+      if (page.value === 1) {
+        const validated = validateEmployer(map());
+        validated.fold(
+          (err: string) => {
+            if (err.includes("You must enter at least one contact"))
+              page.value = actual;
+            else message.value = err;
+          },
+          () => {
+            page.value = actual;
+          }
+        );
+      } else page.value = actual;
     }
 
     const state = reactive({
@@ -344,11 +377,47 @@ export default defineComponent({
         (contact) => contact.id != idDelete
       );
     }
-
-    function register(): void {
-      console.log("Registrando");
+    function map(): ProfileProps {
+      const mapped: ProfileProps = {
+        ...registerInfo,
+        logoURL: registerInfo.logo,
+        zip: parseInt(registerInfo.zip),
+        skills: registerInfo.skills.value.map((skill) => {
+          return {
+            name: "any",
+            number: skill,
+            category: 1,
+          };
+        }),
+        contacts: registerInfo.contacts.map((contact) => {
+          return {
+            ...contact,
+            phoneNumber: parseInt(contact.phoneNumber),
+          };
+        }),
+      };
+      return mapped;
+    }
+    async function register(): Promise<void> {
       console.log(registerInfo);
-      //AQUI VA LA FUNCION A COLOCAR PARA GUARDARLO
+      loading.value = true;
+      const registerResult = await registerService.register(map());
+      registerResult.fold(
+        async (err) => {
+          const msg: string =
+            err.kind === "ApiError" ? err.message : err.message.message;
+          message.value = msg;
+        },
+        async () => {
+          message.value = "";
+          const loginData: loginProps = {
+            email: registerInfo.email,
+            password: registerInfo.password,
+          };
+          await store.dispatch("authModule/login", loginData);
+        }
+      );
+      loading.value = false;
     }
 
     return {
@@ -362,9 +431,18 @@ export default defineComponent({
       addContact,
       register,
       deleteContact,
+      message,
+      loading,
     };
   },
-  components: { WhiteVerticalCard, Button, Multiselect, GrayCard, Modal },
+  components: {
+    WhiteVerticalCard,
+    Button,
+    Multiselect,
+    GrayCard,
+    Modal,
+    Loader,
+  },
   name: "RegisterMain",
   created() {
     console.log(this.state);
@@ -373,6 +451,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.error {
+  color: $highlit-darkblue;
+}
+.loading {
+  margin: 3rem 0;
+}
 .content-register {
   display: flex;
   flex-direction: column;

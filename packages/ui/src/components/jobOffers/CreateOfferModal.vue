@@ -161,6 +161,8 @@ export default defineComponent({
         jobOffer.skills.options = value.skills.map((skill) => {
           return { value: skill.number, label: skill.name };
         });
+      } else if (value.kind === "ErrorSkillsState") {
+        skillPloc.reload();
       }
     });
     const jobOffer = reactive({
@@ -197,9 +199,6 @@ export default defineComponent({
     });
 
     function showModal(): void {
-      if (skillState.value.kind === "ErrorSkillsState") {
-        skillPloc.reload();
-      }
       state.isModalVisible = true;
     }
     function closeModal(): void {

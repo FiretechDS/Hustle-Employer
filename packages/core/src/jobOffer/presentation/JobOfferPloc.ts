@@ -9,13 +9,13 @@ import { DeleteOfferUseCase } from "../application/port/in/DeleteOfferUseCase";
 import { plocResult } from "../../common/presentation/PlocResult";
 import { UpdateOfferUseCase } from "../application/port/in/UpdateOfferUseCase";
 
-const employerID = 100;
 
 export class JobOfferPloc extends Ploc<OffersState>{
   private loadOffersQuery:LoadOffersQuery
   private publishOfferUseCase:PublishOfferUseCase;
   private deleteOfferUseCase:DeleteOfferUseCase;
   private updateOfferUseCase:UpdateOfferUseCase;
+  private employerID:number=-1;
   constructor ( loadOffersQueryProp:LoadOffersQuery,  publishOfferUseCaseProp:PublishOfferUseCase, deleteOfferUseCase:DeleteOfferUseCase,updateUseCaseProp:UpdateOfferUseCase ){
     super(offersInitialState);
     this.loadOffersQuery=loadOffersQueryProp;
@@ -24,28 +24,32 @@ export class JobOfferPloc extends Ploc<OffersState>{
     this.updateOfferUseCase=updateUseCaseProp;
     this.loadOffers();
   }
-
+  setEmployer(id:number):void{
+    this.employerID = id
+    this.loadOffers()
+  }
   public reload():void{
     this.changeState({kind:'LoadingOffersState'})
     this.loadOffers()
   }
 
   private async loadOffers(){
- 
-      const offersResult = await  this.loadOffersQuery.load(employerID);
+    if(this.employerID!==-1){
+      const offersResult = await  this.loadOffersQuery.load(this.employerID);
       offersResult.fold((error)=>{
            this.changeState( this.handleError(error))
       },(offers)=>{
           if(offers.length>0) this.changeState(this.mapToUpdatedState(offers))
           else this.changeState(this.handleEmpty())
       } )
+    }
   }
 
    async createOffer(offer:jobCreatePresentationProps):Promise<plocResult>{
 
     const result:plocResult ={success:false,value:'An unexpected error has occurred. '}
     offer.title=this.checkTitle(offer.title)
-    const publishResult =  await this.publishOfferUseCase.publish((PresentationToApplicationMapper.mapToCreate( {...offer,employerId:employerID})));
+    const publishResult =  await this.publishOfferUseCase.publish((PresentationToApplicationMapper.mapToCreate( {...offer,employerId:this.employerID})));
    
     publishResult.fold(error=>{
         if( error.kind==='ApiError')  result.value= "Coudn't connect to server, try again later."

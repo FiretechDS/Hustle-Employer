@@ -22,7 +22,8 @@
     "vue-router": "^4.0.10",
     "vue-spinner": "^1.0.4",
     "vue3-google-map": "^0.8.0",
-    "vue3-perfect-scrollbar": "^1.5.5"
+    "vue3-perfect-scrollbar": "^1.5.5",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

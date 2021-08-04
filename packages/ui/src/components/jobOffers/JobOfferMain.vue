@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive, watch } from "vue";
+import { defineComponent, inject, onBeforeMount, reactive, watch } from "vue";
 import CreateOfferModal from "@/components/jobOffers/CreateOfferModal.vue";
 import OfferDetail from "@/components/jobOffers/OfferDetail.vue";
 import {
@@ -83,6 +83,7 @@ import ArchiveActiveButtons from "./ArchiveActiveButtons.vue";
 import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import { useStore } from "vuex";
 export default defineComponent({
   components: {
     CreateOfferModal,
@@ -94,12 +95,17 @@ export default defineComponent({
   name: "JobOfferMain",
   setup() {
     const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
+    const store = useStore();
+    console.log(store.getters["authModule/user"]);
+    //ploc.setEmployer(store.getters["authModule/user"]);
     const state = usePlocState(ploc);
     const message = reactive({
       value: "" as string,
       loading: false as boolean,
     });
-
+    onBeforeMount(() => {
+      ploc.setEmployer(store.getters["authModule/user"]);
+    });
     const offerFilter = reactive({ active: true });
 
     function handleFilter(active: boolean): void {

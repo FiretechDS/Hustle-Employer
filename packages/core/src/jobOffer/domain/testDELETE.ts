@@ -16,7 +16,7 @@ import { JobHeader } from "./valueObjects/HeaderValueObject";
 import { Skill } from "../../skills/domain/Skill";
 import { Status, statuses } from "./valueObjects/StatusValueObject";
 import { Schedule } from "./valueObjects/ScheduleValueObject";
-import { JobOfferPloc } from "../presentation";
+import { jobCreatePresentationProps, JobOfferPloc } from "../presentation";
 import { PublishOfferService } from "../application/services/PublishOfferService";
 import { OfferinMemoryPublisher } from "../adapter/out/OfferInMemoryPublisher";
 import { LoadOffersService } from "../application/services/LoadOffersService";
@@ -39,6 +39,22 @@ try {
   const title='New job'
   const skillProps = [{name:'Cook',category:'Technical'}, {name:'Clean',category:'soft'} ]
   const days =[['tuesday','monday'],['friday','monday']]
+  const presentationOffer:jobCreatePresentationProps ={
+    deadline: "2021-08-26",
+    duration: 14,
+    endHour: 23,
+    hourlyRate: 14,
+    latitude: 41.44336245906251,
+    location: "Cleveland",
+    longitude: -81.64968771001318,
+    schedules: ['monday','tuesday'],
+    skills: [{number:1,category:1,name:'any'}],
+    specialRequirements: "",
+    startHour: 6,
+    status: 'Posted',
+    title: "Offer em 3463",
+    employerId:69,
+  }
   const offer:jobCreationProps={
     deadline:new Date('2022-01-02'),
     creationDate: new Date(),
@@ -59,15 +75,6 @@ try {
   const mappedOffer = ApplicationToInfraMapper.map(offer)
   const offerDto ={...mappedOffer, EmployerId:mappedOffer.employerId, statusJobOfferModelId:mappedOffer.statusJobOfferModel}
 
-
-  const password ="aAaaaaaaa1*"
-  const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-
-        if (!password.match(passwordRegExp)){
-            throw new Error("Password must contain at least 1 lowercase, 1 uppercase, 1 number, 1 special character and at least 8 characters long")
-        }else{
-          console.log('valid password: '+ password)
-        } 
 } catch (error) {
   console.log('Caught error: '+error.message)
 }
@@ -77,8 +84,7 @@ try {
   try {
     const repo = new SkillApiLoader();
     const ploc = dependenciesLocator.provideJobOfferPloc()
-    const result = await repo.load()
-    result.fold(()=>{},(good)=>{console.log(good)} )
+    ploc.setEmployer(3643)
   } catch (error) {
     console.log(error.message)
   }
