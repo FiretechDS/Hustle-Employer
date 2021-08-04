@@ -61,14 +61,17 @@
                     />
                   </li>
                 </ul>
-                <p class="title-info">Required Skills</p>
-                <perfect-scrollbar>
-                  <ul class="columns-profile-info">
-                    <li v-for="skill in info.skills" :key="skill.name">
-                        <p class="value-info"> {{ skill.name }} </p>
-                    </li>
-                  </ul>
-                </perfect-scrollbar>
+                <div class="row-item-profile">
+                  <p class="title-info">Required Skills</p>
+                  <perfect-scrollbar v-if="page === 1">
+                    <ul class="skills-profile">
+                     <li v-for="skill in info.skills" :key="skill.name">
+                         <p class="value-info ps-items" > {{ skill.name }} </p>
+                     </li>
+                    </ul>
+                  </perfect-scrollbar>
+                </div>
+                
               </div>
             </div>
             
@@ -241,9 +244,10 @@ export default defineComponent({
       logoURL: 'https://i1.wp.com/i.imgflip.com/2ejoc0.jpg',
       email: 'staff@firetech.com',
       password: 'Firetech1234',
-      skill:[
-        {name:'Dart'},
-        {name:'Vue'}
+      skills:[
+        {id: 1, name:'Dart'},
+        {id: 2, name:'Vue'},
+        {id: 3, name:'Spring'}
       ],
       contacts: [
         {
@@ -289,7 +293,7 @@ export default defineComponent({
 .profile-card-container{
   display: flex;
   justify-content: space-around;
-  margin-top: 5rem;
+  margin-top: 8rem;
   font-family: 'Poppins', sans-serif;
 }
 .rows-profile{
@@ -491,6 +495,9 @@ export default defineComponent({
   border: 0px;
   cursor: text;
 }
+.skills-profile{
+  padding-inline-start: 2rem;
+}
 .address-profile{
   text-align: initial;
 }
@@ -539,5 +546,13 @@ export default defineComponent({
   margin-right: 5rem;
   display: flex;
   filter: $filter-red;
+}
+.ps{
+  min-height: 4rem;
+  max-height: 10rem;
+  width: 20rem;
+}
+.ps-items{
+  margin-top: -0.2rem;
 }
 </style>
