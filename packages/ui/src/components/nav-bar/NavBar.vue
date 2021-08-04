@@ -29,7 +29,7 @@
         <div class="dropdown">
           <CircleIcon iconName="user.svg" />
           <div class="dropdown-content">
-            <router-link to="/">
+            <router-link to="/profile">
               <div>Profile</div>
             </router-link>
             <router-link to="/">
