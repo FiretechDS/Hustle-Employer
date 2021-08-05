@@ -12,6 +12,10 @@ module.exports = {
 
         browser
             .url('http://localhost:8080')
+            .waitForElementVisible('.white-card-body')
+            .setValue('#mail-login','luiscasm2501@yomail.com')
+            .setValue('#password-login','Gothitelle1*')
+            .click('#login-button')
             .waitForElementVisible('body')
             .assert.visible('#create-new-offer-button')
             .click('#create-new-offer-button')
