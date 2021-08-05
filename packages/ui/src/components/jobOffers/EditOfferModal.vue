@@ -11,17 +11,17 @@
     <template v-slot:body>
       <form class="create-job-offer-form">
         <p class="subtitle">Job:</p>
-        <input v-model="jobOffer.title" placeholder="Title" id="title-input" />
+        <input v-model="jobOffer.title" placeholder="Title" id="title-input-edit" />
         <input
           v-model="jobOffer.location"
           placeholder="Address"
-          id="location-input"
+          id="location-input-edit"
         />
         <input
           type="number"
           v-model="jobOffer.hourlyRate"
           placeholder="HourlyRate ($)"
-          id="hourlyRate-input"
+          id="hourlyRate-input-edit"
         />
         <p class="subtitle">Schedule:</p>
         <div class="schedule-options">
@@ -44,14 +44,14 @@
             v-model="jobOffer.startHour"
             placeholder="Start hour"
             class="hour-multiselect"
-            id="start-hour-input"
+            id="start-hour-input-edit"
           />
           <Multiselect
             :options="getHourOptions()"
             v-model="jobOffer.endHour"
             placeholder="End hour"
             class="hour-multiselect"
-            id="end-hour-input"
+            id="end-hour-input-edit"
           />
         </div>
         <p class="subtitle">Deadline:</p>
@@ -59,13 +59,13 @@
           type="date"
           v-model="jobOffer.deadline"
           placeholder="Deadline"
-          id="deadline-input"
+          id="deadline-input-edit"
         />
         <input
           type="number"
           v-model="jobOffer.duration"
           placeholder="Duration (hours)"
-          id="duration-input"
+          id="duration-input-edit"
         />
         <Multiselect
           :options="jobOffer.skills.options"
@@ -74,7 +74,7 @@
           placeholder="Skills"
           mode="multiple"
           class="skills-multiselect"
-          id="skills-input"
+          id="skills-input-edit"
         >
           <template v-slot:multiplelabel="{ values }">
             <div class="multiselect-multiple-label">
@@ -87,7 +87,7 @@
           class="description-input"
           v-model="jobOffer.specialRequirements"
           placeholder="Description"
-          id="description-input"
+          id="description-input-edit"
         />
         <p class="subtitle">Location:</p>
         <MapComponent
