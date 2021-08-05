@@ -221,128 +221,6 @@
         </div>
       </template>
     </Modal>
-    <Modal v-if="state.isEditableModalVisible === true" @close="closeEditableModal()">
-       <template v-slot:header>
-          <span class="title">Edit offer</span>
-      </template>
-      <template v-slot:body>
-        <p class="fields-modal-offer value-modal-offer">
-          <input
-                v-model="offer.specialRequirements"
-                class="description-input"
-                placeholder="Special requirements"
-                id="edit-offer-hourly-rate"
-                type="text"
-              />
-        </p>
-        <div class="fields-modal-offer">
-          <ul class="columns-modal-offer-detail">
-            <li>
-              <p class="title-modal-offer">Title</p>
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">Address</p>
-            </li>
-          </ul>
-          <ul class="columns-modal-offer-detail">
-            <li>
-              <input
-                v-model="offer.jobTitle"
-                class="tiny-field-gray"
-                placeholder="Job title"
-                id="edit-offer-hourly-rate"
-                type="text"
-              />
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <input
-                v-model="offer.address"
-                class="tiny-field-gray"
-                placeholder="Address"
-                id="edit-offer-hourly-rate"
-                type="text"
-              />
-            </li>
-          </ul>
-        </div>
-        <div class="fields-modal-offer">
-          <ul class="columns-modal-offer-detail">
-            <li>
-              <p class="title-modal-offer">Hourly rate</p>
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">Hours</p>
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">Deadline</p>
-            </li>
-          </ul>
-          <ul class="columns-modal-offer-detail">
-            <li>
-              <input
-                v-model="offer.hourlyRate"
-                class="tiny-field-gray"
-                placeholder="Hourly rate"
-                id="edit-offer-hourly-rate"
-                type="text"
-              />
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <input
-                v-model="offer.duration"
-                class="tiny-field-gray"
-                placeholder="Duration"
-                id="edit-offer-hourly-rate"
-                type="text"
-              />
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <input
-                class="tiny-field-gray"
-                type="date"
-                v-model="offer.deadline"
-                placeholder="Deadline"
-                id="deadline-input"
-              />
-            </li>
-          </ul>
-        </div>
-        <div class="fields-modal-offer">
-          <ul class="columns-modal-offer-detail">
-            <li>
-              <p class="title-modal-offer">Days</p>
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">Start hour</p>
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <p class="title-modal-offer">End hour</p>
-            </li>
-          </ul>
-          <ul class="columns-modal-offer-detail">
-            
-            <li class="small-columns-modal-offer-detail">
-              <Multiselect
-              :options="getHourOptions()"
-              v-model="offer.startHour"
-              placeholder="Start hour"
-              class="hour-multiselect"
-              id="start-hour-input"
-            />
-            </li>
-            <li class="small-columns-modal-offer-detail">
-              <Multiselect
-              :options="getHourOptions()"
-              v-model="offer.endHour"
-              placeholder="End hour"
-              class="hour-multiselect"
-              id="end-hour-input"
-            />
-            </li>
-          </ul>
-        </div>
-      </template>
-    </Modal>
   </div>
 </template>
 
@@ -393,7 +271,6 @@ export default defineComponent({
     function showEditableModal(): void {
       state.isEditableModalVisible = true;
       closeModal();
-      console.log('Muestrate');
       //console.log(ploc);
     }
     function closeEditableModal(): void {
