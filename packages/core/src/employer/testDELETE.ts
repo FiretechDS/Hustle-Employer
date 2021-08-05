@@ -1,7 +1,7 @@
 import { Profile } from "./domain/Profile";
 import { loginProps, ProfileProps } from "./domain/EmployerDomainMapper";
 import { ProfileToDomainMapper } from "./domain/EmployerDomainMapper";
-import { EmployerContact } from "./domain/valueObjects/ContactValueObject";
+import { contactMappedProps, EmployerContact } from "./domain/valueObjects/ContactValueObject";
 import { IdentifierEmployer } from "./domain/valueObjects/IdentifiersValueObject";
 import { AddressEmployer } from "./domain/valueObjects/AddressValueObject";
 import { RegisterService } from "./application/services/RegisterService";
@@ -9,10 +9,34 @@ import { RegisterApi } from "./adapter/out/RegisterApiPublisher";
 import { ApplicationToInfraMapper } from "./adapter/ProfileApplicationToInfraMapper";
 import { LoginService } from "./application/services/LoginService";
 import { LoginApi } from "./adapter/out/LoginApi";
-import { registerLocator } from "../common";
+import { validateContact } from "./presentation/RegisterValidator"
 
 
-    const register:ProfileProps={
+ /*   var contacto1:contactMappedProps = {
+        id: 1,
+        firstName:"David",
+        lastName: "Ortuño",
+        jobTitle:"Developer",
+        phoneNumber: 584126110189,
+        email:"ortuod@gmail.com"
+    }   
+    var contact1creado = EmployerContact.create(contacto1.id,contacto1.firstName,contacto1.lastName,contacto1.jobTitle,contacto1.phoneNumber,contacto1.email);
+    console.log(contact1creado); 
+*/
+    const contacto:contactMappedProps ={
+        id: 1,
+        firstName: 'David',
+        lastName: 'Ortuño',
+        email: 'ortuod@gmail.com',
+        phoneNumber: 584126110189,
+        jobTitle: 'Developer'
+    }
+
+    var validacion = validateContact(contacto);
+    console.log('Fallo '+validacion.isLeft());
+    console.log('Paso '+validacion.isRight());
+
+    /*const register:ProfileProps={
         id:undefined,
         email: "daortuno.17@gmail.com",
         password: "David123456*",
@@ -54,4 +78,4 @@ import { registerLocator } from "../common";
   
    const loginService = registerLocator.provideLoginService()
    console.log(loginService)
-
+*/

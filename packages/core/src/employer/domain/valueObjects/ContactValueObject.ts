@@ -76,7 +76,6 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
             var twoDigits = phoneString.substr(0,2);
             if(parseInt(twoDigits)===58){               //Venezuelan numbers empiezan por +58
                 if(phoneString.substr(2).length!==10){  //Si empiezan por +58 deben tener 10 numeros de longitud
-                    console.log(phoneString.substr(1));
                     throw new Error("Invalid Venezuelan Number")
                 }
             }
