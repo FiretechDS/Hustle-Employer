@@ -37,6 +37,18 @@ export class EmployerContact extends ValueObject<ContactInfoProps>{
             throw new Error('You must enter at least one contact')
         }
         contacts.forEach( prop =>{
+            contacts.forEach(val => {
+                if(val.id!=prop.id){
+                    if(val.phoneNumber === prop.phoneNumber){
+                        throw new Error('There is at least two contacts with the same phone number')
+                    }
+                    else{
+                        if(!val.email.localeCompare(prop.email)){
+                            throw new Error('There is at least two contacts with the same email')
+                        }
+                    }
+                }
+            })
             const contact = this.create(prop.id,prop.firstName,prop.lastName,prop.jobTitle,prop.phoneNumber,prop.email);
             contactList.push(contact);
           })

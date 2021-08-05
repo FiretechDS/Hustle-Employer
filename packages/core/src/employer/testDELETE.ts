@@ -23,16 +23,27 @@ import { validateContact } from "./presentation/RegisterValidator"
     var contact1creado = EmployerContact.create(contacto1.id,contacto1.firstName,contacto1.lastName,contacto1.jobTitle,contacto1.phoneNumber,contacto1.email);
     console.log(contact1creado); 
 */
-    const contacto:contactMappedProps ={
+    const contactos = [{
         id: 1,
-        firstName: 'David',
-        lastName: 'Ortuño',
-        email: 'ortuod@gmail.com',
+        firstName:"David",
+        lastName: "Ortuño",
+        jobTitle:"Developer",
         phoneNumber: 584126110189,
-        jobTitle: 'Developer'
-    }
+        email:"ortuod@gmail.com"
+        },
+        {
+        id:2,
+        firstName:"Luis",
+        lastName: "Castillo",
+        jobTitle:"Full Stack",
+        phoneNumber: 584129998877,
+        email:"luiscastillo@gmail.com"
+        }]
 
-    var validacion = validateContact(contacto);
+    var listContacts = EmployerContact.createList(contactos);
+    console.log(listContacts);
+
+/*    var validacion = validateContact(contacto);
     console.log('Fallo '+validacion.isLeft());
     console.log('Paso '+validacion.isRight());
 

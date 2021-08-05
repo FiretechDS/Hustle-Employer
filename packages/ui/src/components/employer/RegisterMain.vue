@@ -266,7 +266,6 @@ import Multiselect from "@vueform/multiselect";
 import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
 import Modal from "../Modal.vue";
-import ContactInfoType from "./types/ContactInfo";
 import { contactMappedProps } from "../../../../core/src/employer/domain/valueObjects/ContactValueObject"
 import { usePlocState } from "../../common/UsePlocState";
 import { SkillPloc, validateEmployer, validateContact } from "../../../../core/src";
