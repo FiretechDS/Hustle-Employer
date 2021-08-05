@@ -1,5 +1,10 @@
 <template>
   <div>
+    <EditOfferModal
+      :isModalVisible="editVisible"
+      :offer="offer"
+      :closeEditableModal="closeEditableModal"
+    />
     <HorizontalCard
       :title="offer.title"
       :salary="offer.hourlyRate"
@@ -21,7 +26,7 @@
           />
           <span class="tooltiptext"> Candidate </span>
         </div>
-        <div class="icon tooltip" @click.stop>
+        <div class="icon tooltip" @click.stop @click="showEditableModal">
           <img
             class="cardIcons highlight-icon"
             :src="require('@/assets/svg/edit.svg')"
@@ -58,7 +63,7 @@
           />
           <span class="tooltiptext"> Duplicate </span>
         </div>
-        <div class="icon tooltip" @click.stop>
+        <div class="icon tooltip" @click.stop @click="showEditableModal()">
           <img
             class="cardIcons highlight-icon"
             :src="require('@/assets/svg/edit.svg')"
@@ -180,7 +185,7 @@
                 buttonText="Update"
                 iconName="edit.svg"
                 :isPrimary="false"
-                @click="update()"
+                @click="showEditableModal"
               />
             </li>
             <li>
@@ -206,7 +211,7 @@
                 buttonText="Update"
                 iconName="edit.svg"
                 :isPrimary="false"
-                @click="update()"
+                @click="showEditableModal"
               />
             </li>
             <li>
@@ -226,18 +231,20 @@
 
 <script lang="ts">
 import { defineComponent, reactive, PropType, inject, computed } from "vue";
+import Loader from "@/components/Loader.vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
+import Multiselect from "@vueform/multiselect";
 import "mosha-vue-toastify/dist/style.css";
 import {
   JobOfferPloc,
   jobPresentationProps,
 } from "../../../../core/src/jobOffer/presentation";
 import { useConfirm } from "primevue/useconfirm";
-import Loader from "../Loader.vue";
 import MapComponent from "../map/MapComponent.vue";
+import EditOfferModal from "./EditOfferModal.vue";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -251,22 +258,58 @@ export default defineComponent({
       default: true,
     },
   },
-  components: { Modal, HorizontalCard, Button, Loader, MapComponent },
+  components: {
+    Modal,
+    HorizontalCard,
+    Button,
+    Loader,
+    MapComponent,
+    Multiselect,
+    EditOfferModal,
+  },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
+      isEditableModalVisible: false as boolean,
       loading: false as boolean,
     });
     const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
     const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
-      console.log(ploc);
     }
     function closeModal(): void {
       state.isModalVisible = false;
     }
-
+    function showEditableModal(): void {
+      closeModal();
+      state.isEditableModalVisible = true;
+      console.log("open edit: " + state.isEditableModalVisible);
+    }
+    function closeEditableModal(): void {
+      state.isEditableModalVisible = false;
+    }
+    const editVisible = computed(() => state.isEditableModalVisible);
+    function getHourOptions(): Object[] {
+      let i = 5;
+      const options = [];
+      while (i <= 23) {
+        options.push({ value: i, label: `${i}:00` });
+        i++;
+      }
+      return options;
+    }
+    var dias = {
+      value: [] as Array<string>,
+      options: [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+      ],
+    };
     const providePosition = computed(() => {
       return {
         lat: props.offer.latitude,
@@ -326,10 +369,15 @@ export default defineComponent({
       state,
       showModal,
       closeModal,
+      showEditableModal,
+      closeEditableModal,
+      getHourOptions,
       deleteModal,
       fileOrPublish,
       duplicate,
+      dias,
       providePosition,
+      editVisible,
     };
   },
 });
@@ -375,5 +423,31 @@ export default defineComponent({
 .loader {
   height: 1.5rem;
   margin-left: 4rem;
+}
+.tiny-field-gray {
+  text-indent: 0.7rem;
+  border-radius: 8px;
+  height: 2.5rem;
+  margin-top: 1rem;
+  margin-left: -1rem;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  display: inline-block;
+  border-color: transparent;
+  color: $font-gray;
+  background: $lighter-gray;
+  width: 85%;
+}
+.description-input {
+  text-indent: 0.7rem;
+  width: 95%;
+  height: 6rem;
+  border: none;
+  border-radius: 10px;
+  color: $font-gray;
+  background: $lighter-gray;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  margin-left: -1rem;
 }
 </style>
