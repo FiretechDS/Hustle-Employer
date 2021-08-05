@@ -137,7 +137,7 @@
               >
                 <li>
                   <p class="value-info">
-                    {{ contact.firstName + contact.lastName }}
+                    {{ contact.firstName + " " + contact.lastName }}
                   </p>
                 </li>
                 <li class="small-columns-contact-profile-info">
@@ -428,6 +428,8 @@ export default defineComponent({
   text-align: left;
   color: $highlit-darkblue;
   font-weight: bolder;
+  margin-top: auto;
+  margin-bottom: 1rem;
 }
 .loader {
   width: 50vw;

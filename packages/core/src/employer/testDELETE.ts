@@ -55,4 +55,6 @@ const loadEmpUC = new LoadEmployerService(loadEmpPort)
        console.log(res)
    }
 
-   loginFunction()
+   const string = "LUIS CASTILLO"
+   const split = string.split(" ")
+   console.log(split)

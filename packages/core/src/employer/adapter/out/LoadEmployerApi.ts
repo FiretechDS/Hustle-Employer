@@ -12,7 +12,7 @@ export class LoadEmployerApi implements LoadEmployerPort{
       if (response.status===200){
         const employerData:ProfileWebResponse = await response.data.data
         const mappedEmployer:profileCreatedProps ={
-          id:1,
+          id:employerId,
           email:'',
           password:'',
           logoURL:employerData.companyLogo,
@@ -30,13 +30,14 @@ export class LoadEmployerApi implements LoadEmployerPort{
             }
           }),
           contacts:employerData.contactEntityList.map((contact)=>{
+            const name =contact.fullName.split(' ')
             return{
               phoneNumber:parseInt(contact.phoneNumber),
               id:contact.id,
               email:contact.email,
               jobTitle:contact.jobTitle,
-              firstName:contact.fullName,
-              lastName:''
+              firstName:name[0] ,
+              lastName:name[1]
             }
           })
 
