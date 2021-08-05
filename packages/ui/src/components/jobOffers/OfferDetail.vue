@@ -21,7 +21,7 @@
           />
           <span class="tooltiptext"> Candidate </span>
         </div>
-        <div class="icon tooltip" @click.stop>
+        <div class="icon tooltip" @click.stop @click="showEditableModal()">
           <img
             class="cardIcons highlight-icon"
             :src="require('@/assets/svg/edit.svg')"
@@ -58,7 +58,7 @@
           />
           <span class="tooltiptext"> Duplicate </span>
         </div>
-        <div class="icon tooltip" @click.stop>
+        <div class="icon tooltip" @click.stop @click="showEditableModal()">
           <img
             class="cardIcons highlight-icon"
             :src="require('@/assets/svg/edit.svg')"
@@ -206,7 +206,7 @@
                 buttonText="Update"
                 iconName="edit.svg"
                 :isPrimary="false"
-                @click="update()"
+                @click="showEditableModal()"
               />
             </li>
             <li>
@@ -221,22 +221,145 @@
         </div>
       </template>
     </Modal>
+    <Modal v-if="state.isEditableModalVisible === true" @close="closeEditableModal()">
+       <template v-slot:header>
+          <span class="title">Edit offer</span>
+      </template>
+      <template v-slot:body>
+        <p class="fields-modal-offer value-modal-offer">
+          <input
+                v-model="offer.specialRequirements"
+                class="description-input"
+                placeholder="Special requirements"
+                id="edit-offer-hourly-rate"
+                type="text"
+              />
+        </p>
+        <div class="fields-modal-offer">
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Title</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Address</p>
+            </li>
+          </ul>
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <input
+                v-model="offer.jobTitle"
+                class="tiny-field-gray"
+                placeholder="Job title"
+                id="edit-offer-hourly-rate"
+                type="text"
+              />
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <input
+                v-model="offer.address"
+                class="tiny-field-gray"
+                placeholder="Address"
+                id="edit-offer-hourly-rate"
+                type="text"
+              />
+            </li>
+          </ul>
+        </div>
+        <div class="fields-modal-offer">
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Hourly rate</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Hours</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Deadline</p>
+            </li>
+          </ul>
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <input
+                v-model="offer.hourlyRate"
+                class="tiny-field-gray"
+                placeholder="Hourly rate"
+                id="edit-offer-hourly-rate"
+                type="text"
+              />
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <input
+                v-model="offer.duration"
+                class="tiny-field-gray"
+                placeholder="Duration"
+                id="edit-offer-hourly-rate"
+                type="text"
+              />
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <input
+                class="tiny-field-gray"
+                type="date"
+                v-model="offer.deadline"
+                placeholder="Deadline"
+                id="deadline-input"
+              />
+            </li>
+          </ul>
+        </div>
+        <div class="fields-modal-offer">
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Days</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Start hour</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">End hour</p>
+            </li>
+          </ul>
+          <ul class="columns-modal-offer-detail">
+            
+            <li class="small-columns-modal-offer-detail">
+              <Multiselect
+              :options="getHourOptions()"
+              v-model="offer.startHour"
+              placeholder="Start hour"
+              class="hour-multiselect"
+              id="start-hour-input"
+            />
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <Multiselect
+              :options="getHourOptions()"
+              v-model="offer.endHour"
+              placeholder="End hour"
+              class="hour-multiselect"
+              id="end-hour-input"
+            />
+            </li>
+          </ul>
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, PropType, inject, computed } from "vue";
+import Loader from "@/components/Loader.vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
 import { createToast } from "mosha-vue-toastify";
+import Multiselect from "@vueform/multiselect";
 import "mosha-vue-toastify/dist/style.css";
 import {
   JobOfferPloc,
   jobPresentationProps,
 } from "../../../../core/src/jobOffer/presentation";
 import { useConfirm } from "primevue/useconfirm";
-import Loader from "../Loader.vue";
 import MapComponent from "../map/MapComponent.vue";
 
 export default defineComponent({
@@ -251,10 +374,11 @@ export default defineComponent({
       default: true,
     },
   },
-  components: { Modal, HorizontalCard, Button, Loader, MapComponent },
+  components: { Modal, HorizontalCard, Button, Loader, MapComponent, Multiselect },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
+      isEditableModalVisible: false as boolean,
       loading: false as boolean,
     });
     const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
@@ -266,7 +390,35 @@ export default defineComponent({
     function closeModal(): void {
       state.isModalVisible = false;
     }
-
+    function showEditableModal(): void {
+      state.isEditableModalVisible = true;
+      closeModal();
+      console.log('Muestrate');
+      //console.log(ploc);
+    }
+    function closeEditableModal(): void {
+      state.isEditableModalVisible = false;
+    }
+    function getHourOptions(): Object[] {
+      let i = 5;
+      const options = [];
+      while (i <= 23) {
+        options.push({ value: i, label: `${i}:00` });
+        i++;
+      }
+      return options;
+    }
+    var dias={
+        value: [] as Array<string>,
+        options: [
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+        ],
+      };
     const providePosition = computed(() => {
       return {
         lat: props.offer.latitude,
@@ -326,9 +478,13 @@ export default defineComponent({
       state,
       showModal,
       closeModal,
+      showEditableModal,
+      closeEditableModal,
+      getHourOptions,
       deleteModal,
       fileOrPublish,
       duplicate,
+      dias,
       providePosition,
     };
   },
@@ -375,5 +531,31 @@ export default defineComponent({
 .loader {
   height: 1.5rem;
   margin-left: 4rem;
+}
+.tiny-field-gray{
+  text-indent: 0.7rem;
+  border-radius: 8px;
+  height: 2.5rem;
+  margin-top: 1rem;
+  margin-left: -1rem;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  display: inline-block;
+  border-color: transparent;
+  color: $font-gray;
+  background: $lighter-gray;
+  width: 85%;
+}
+.description-input {
+  text-indent: 0.7rem;
+  width: 95%;
+  height: 6rem;
+  border: none;
+  border-radius: 10px;
+  color: $font-gray;
+  background: $lighter-gray;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  margin-left: -1rem;
 }
 </style>
