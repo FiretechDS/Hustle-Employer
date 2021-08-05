@@ -1,5 +1,10 @@
 <template>
   <div>
+    <EditOfferModal
+      :isModalVisible="editVisible"
+      :offer="offer"
+      :closeEditableModal="closeEditableModal"
+    />
     <HorizontalCard
       :title="offer.title"
       :salary="offer.hourlyRate"
@@ -21,7 +26,7 @@
           />
           <span class="tooltiptext"> Candidate </span>
         </div>
-        <div class="icon tooltip" @click.stop @click="showEditableModal()">
+        <div class="icon tooltip" @click.stop @click="showEditableModal">
           <img
             class="cardIcons highlight-icon"
             :src="require('@/assets/svg/edit.svg')"
@@ -180,7 +185,7 @@
                 buttonText="Update"
                 iconName="edit.svg"
                 :isPrimary="false"
-                @click="update()"
+                @click="showEditableModal"
               />
             </li>
             <li>
@@ -206,7 +211,7 @@
                 buttonText="Update"
                 iconName="edit.svg"
                 :isPrimary="false"
-                @click="showEditableModal()"
+                @click="showEditableModal"
               />
             </li>
             <li>
@@ -239,6 +244,7 @@ import {
 } from "../../../../core/src/jobOffer/presentation";
 import { useConfirm } from "primevue/useconfirm";
 import MapComponent from "../map/MapComponent.vue";
+import EditOfferModal from "./EditOfferModal.vue";
 
 export default defineComponent({
   name: "OfferDetail",
@@ -252,7 +258,15 @@ export default defineComponent({
       default: true,
     },
   },
-  components: { Modal, HorizontalCard, Button, Loader, MapComponent, Multiselect },
+  components: {
+    Modal,
+    HorizontalCard,
+    Button,
+    Loader,
+    MapComponent,
+    Multiselect,
+    EditOfferModal,
+  },
   setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
@@ -263,19 +277,19 @@ export default defineComponent({
     const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
-      console.log(ploc);
     }
     function closeModal(): void {
       state.isModalVisible = false;
     }
     function showEditableModal(): void {
-      state.isEditableModalVisible = true;
       closeModal();
-      //console.log(ploc);
+      state.isEditableModalVisible = true;
+      console.log("open edit: " + state.isEditableModalVisible);
     }
     function closeEditableModal(): void {
       state.isEditableModalVisible = false;
     }
+    const editVisible = computed(() => state.isEditableModalVisible);
     function getHourOptions(): Object[] {
       let i = 5;
       const options = [];
@@ -285,17 +299,17 @@ export default defineComponent({
       }
       return options;
     }
-    var dias={
-        value: [] as Array<string>,
-        options: [
-          "monday",
-          "tuesday",
-          "wednesday",
-          "thursday",
-          "friday",
-          "saturday",
-        ],
-      };
+    var dias = {
+      value: [] as Array<string>,
+      options: [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+      ],
+    };
     const providePosition = computed(() => {
       return {
         lat: props.offer.latitude,
@@ -363,6 +377,7 @@ export default defineComponent({
       duplicate,
       dias,
       providePosition,
+      editVisible,
     };
   },
 });
@@ -409,7 +424,7 @@ export default defineComponent({
   height: 1.5rem;
   margin-left: 4rem;
 }
-.tiny-field-gray{
+.tiny-field-gray {
   text-indent: 0.7rem;
   border-radius: 8px;
   height: 2.5rem;
