@@ -10,7 +10,13 @@ import PerfectScrollbar from 'vue3-perfect-scrollbar'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 require('@/store/suscriber')
 
-store.dispatch('authModule/attempt',localStorage.getItem('user')).then(()=>{
+const user = {
+  id:localStorage.getItem('user')||undefined,
+  email:localStorage.getItem('email')||undefined,
+  password:localStorage.getItem('password')||undefined
+}
+
+store.dispatch('authModule/attempt',user).then(()=>{
   createApp(App).use(router).use(PrimeVue).use(ConfirmationService).use(store).use(PerfectScrollbar).mount("#app");
 })
 

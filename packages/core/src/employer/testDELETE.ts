@@ -10,6 +10,8 @@ import { ApplicationToInfraMapper } from "./adapter/ProfileApplicationToInfraMap
 import { LoginService } from "./application/services/LoginService";
 import { LoginApi } from "./adapter/out/LoginApi";
 import { registerLocator } from "../common";
+import { LoadEmployerService } from "./application/services/LoadEmployerService";
+import { LoadEmployerApi } from "./adapter/out/LoadEmployerApi";
 
 
     const register:ProfileProps={
@@ -41,17 +43,16 @@ import { registerLocator } from "../common";
             email:"luiscastillo@gmail.com"
         }]
     } 
-
+const loadEmpPort = new LoadEmployerApi()
+const loadEmpUC = new LoadEmployerService(loadEmpPort)
    async function loginFunction(){
        const loginService = new LoginService(new LoginApi())
         const credentials:loginProps = {
             email:"luiscasm2501@yomail.com",
             password:"Gothitelle1*"
         }
-       const res = await loginService.login(credentials)
+       const res = await loadEmpUC.loadEmployer(2)
        console.log(res)
    }
-  
-   const loginService = registerLocator.provideLoginService()
-   console.log(loginService)
 
+   loginFunction()

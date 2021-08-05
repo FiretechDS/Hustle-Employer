@@ -251,13 +251,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-header {
+.header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.loader {
-  transform: translate(3rem, -1rem);
 }
 
 div {

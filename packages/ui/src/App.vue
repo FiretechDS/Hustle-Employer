@@ -10,6 +10,7 @@
 import { defineComponent } from "vue";
 import {
   dependenciesLocator,
+  profileLocator,
   registerLocator,
   skillLocator,
 } from "../../core/src/common/dependencies";
@@ -23,6 +24,7 @@ export default defineComponent({
     jobOfferPloc: dependenciesLocator.provideJobOfferPloc(),
     skillsPloc: skillLocator.provideSkillProp(),
     registerService: registerLocator.provideRegisterService(),
+    profilePloc: profileLocator.provideEmployerPloc(),
   },
 });
 </script>
