@@ -7,6 +7,8 @@
       :duration="offer.duration"
       :deadline="offer.deadline"
       :onClick="showModal"
+      :class="offer.id"
+      :id="offer.title"
     >
       <template v-slot:buttons v-if="state.loading">
         <div class="loader">
@@ -183,12 +185,13 @@
                 @click="update()"
               />
             </li>
-            <li>
+            <li class="archive-button">
               <Button
                 buttonText="Archive"
                 iconName="archive.svg"
                 :isPrimary="false"
                 @click="fileOrPublish('Posted')"
+                :id="offer.title"
               />
             </li>
           </ul>
@@ -209,12 +212,13 @@
                 @click="update()"
               />
             </li>
-            <li>
+            <li class="delete-button">
               <Button
                 buttonText="Delete"
                 iconName="delete.svg"
                 :isPrimary="false"
                 @click="deleteModal"
+                :id="offer.title"
               />
             </li>
           </ul>
