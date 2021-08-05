@@ -9,7 +9,16 @@
     <template v-slot:header class="modal-header-aye">
       <div class="candidate-modal-header">
         <div>{{ firstName }} {{ middleName }} {{ lastName }}</div>
-        <div class="rate-stars">5 stars</div>
+        <div class="rate-stars">
+          <vue3starRatings 
+                v-model="rating"
+                starSize="15"
+                disableClick='true'
+                showControl='false'
+                controlSize='0'
+                controlBg='#ffffff'
+            />
+        </div>
         <div class="rounded-logo">{{ firstName[0] }}{{ lastName[0] }}</div>
       </div>
     </template>
@@ -131,7 +140,7 @@ import { defineComponent, reactive, PropType } from "vue";
 import SmallCard from "@/components/SmallCard.vue";
 import Modal from "../Modal.vue";
 import Button from "../Button.vue";
-
+import vue3starRatings from "vue3-star-ratings";
 export default defineComponent({
   name: "OfferDetail",
   props: {
@@ -177,8 +186,11 @@ export default defineComponent({
     references: {
       type: Array as PropType<{ name: string }[]>,
     },
+    rating: {
+      type: String,
+    },
   },
-  components: { Modal, SmallCard, Button },
+  components: { Modal, SmallCard, Button, vue3starRatings },
   created() {
     console.log(this.state);
   },
@@ -283,5 +295,10 @@ export default defineComponent({
     margin-top: 0;
     margin-bottom: 0;
   }
+}
+.vue3-star-ratings__wrapper{
+    padding: 0;
+    margin: 0;
+    font-size: small;
 }
 </style>

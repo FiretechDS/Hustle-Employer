@@ -35,6 +35,7 @@
         :skills="data.skills"
         :workExperience="data.workExperience"
         :references="data.references"
+        :rating="data.rating"
       />
       <!--more examples-->
       <CandidateDetail
@@ -95,6 +96,7 @@ export default defineComponent({
         { name: "Sabe trabajar en equipo" },
       ],
       references: [{ name: "Steve Jobs" }],
+      rating: "4.5",
     };
     return { sortType, data };
   },

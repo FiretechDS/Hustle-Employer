@@ -55,7 +55,14 @@
         class="stars-rating"
         v-if="(jobStatus === '5' || jobStatus === '6') && rating !== ''"
       >
-        {{ rating }} stars
+        <vue3starRatings 
+                v-model="rating"
+                starSize="15"
+                disableClick='true'
+                showControl='false'
+                controlSize='0'
+                controlBg='#ffffff'
+            />
       </div>
       <div
         class="stars-rating"
@@ -70,10 +77,10 @@
 <script lang="ts">
 import { defineComponent, PropType, reactive } from "vue";
 import Button from "../Button.vue";
-
+import vue3starRatings from "vue3-star-ratings";
 export default defineComponent({
   name: "JobCard",
-  components: { Button },
+  components: { Button, vue3starRatings },
   props: {
     showInfo: {
       type: Function as PropType<() => void>,
@@ -163,7 +170,7 @@ p {
 }
 .job-status {
   color: $font-gray;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-align: -webkit-center;
   font-weight: bold;
   margin-left: 1rem;
@@ -232,9 +239,13 @@ p {
   .stars-rating {
     color: grey;
     font-style: italic;
-    flex: 1.5;
+    //flex: 1.5;
     padding: 0 1rem;
     text-align: center;
   }
+}
+.vue3-star-ratings__wrapper{
+    padding: 0;
+    margin: 0;
 }
 </style>

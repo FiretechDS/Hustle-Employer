@@ -115,21 +115,27 @@
               buttonText="Review"
               iconName="review.svg"
               :isPrimary="false"
-              @click="reviewEmployee()"
+              @click="openReviewModal()"
             />
           </li>
         </ul>
       </div>
     </template>
   </Modal>
+  <ReviewModal 
+    v-if="(jobStatus==='5'||jobStatus==='6')&&review===''"
+    v-show="state.isReviewModalVisible"
+    @close="closeReviewModal()"
+    @publish="reviewEmployee"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, PropType } from "vue";
 import JobCard from "./JobCard.vue";
 import Modal from "../Modal.vue";
+import ReviewModal from "./ReviewModal.vue";
 import Button from "../Button.vue";
-
 export default defineComponent({
   name: "OfferDetail",
   props: {
@@ -182,13 +188,14 @@ export default defineComponent({
       type: String,
     },
   },
-  components: { Modal, JobCard, Button },
+  components: { Modal, JobCard, Button, ReviewModal },
   created() {
     console.log(this.state);
   },
   setup() {
     const state = reactive({
       isModalVisible: false as boolean,
+      isReviewModalVisible: false as boolean,
     });
     function showModal(): void {
       state.isModalVisible = true;
@@ -214,8 +221,14 @@ export default defineComponent({
     function rateEmployee(): void {
       console.log("Rating!")
     }
-    function reviewEmployee(): void {
-      console.log("Reviewing!")
+    function openReviewModal(): void {
+      state.isReviewModalVisible = true;
+    }
+    function closeReviewModal(): void {
+      state.isReviewModalVisible = false;
+    }
+    function reviewEmployee(reviewInput: { review: string; rating: string }) {
+      console.log("Reviewing: "+reviewInput.review+" - "+reviewInput.rating+" stars.")
     }
     return {
       state,
@@ -227,6 +240,8 @@ export default defineComponent({
       downloadInfo,
       openLocation,
       rateEmployee,
+      openReviewModal,
+      closeReviewModal,
       reviewEmployee,
     };
   },
@@ -307,5 +322,10 @@ export default defineComponent({
 }
 .description {
   margin-bottom: 0;
+}
+.vue3-star-ratings__wrapper{
+    padding: 0;
+    margin: 0 10rem;
+    margin-top: 2rem;
 }
 </style>
