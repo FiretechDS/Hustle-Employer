@@ -25,14 +25,15 @@ export interface ProfileWebModel{
     listContact:Contact[],
     createAddressCommand:Address
 }
-
+type id = {id:number}
+type registeredContact = Contact & id
 export interface ProfileWebResponse{
     companyName: string,
     companyLogo:string,
     specialRequirement: string,
     status:string,
     skillModelList:skillModel[],
-    contactResponse:Contact[],
+    contactEntityList:registeredContact[],
     addressResponse:Address
 }
 

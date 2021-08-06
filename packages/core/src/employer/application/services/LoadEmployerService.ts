@@ -1,6 +1,6 @@
 import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
-import { ProfileProps } from "../../domain/EmployerDomainMapper";
+import { profileCreatedProps } from "../../domain/EmployerDomainMapper";
 import { LoadEmployerUseCase } from "../port/in/LoadEmployerUseCase";
 import { LoadEmployerPort } from "../port/out/LoadEmployerPort";
 
@@ -9,7 +9,7 @@ export class LoadEmployerService implements LoadEmployerUseCase{
   constructor(port:LoadEmployerPort){
     this.loadPort=port
   }
- async  loadEmployer(employerId:number): Promise<Either<DataError, ProfileProps>> {
+ async  loadEmployer(employerId:number): Promise<Either<DataError, profileCreatedProps>> {
     try {
       const loadResult = await this.loadPort.load(employerId)
       return loadResult;

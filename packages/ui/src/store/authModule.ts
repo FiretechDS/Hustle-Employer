@@ -12,18 +12,28 @@ export const authModule:Module<any,any> = {
   namespaced:true,
   state:{
     userId:undefined,
+    data:{
+      email:'',
+      password:''
+    }
   },
+
   getters:{
     authenticated(state):boolean{
       return state.userId!==undefined
     },
     user (state):number{
       return state.userId
+    },data(state):{email:string,password:string}{
+      return state.data
     }
   },
   mutations:{
     SET_USER(state,userId){
       state.userId =userId
+    },
+    SET_DATA(state,loginProps:loginProps){
+      state.data = loginProps
     }
   },
   actions:{
@@ -37,7 +47,7 @@ export const authModule:Module<any,any> = {
           error = err.kind==='ApiError'?err.message:err.message.message
         },
         async (props)=>{
-         await dispatch('attempt',props.id)
+         await dispatch('attempt',props)
           router.push('/offers')
         }
       )
@@ -46,15 +56,17 @@ export const authModule:Module<any,any> = {
       })
     },
 
-    async attempt ({commit},user:number){
-      if (user){
-        commit('SET_USER',user)
-      }
+    async attempt ({commit},user:loginProps){
+      //if (user){
+        commit('SET_USER',user.id)
+        commit('SET_DATA',user)
+      //}
     },
 
     logout({commit}){
       commit('SET_USER',undefined)
-     router.push('/login')
+      commit('SET_DATA',undefined)
+      router.push('/login')
     }
   }
 }

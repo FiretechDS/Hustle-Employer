@@ -54,7 +54,10 @@ const routes = [
   {
     path: "/profile",
     name: "Profile ",
-    component: ProfilePage
+    component: ProfilePage,
+        meta:{
+      requiresAuth:true
+    }
   },
 ];
 const router = createRouter({
