@@ -1,20 +1,25 @@
 module.exports = {
+    '@disabled': false,
     'Create Job Offer - Acceptance Test' : function (browser){
 
         const validOffer = {
             deadline: '01-01-2022',
             duration: '200',
-            title: 'Acceptance test',
+            title: 'AcceptanceTest',
             hourlyRate: '100',
             location: 'New York, US',
             description: 'This is an acceptance test.'
         };
+        const createdUser = {
+          username: 'luiscasm2501@yomail.com',
+          password: 'Gothitelle1*',
+        }
 
         browser
             .url('http://localhost:8080')
             .waitForElementVisible('.white-card-body')
-            .setValue('#mail-login','luiscasm2501@yomail.com')
-            .setValue('#password-login','Gothitelle1*')
+            .setValue('#mail-login',createdUser.username)
+            .setValue('#password-login',createdUser.password)
             .click('#login-button')
             .waitForElementVisible('body')
             .assert.visible('#create-new-offer-button')
@@ -47,8 +52,9 @@ module.exports = {
             .click('#create-button')
             .waitForElementVisible('.form-result')
             .assert.containsText('.form-result', 'Offer published successfully')
+
             //Not-happy-path Validation: when duration equals 0
             //.assert.containsText('.form-result', 'Job duration must be greater than zero')
-            .saveScreenshot('tests_output/create_job_offer.png')
+            //.saveScreenshot('tests_output/create_job_offer.png')
     }
 }
