@@ -1,22 +1,14 @@
 module.exports = {
   '@disabled': false,
     'Delete Job Offer - Acceptance Test' : function (browser){
-
-        const validOffer = {
-            deadline: '01-01-2022',
-            duration: '200',
-            title: 'Acceptancetest',
-            hourlyRate: '100',
-            location: 'New York, US',
-            description: 'This is an acceptance test.'
-        };
+        const connection = 'http://localhost:8080'
         const createdUser = {
           username: 'luiscasm2501@yomail.com',
           password: 'Gothitelle1*',
         }
 
         browser
-            .url('http://localhost:8080')
+            .url(connection)
             .waitForElementVisible('.white-card-body')
             .setValue('#mail-login',createdUser.username)
             .setValue('#password-login',createdUser.password)
