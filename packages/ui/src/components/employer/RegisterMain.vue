@@ -239,6 +239,9 @@
           id="register-contact-email"
           type="text"
         />
+        <p class="error" :style="{ 'text-align': 'center', margin: 0 }">
+          {{ contactMsg }}
+        </p>
       </template>
       <template v-slot:footer>
         <div class="card-multiple-items-register">
@@ -266,9 +269,13 @@ import Multiselect from "@vueform/multiselect";
 import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
 import Modal from "../Modal.vue";
-import { contactMappedProps } from "../../../../core/src/employer/domain/valueObjects/ContactValueObject"
+import { contactMappedProps } from "../../../../core/src/employer/domain/valueObjects/ContactValueObject";
 import { usePlocState } from "../../common/UsePlocState";
-import { SkillPloc, validateEmployer, validateContact } from "../../../../core/src";
+import {
+  SkillPloc,
+  validateEmployer,
+  validateContact,
+} from "../../../../core/src";
 import { RegisterEmployerUseCase } from "../../../../core/src/employer/application/port/in/RegisterEmployerUseCase";
 import { ProfileProps } from "../../../../core/src/employer/domain/EmployerDomainMapper";
 import Loader from "../Loader.vue";
@@ -284,6 +291,7 @@ export default defineComponent({
     const skillState = usePlocState(skillPloc);
     const store = useStore();
     const message = ref("");
+    const contactMsg = ref("");
     const loading = ref(false);
     const registerInfo = reactive({
       companyName: "" as string,
@@ -345,6 +353,7 @@ export default defineComponent({
     }
 
     function addContact(): void {
+      contactMsg.value = "";
       const newContact = {
         id: contactInfo.id,
         firstName: contactInfo.firstName,
@@ -353,16 +362,17 @@ export default defineComponent({
         phoneNumber: parseInt(contactInfo.phoneNumber),
         email: contactInfo.email,
       };
-      var validacion = validateContact(newContact);
-      if(validacion.isRight()){
-        registerInfo.contacts.push(newContact);
-        closeModal();
-        setContactToDefault();
-      }
-      else{
-        console.log(validacion.isLeft);
-      }
-      console.log(newContact);
+      var validation = validateContact(newContact);
+      validation.fold(
+        (error) => {
+          contactMsg.value = error;
+        },
+        () => {
+          registerInfo.contacts.push(newContact);
+          closeModal();
+          setContactToDefault();
+        }
+      );
     }
 
     function changeID(): void {
@@ -439,6 +449,7 @@ export default defineComponent({
       deleteContact,
       message,
       loading,
+      contactMsg,
     };
   },
   components: {
