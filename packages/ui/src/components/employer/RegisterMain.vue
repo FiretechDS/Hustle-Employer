@@ -266,9 +266,9 @@ import Multiselect from "@vueform/multiselect";
 import GrayCard from "../GrayCard.vue";
 import { skills } from "../jobOffers/skills";
 import Modal from "../Modal.vue";
-import ContactInfoType from "./types/ContactInfo";
+import { contactMappedProps } from "../../../../core/src/employer/domain/valueObjects/ContactValueObject"
 import { usePlocState } from "../../common/UsePlocState";
-import { SkillPloc, validateEmployer } from "../../../../core/src";
+import { SkillPloc, validateEmployer, validateContact } from "../../../../core/src";
 import { RegisterEmployerUseCase } from "../../../../core/src/employer/application/port/in/RegisterEmployerUseCase";
 import { ProfileProps } from "../../../../core/src/employer/domain/EmployerDomainMapper";
 import Loader from "../Loader.vue";
@@ -301,7 +301,7 @@ export default defineComponent({
       city: "" as string,
       state: "" as string,
       zip: "" as string,
-      contacts: [] as Array<ContactInfoType>,
+      contacts: [] as Array<contactMappedProps>,
     });
 
     const contactInfo = reactive({
@@ -350,13 +350,19 @@ export default defineComponent({
         firstName: contactInfo.firstName,
         lastName: contactInfo.lastName,
         jobTitle: contactInfo.jobTitle,
-        phoneNumber: contactInfo.phoneNumber,
+        phoneNumber: parseInt(contactInfo.phoneNumber),
         email: contactInfo.email,
       };
-      registerInfo.contacts.push(newContact);
-      console.log(registerInfo.contacts);
-      closeModal();
-      setContactToDefault();
+      var validacion = validateContact(newContact);
+      if(validacion.isRight()){
+        registerInfo.contacts.push(newContact);
+        closeModal();
+        setContactToDefault();
+      }
+      else{
+        console.log(validacion.isLeft);
+      }
+      console.log(newContact);
     }
 
     function changeID(): void {
@@ -392,7 +398,7 @@ export default defineComponent({
         contacts: registerInfo.contacts.map((contact) => {
           return {
             ...contact,
-            phoneNumber: parseInt(contact.phoneNumber),
+            phoneNumber: contact.phoneNumber,
           };
         }),
       };
