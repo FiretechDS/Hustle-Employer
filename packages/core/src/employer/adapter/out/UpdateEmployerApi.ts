@@ -8,7 +8,7 @@ import { ApplicationToInfraMapper } from "../ProfileApplicationToInfraMapper";
 export class UpdateEmployerApi implements UpdateEmployerPort{
   async update(employer: profileCreatedProps): Promise<Either<DataError, true>> {
     try {
-      const profileDto ={...ApplicationToInfraMapper.map(employer),id:employer.id}
+      const profileDto ={...ApplicationToInfraMapper.map(employer),idRol:2,id:employer.id}
       console.log(profileDto)
       const apiResponse = await apiFetcher.post('/employer/update',profileDto,{headers:{'Content-Type':'application/json'}})
       if (apiResponse.status===200){
