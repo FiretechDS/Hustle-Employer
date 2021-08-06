@@ -1,6 +1,6 @@
 import { JobOffersWeb } from "./OfferWebModel";
 import { JobApplicationProps } from "../application/JobApplicationModel";
-import { Skill } from "../domain/valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 
 
 export class InfraToApplicationMapper{
@@ -8,8 +8,10 @@ export class InfraToApplicationMapper{
     return {
       ...props,
       deadline:new Date(props.deadline),
-      creationDate:new Date("1990-01-01"), //Temp solution until persistance implements a creation date
-      status: props.statusJobOfferModel.id,
+      creationDate:new Date(props.createdOn), 
+      status: props.statusJobOfferModel.id-1,
+      latitude:parseFloat(props.latitude),
+      longitude:parseFloat(props.length),
       skills:props.skillModel.map((skill)=>{
         return {name:skill.habilityName, category: Skill.getNumber( skill.skillCategoryModel.nameCategory),number:skill.id }
       } ),

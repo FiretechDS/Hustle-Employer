@@ -1,30 +1,42 @@
 <template>
   <transition name="modal-fade">
-  <div class="modal-backdrop" >
-    <div class="modal">
-      <header class="modal-header">
-        <slot name="header"> This is the default title! </slot>
-        <img class="btn-close" src="@/assets/svg/letra-x.png" @click="close" />
-      </header>
+    <div class="modal-backdrop" @click="close">
+      <div class="modal" @click.stop>
+        <header class="modal-header">
+          <slot name="header"> This is the default title! </slot>
+          <img
+            class="btn-close"
+            :hidden="hideX"
+            src="@/assets/svg/letra-x.png"
+            @click="close"
+            id="close-modal-button"
+          />
+        </header>
 
-      <section class="modal-body">
-        <slot name="body"> This is the default body! </slot>
-      </section>
+        <section class="modal-body">
+          <slot name="body"> This is the default body! </slot>
+        </section>
 
-      <footer class="modal-footer">
-        <slot name="footer"> This is the default footer! </slot>
-      </footer>
+        <footer class="modal-footer">
+          <slot name="footer"> This is the default footer! </slot>
+        </footer>
+      </div>
     </div>
-  </div>
   </transition>
 </template>
 
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "Modal",
+  props: {
+    hideX: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+  },
   setup(props, ctx) {
     function close() {
       ctx.emit("close");
@@ -47,34 +59,38 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .modal {
   background: #ffffff;
+  z-index: 3;
   //  box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   max-width: 70rem;
+  max-height: 100vh;
 }
 
 .modal-header,
 .modal-footer {
   padding: 15px;
-  display: flex;
+  //display: flex;
 }
 
 .modal-header {
   position: relative;
-//  border-bottom: 1px solid #eeeeee;
+  //  border-bottom: 1px solid #eeeeee;
   color: $font-dark;
   justify-content: space-between;
-  font-size: $medium-font
+  font-size: $medium-font;
+  margin-left: 4rem;
 }
 
 .modal-footer {
-//  border-top: 1px solid #eeeeee;
+  //  border-top: 1px solid #eeeeee;
   flex-direction: column;
   justify-content: flex-end;
 }
@@ -95,12 +111,12 @@ export default defineComponent({
 }
 
 .modal-fade-enter,
-  .modal-fade-leave-to {
-    opacity: 0;
-  }
+.modal-fade-leave-to {
+  opacity: 0;
+}
 
-  .modal-fade-enter-active,
-  .modal-fade-leave-active {
-    transition: opacity .5s ease;
-  }
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
 </style>

@@ -21,7 +21,7 @@ export class JobHeader extends ValueObject<HeaderProps>{
       throw new Error("Title can't be blank")
     }
     if(!specialRequirements|| specialRequirements.trim()===''){
-      specialRequirements='None.'
+      specialRequirements='This offer has no special requirements.'
     }
     return new JobHeader({title:title, specialRequirements:specialRequirements } )
   }

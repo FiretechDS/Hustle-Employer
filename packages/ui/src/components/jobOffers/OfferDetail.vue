@@ -1,58 +1,230 @@
 <template>
   <div>
-    <HorizontalCard :title="title" :salary="salary" :status="status" :duration="duration" :deadline="deadline" :onClick="showModal" />
-    <Modal v-show="state.isModalVisible" @close="closeModal()">
-      <template v-slot:header> {{this.title}}</template>
-      <template v-slot:body>
-        
-          <p class="fields-modal-offer value-modal-offer">{{description}}</p>
-
-        <div class="fields-modal-offer">
-        <ul class="columns-modal-offer-detail">
-          <li>
-            <p class="title-modal-offer">Pago/hora</p>
-          </li>
-          <li class="small-columns-modal-offer-detail"> 
-            <p class="title-modal-offer">Horas</p>
-          </li> 
-          <li class="small-columns-modal-offer-detail"> 
-            <p class="title-modal-offer">Vencimiento</p>
-          </li>
-        </ul>
-        <ul class="columns-modal-offer-detail">
-          <li>
-            <p class="value-modal-offer">{{salary}}</p>
-          </li>
-          <li class="small-columns-modal-offer-detail"> 
-            <p class="value-modal-offer">{{duration}}</p>
-          </li> 
-          <li class="small-columns-modal-offer-detail"> 
-            <p class="value-modal-offer">{{deadline}}</p>
-          </li>
-        </ul>
+    <EditOfferModal
+      :isModalVisible="editVisible"
+      :offer="offer"
+      :closeEditableModal="closeEditableModal"
+    />
+    <HorizontalCard
+      :title="offer.title"
+      :salary="offer.hourlyRate"
+      :status="offer.status"
+      :duration="offer.duration"
+      :deadline="offer.deadline"
+      :onClick="showModal"
+      :class="offer.id"
+      :id="offer.title"
+    >
+      <template v-slot:buttons v-if="state.loading">
+        <div class="loader">
+          <Loader class="loader" color="#39a9cb" size="8px" />
         </div>
+      </template>
+      <template v-slot:buttons v-else-if="areOffersActive && !state.loading">
+        <div class="icon tooltip" @click.stop>
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/postulantes.svg')"
+          />
+          <span class="tooltiptext"> Candidate </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="showEditableModal">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/edit.svg')"
+          />
+          <span class="tooltiptext"> Update </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="fileOrPublish('Posted')">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/archive.svg')"
+          />
+          <span class="tooltiptext"> Archive </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="showModal">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/more.svg')"
+          />
+          <span class="tooltiptext"> Details </span>
+        </div>
+      </template>
+      <template v-slot:buttons v-else>
+        <div class="icon tooltip" @click.stop @click="fileOrPublish('Open')">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/paper-plane.svg')"
+          />
+          <span class="tooltiptext"> Publish </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="duplicate">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/duplicate.svg')"
+          />
+          <span class="tooltiptext"> Duplicate </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="showEditableModal()">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/edit.svg')"
+          />
+          <span class="tooltiptext"> Update </span>
+        </div>
+        <div class="icon tooltip" @click.stop @click="deleteModal">
+          <img
+            class="cardIcons highlight-icon"
+            :src="require('@/assets/svg/delete.svg')"
+          />
+          <span class="tooltiptext"> Delete </span>
+        </div>
+      </template>
+    </HorizontalCard>
+    <Modal v-show="state.isModalVisible" @close="closeModal()">
+      <template v-slot:header> {{ offer.title }}</template>
+      <template v-slot:body>
+        <p class="fields-modal-offer value-modal-offer">
+          {{ offer.specialRequirements }}
+        </p>
 
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Horario</p>
-          <ul class="list-modal-offer">
-            <li v-for="day in schedule.days" :key="schedule.days.indexOf(day)">
-              <div class="value-modal-offer"> 
-                <p>
-                {{day}} {{schedule.hourIn}}:00 -{{schedule.hourOut}}:00 
-                </p>
-              </div>
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Hourly rate</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Hours</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="title-modal-offer">Deadline</p>
+            </li>
+          </ul>
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="value-modal-offer">${{ offer.hourlyRate }}</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="value-modal-offer">{{ offer.duration }} hours</p>
+            </li>
+            <li class="small-columns-modal-offer-detail">
+              <p class="value-modal-offer">{{ offer.deadline }}</p>
             </li>
           </ul>
         </div>
+        <div class="listRow">
+          <div class="flexRow">
+            <p class="title-modal-offer">Schedule</p>
+            <perfect-scrollbar>
+              <ul class="list-modal-offer">
+                <li
+                  v-for="day in offer.schedules"
+                  :key="offer.schedules.indexOf(day)"
+                >
+                  <div class="value-modal-offer">
+                    <p>
+                      {{ day }} {{ offer.startHour }}:00 -{{ offer.endHour }}:00
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="flexRow">
+            <p class="title-modal-offer">Required Skills</p>
+            <perfect-scrollbar>
+              <ul class="list-modal-offer">
+                <li v-for="skill in offer.skills" :key="skill.name">
+                  <div class="value-modal-offer">
+                    <p>
+                      {{ skill.name }}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="flexRow">
+            <p class="title-modal-offer">Address</p>
+            <p class="value-modal-offer">{{ offer.location }}</p>
+          </div>
+        </div>
         <div class="fields-modal-offer">
-          <p class="title-modal-offer">Habilidades</p>
-          <ul class="list-modal-offer">
-            <li v-for="skill in skills" :key="skill.name">
-              <div class="value-modal-offer">
-                <p>
-                {{skill.name}} 
-                </p>
-              </div>
+          <ul class="columns-modal-offer-detail">
+            <li>
+              <p class="title-modal-offer">Location</p>
+            </li>
+          </ul>
+        </div>
+        <MapComponent
+          :position="providePosition"
+          :styling="{
+            height: '20rem',
+            width: '80%',
+            'margin-right': 'auto',
+            'margin-left': 'auto',
+            'border-radius': '5px',
+            'margin-top': '2rem',
+          }"
+          :zoom="10"
+        />
+      </template>
+      <template v-slot:footer>
+        <div class="offer-detail-footer">
+          <ul v-if="areOffersActive" class="footer-offer-detail">
+            <li>
+              <router-link :to="`/candidates/${offer.id}`">
+                <Button
+                  buttonText="Applicants"
+                  iconName="postulantes.svg"
+                  :styles="{ width: '15rem' }"
+                  :isPrimary="false"
+                />
+              </router-link>
+            </li>
+            <li>
+              <Button
+                buttonText="Update"
+                iconName="edit.svg"
+                :isPrimary="false"
+                @click="showEditableModal"
+              />
+            </li>
+            <li class="archive-button">
+              <Button
+                buttonText="Archive"
+                iconName="archive.svg"
+                :isPrimary="false"
+                @click="fileOrPublish('Posted')"
+                :id="offer.title"
+              />
+            </li>
+          </ul>
+          <ul v-else class="footer-offer-detail">
+            <li>
+              <Button
+                buttonText="Publish"
+                iconName="paper-plane.svg"
+                :isPrimary="false"
+                @click="fileOrPublish('Open')"
+              />
+            </li>
+            <li>
+              <Button
+                buttonText="Update"
+                iconName="edit.svg"
+                :isPrimary="false"
+                @click="showEditableModal"
+              />
+            </li>
+            <li class="delete-button">
+              <Button
+                buttonText="Delete"
+                iconName="delete.svg"
+                :isPrimary="false"
+                @click="deleteModal"
+                :id="offer.title"
+              />
             </li>
           </ul>
         </div>
@@ -62,63 +234,224 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from "vue";
+import { defineComponent, reactive, PropType, inject, computed } from "vue";
+import Loader from "@/components/Loader.vue";
 import HorizontalCard from "@/components/HorizontalCard.vue";
 import Modal from "../Modal.vue";
-
+import Button from "../Button.vue";
+import { createToast } from "mosha-vue-toastify";
+import Multiselect from "@vueform/multiselect";
+import "mosha-vue-toastify/dist/style.css";
+import {
+  JobOfferPloc,
+  jobPresentationProps,
+} from "../../../../core/src/jobOffer/presentation";
+import { useConfirm } from "primevue/useconfirm";
+import MapComponent from "../map/MapComponent.vue";
+import EditOfferModal from "./EditOfferModal.vue";
 
 export default defineComponent({
   name: "OfferDetail",
-  props:{  
-       title: {
-         type: String
-       },
-       salary: {
-         type: Number
-       },
-       description:{
-         type: String
-       },
-       duration: {
-         type: Number
-       },
-       deadline:{
-         type: String
-       },
-       schedule:{
-         type: Object as PropType<{id: number, days: string[], hourIn: string, hourOut: string}>
-       },
-       skills:{
-         type: Array as PropType<{name: string, category: string}[]>
-       },
-       status:{
-         type: String
-       },
-       job:{
-         type: Object
-       }
+  props: {
+    offer: {
+      type: Object as () => jobPresentationProps,
+      required: true,
     },
-  components: { Modal, HorizontalCard },
-  created(){
-    console.log(this.state)
+    areOffersActive: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
   },
-  setup() {
+  components: {
+    Modal,
+    HorizontalCard,
+    Button,
+    Loader,
+    MapComponent,
+    Multiselect,
+    EditOfferModal,
+  },
+  setup(props) {
     const state = reactive({
       isModalVisible: false as boolean,
+      isEditableModalVisible: false as boolean,
+      loading: false as boolean,
     });
+    const ploc = inject<JobOfferPloc>("jobOfferPloc") as JobOfferPloc;
+    const confirm = useConfirm();
     function showModal(): void {
       state.isModalVisible = true;
-      console.log("open");
     }
     function closeModal(): void {
       state.isModalVisible = false;
-      console.log("closed");
+    }
+    function showEditableModal(): void {
+      closeModal();
+      state.isEditableModalVisible = true;
+      console.log("open edit: " + state.isEditableModalVisible);
+    }
+    function closeEditableModal(): void {
+      state.isEditableModalVisible = false;
+    }
+    const editVisible = computed(() => state.isEditableModalVisible);
+    function getHourOptions(): Object[] {
+      let i = 5;
+      const options = [];
+      while (i <= 23) {
+        options.push({ value: i, label: `${i}:00` });
+        i++;
+      }
+      return options;
+    }
+    var dias = {
+      value: [] as Array<string>,
+      options: [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+      ],
+    };
+    const providePosition = computed(() => {
+      return {
+        lat: props.offer.latitude,
+        lng: props.offer.longitude,
+      };
+    });
+    function deleteModal() {
+      confirm.require({
+        message: `Are you sure you want to delete ${props.offer.title}?`,
+        header: "Delete Offer",
+        accept: () => {
+          deleteOffer();
+        },
+        reject: () => {
+          //callback to execute when user rejects the action
+        },
+      });
+    }
+    function toast(message: string, success: boolean): void {
+      createToast(message, {
+        type: success ? "success" : "warning",
+        toastBackgroundColor: "#39a9cb",
+        position: "bottom-center",
+        showIcon: true,
+      });
+    }
+    async function deleteOffer() {
+      state.loading = true;
+      const result = await ploc.deleteOffer(props.offer.id);
+      toast(result.value, result.success);
+    }
+    async function fileOrPublish(status: "Posted" | "Open"): Promise<void> {
+      state.loading = true;
+      const result = await ploc.updateOffer(props.offer.id, {
+        ...props.offer,
+        status: status,
+      });
+      const msg = result.success
+        ? `${props.offer.title} was moved to ${
+            status === "Posted" ? "archive" : "published"
+          }.`
+        : result.value;
+      toast(msg, result.success);
+      state.loading = false;
+    }
+
+    async function duplicate(): Promise<void> {
+      state.loading = true;
+      const result = await ploc.createOffer(props.offer);
+      const msg = `${
+        result.success ? "Offer duplicated succesfully" : result.value
+      }`;
+      toast(msg, result.success);
+      state.loading = false;
     }
     return {
       state,
       showModal,
       closeModal,
+      showEditableModal,
+      closeEditableModal,
+      getHourOptions,
+      deleteModal,
+      fileOrPublish,
+      duplicate,
+      dias,
+      providePosition,
+      editVisible,
     };
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.icon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+}
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 5rem;
+  width: 85%;
+  //padding-right: 13rem;
+  margin-left: 1rem;
+  /*:first-child {
+    flex: 0;
+    width: 19.2rem;
+  }*/
+  .flexRow {
+    flex: 1;
+  }
+}
+.cardIcons {
+  width: 3rem;
+  height: 3rem;
+  filter: $filter-blue;
+  flex: 1;
+}
+.ps {
+  min-height: 6rem;
+  max-height: 12rem;
+  // width: 20rem;
+}
+.loader {
+  height: 1.5rem;
+  margin-left: 4rem;
+}
+.tiny-field-gray {
+  text-indent: 0.7rem;
+  border-radius: 8px;
+  height: 2.5rem;
+  margin-top: 1rem;
+  margin-left: -1rem;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  display: inline-block;
+  border-color: transparent;
+  color: $font-gray;
+  background: $lighter-gray;
+  width: 85%;
+}
+.description-input {
+  text-indent: 0.7rem;
+  width: 95%;
+  height: 6rem;
+  border: none;
+  border-radius: 10px;
+  color: $font-gray;
+  background: $lighter-gray;
+  font-size: $normal-font;
+  font-family: "Poppins";
+  margin-left: -1rem;
+}
+</style>

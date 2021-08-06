@@ -1,11 +1,5 @@
-interface skillModel{
-  id:number,
-  habilityName:string,
-  skillCategoryModel:{
-    id:number,
-    nameCategory:string
-  }
-}
+import { skillModel } from "../../skills/adapter/skillModel";
+
 interface scheduleModel{
   id:number,
   day:string,
@@ -19,9 +13,12 @@ export interface JobOffersWeb{
   title:string,
   location:string,
   deadline:string,
+  createdOn:string,
   specialRequirements:string,
   duration:number,
   hourlyRate:number,
+  latitude:string,
+  length:string,
   statusJobOfferModel:{
     id:number,
     description:string

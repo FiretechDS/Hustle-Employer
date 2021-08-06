@@ -1,5 +1,8 @@
 @import 'multiselect';
 @import 'variables';
+@import 'tooltip';
+@import 'conf-modal.scss';
+@import 'dropdown';
 /* Font styles */
 @font-face {
   font-family: 'Poppins';
@@ -38,7 +41,12 @@
   src: local('Poppins'),
     url('/fonts/Poppins/Poppins-Semibold.ttf') format('truetype');
 }
-
+.highlight-icon {
+  opacity: 1;
+  &:hover {
+    opacity: 0.8;
+  }
+}
 body {
   margin: 0;
   background-color: $background-color;
@@ -59,8 +67,8 @@ html {
   display: flex;
   width: 60vw;
   justify-content: space-around;
+  align-items: center;
   list-style-type: none;
-
   :first-child {
     justify-self: flex-start;
     flex: 1;
@@ -70,14 +78,14 @@ html {
   }
 }
 
-
 //DETAIL OFFER MODAL
-.title-modal-offer{
-  color: $font-dark
+.title-modal-offer {
+  color: $font-dark;
+  font-weight: bolder;
 }
 
-.value-modal-offer{
-  color: $font-gray
+.value-modal-offer {
+  color: $font-gray;
 }
 
 .columns-modal-offer-detail {
@@ -98,17 +106,35 @@ html {
   .small-columns-modal-offer-detail {
     flex: 0rem;
   }
-  
-} 
+}
 
-.fields-modal-offer{
+.fields-modal-offer {
   margin-top: 0rem;
-  padding: 0px;
+  padding: 0px 50px;
   margin-left: 1rem;
   margin-block-end: 0rem;
 }
 
-.list-modal-offer{ 
-  list-style: none;
+.list-modal-offer {
+  list-style: disc;
   padding-inline-start: 1rem;
+}
+
+.footer-offer-detail {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer-offer-detail-applications {
+  width: 15rem;
+}
+
+
+//Register
+.subtitle-register{
+  font-size: 2.5rem;
+  display:flex;
+  justify-self: flex-start;
+  margin: 0px;
 }

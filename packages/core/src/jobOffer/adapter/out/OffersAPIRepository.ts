@@ -2,7 +2,7 @@ import { DataError } from "../../../common/domain/DataError";
 import { Either } from "../../../common/domain/Either";
 import { JobApplicationProps } from "../../application/JobApplicationModel";
 import { LoadOffersPort } from "../../application/port/out/LoadOffersPort";
-import apiFetcher from "../api/springBoot";
+import apiFetcher from "../../../common/adapter/api/springBoot";
 import { InfraToApplicationMapper } from "../JobInfraApplicationMapper";
 import { JobOffersWeb } from "../OfferWebModel";
 
@@ -18,7 +18,7 @@ export class OffersAPIRepository implements LoadOffersPort{
                 }
             return Either.left({kind:'ApiError',message:'No response from API',statusCode: loadResponse.status,error: loadResponse.statusText})
         } catch (error) {
-            return Either.left({kind:'UnexpectedError',message:error})    
+            return Either.left({kind:'UnexpectedError',message:new Error("Couldn't load offers, try again later.")})    
         }
     }
 }

@@ -7,12 +7,13 @@ export interface LoadingOffersState{
 
 export interface LoadedOffersState{
   kind:"LoadedOffersState",
-  offers: Array <jobPresentationProps>
+  activeOffers: Array <jobPresentationProps>,
+  archiveOffers: Array <jobPresentationProps>
+
 }
 
 export interface EmptyOffersState{
   kind:"EmptyOffersState",
-  offers: Array <jobPresentationProps>
   message:string
 }
 

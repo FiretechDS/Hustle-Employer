@@ -3,7 +3,6 @@ import { Either } from "../../../common/domain/Either";
 import { jobCreationProps, ToDomainMapper } from "../../domain/JobDomainMapper";
 import { jobPresentationProps } from "../../presentation";
 import { ToPresentationMapper } from "../../presentation/JobPresentationMapper";
-import { JobApplicationProps } from "../JobApplicationModel";
 import { PublishOfferUseCase } from "../port/in/PublishOfferUseCase";
 import { PublishOfferPort } from "../port/out/PublishOfferPort";
 

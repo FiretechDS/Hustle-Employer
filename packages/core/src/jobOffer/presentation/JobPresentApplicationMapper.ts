@@ -1,11 +1,11 @@
 import { Status } from "../domain/valueObjects/StatusValueObject";
 import { jobCreatePresentationProps, jobPresentationProps } from "./JobPresentationModel";
-import { JobApplicationProps } from "../application/JobApplicationModel";
+import {  JobCreatedApplicationProps } from "../application/JobApplicationModel";
 import { jobCreationProps } from "../domain/JobDomainMapper";
 
 
 export class PresentationToApplicationMapper{
-  static mapCreated (offer:jobPresentationProps):JobApplicationProps{
+  static mapCreated (offer:jobPresentationProps):JobCreatedApplicationProps{
     return {
       ...offer,
       deadline:new Date(offer.deadline),
@@ -19,7 +19,7 @@ export class PresentationToApplicationMapper{
       id:offer.id,
       deadline:new Date(offer.deadline),
       creationDate:offer.creationDate?new Date(offer.creationDate):undefined,
-      status:offer.status? Status.getStatusNumber(offer.status):1,
+      status:Status.getStatusNumber(offer.status),
     }
   }
 }

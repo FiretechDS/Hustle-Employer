@@ -6,10 +6,13 @@ export class ApplicationToInfraMapper{
   static map (offer: jobCreationProps ):jobOfferCreateDto{
     return{
       ...offer,
-      id:1,
+      id:offer.id?offer.id: 1,
+      createdOn: new Date().toLocaleDateString(),
       deadline:offer.deadline.toLocaleDateString(),
-      statusJobOfferModel:offer.status?offer.status:1,
-      specialRequirements:offer.specialRequirements?offer.specialRequirements:'None.',
+      statusJobOfferModel:offer.status+1,
+      specialRequirements:offer.specialRequirements?offer.specialRequirements:'This offer has no special requirements.',
+      latitude:offer.latitude.toString(),
+      length:offer.longitude.toString(),
       skillModel: offer.skills.map(skill =>{
         return skill.number
       } ),

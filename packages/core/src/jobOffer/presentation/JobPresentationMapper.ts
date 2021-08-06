@@ -1,5 +1,5 @@
 import { JobOffer } from "../domain/JobOffer";
-import { Skill } from "../domain/valueObjects/SkillValueObject";
+import { Skill } from "../../skills/domain/Skill";
 import { jobPresentationProps } from "./JobPresentationModel";
 
 
@@ -11,8 +11,8 @@ export class ToPresentationMapper {
       title: jobOffer.header.title,
       specialRequirements: jobOffer.header.specialRequirements,
       duration:jobOffer.duration.value,
-      creationDate:jobOffer.deadline.createdAt.toLocaleDateString(),
-      deadline:jobOffer.deadline.value.toLocaleDateString(),
+      creationDate:jobOffer.deadline.createdAt.toDateString(),
+      deadline:jobOffer.deadline.value.toDateString(),
       skills:jobOffer.skills.map((skill:Skill)=>{
         return {name:skill.name, category:skill.category, number:skill.number }
       }),
@@ -22,6 +22,8 @@ export class ToPresentationMapper {
       location:jobOffer.location.value,
       startHour:jobOffer.schedules.startHour,
       endHour:jobOffer.schedules.endHour,
+      latitude:jobOffer.position.latitude,
+      longitude:jobOffer.position.longitude
     } 
    return mapped
   }

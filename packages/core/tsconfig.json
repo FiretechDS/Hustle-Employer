@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./build",
-    "rootDir": "./src",
+    "rootDirs": ["./src","./test"],
     "composite": true,
     "declaration": true,
     "allowJs": false,
@@ -17,8 +17,9 @@
     "isolatedModules": true,
   },
   "include": [
-    "./src/**/*"
-  ],
+    "./src/**/*",
+    "./test/**/*"
+, "__mocks__"  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
